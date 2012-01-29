@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock title %} - DailyStory</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/skeleton.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/layout.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/story.css">
+    {% block extracss %}{% endblock extracss %}
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">
+	<link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}images/apple-touch-icon-114x114.png">
+
+    {% block extrahead %}{% endblock extrahead %}
+</head>
+<body>
+
+
+    {% include "header.html" %}
+    <div id="main_container" class="container">
+        {% block main %}
+        {% endblock main %}
+    </div> <!-- #main-container -->
+
+    {% include "footer.html" %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+    <!-- scripts concatenated and minified via ant build script-->
+    <script src="{{ STATIC_URL }}js/plugins.js"></script>
+    <script src="{{ STATIC_URL }}js/script.js"></script>
+    <script src="{{ STATIC_URL }}js/tabs.js"></script>
+    <!-- end scripts-->
+    {% block extrajs %}{% endblock extrajs %}
+
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']]; // Change UA-XXXXX-X to be your site's ID
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+
+    <!--[if lt IE 7 ]>
+        <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
+        <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+    <![endif]-->
+
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

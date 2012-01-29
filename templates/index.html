@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Daily Story{% endblock title %}
+
+{% block main %}
+<div id="main" class="sixteen column">
+
+    <h1>Today's story</h1>
+    {% include "story/story.html" %}
+
+{#    <a href="{% url story_archive date.year date.month date.date %}">Yesterday's story</a>#}
+    <a href="{% url random_story %}">Random story</a>
+    <a href="">Even more stories</a>
+
+</div> <!-- #main -->
+{% endblock main %}

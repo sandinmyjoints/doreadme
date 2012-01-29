@@ -1,0 +1,87 @@
+TODO
+====
+* Install git, git init
+
+* Install sqlite for ipython history (note this in instructions for setting up an image)
+
+* Where on the VM filesystem can I move files to OS X, and vice versa?
+
+* Get unit testing working with postgres
+
+* Logging
+
+* Figure out how to classify story vs poetry, esp for Anomalous
+
+* Crawler hints: if story urls fit a certain pattern, can ignore_hints or not 
+
+* Journal infrastructure, views, templates
+
+* Figure out why postgres sometimes crashes during schema migration 
+
+* How to have a concept of today's story--
+Day model that has year, month, day, story fields
+and an instance for every day. Use that to schedule stories through the admin and programmatically. 
+
+Algorithm to schedule stories:
+Whenever a new day is first viewed, create the Day and find a random unfeatured story to associate with it. 
+
+So maybe we do have a Day object. When Day is created:
+ pull a random Story 
+ check that it's not from a journal that was featured recently or by an author that was featured recently
+ save itself
+ view consults today's Day 
+
+View algorithm:
+Select today's date Day from Day. 
+If it doesn't exist:
+ select a random Story that hasn't been featured, 
+ create a Day for today
+ point today's Day to selected Story
+Show the Story that today's Day points to.
+
+
+Daily Story pages/views
+=======================
+
+/ 
+/story
+Today's Story
+[story]
+[Yesterday's story] [More stories] [Get a random story]
+[About]
+
+
+/story/year/month/date
+Jan 1 2012's Story
+[Dec 31 2011] [Jan 2 2012]
+
+
+/story/archives (list in reverse order, paginate)
+Jan 1 2012's Story
+Dec 31 2011's Story
+
+
+/story/slug
+Story detail page
+Featured on date
+
+
+/about
+
+
+/journal/slug
+Journal detail page
+
+
+/journal/list
+list in alpha order
+
+
+/journal
+
+[Include your journal]
+
+
+UI
+==
+Stories slide like turning pages

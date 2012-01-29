@@ -1,0 +1,16 @@
+    <div id="story{{ story.id }}" class="wrapper clearfix story">
+
+        <article>
+            <header>
+                <h1 class="title"><a href="{{ story.url }}">{{ story.title }}</a></h1>
+                {% if story.author %}<h4 class="author">by {{ story.author }}</h4>{% endif %}
+                <p class="lead teaser">
+                    {{ story.teaser }} <a href="{{ story.url }}">&#187;</a>
+                </p>
+                <p class="from_journal">
+                    {% if story.journal %}From {{ story.journal }}{% endif %}
+                </p>
+            </header>
+        </article>
+
+    </div> <!-- #main -->
