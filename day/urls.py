@@ -18,6 +18,7 @@ urlpatterns = patterns('',
         context_object_name="day_list",
         template_name='day/archive.html'), {}, name="month_archive"),
 
+    # / => Today's story
     url(r'^$', TodayArchiveView.as_view(model=Day,
         date_field="day",
         context_object_name="day_list",

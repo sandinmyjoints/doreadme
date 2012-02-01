@@ -1,8 +1,26 @@
 TODO
 ====
-* Install git, git init
+X Install git, git init
 
-* Install sqlite for ipython history (note this in instructions for setting up an image)
+X Install sqlite for ipython history (note this in instructions for setting up an image)
+
+* scrape 12 sites, get at least 100 stories
+
+* Figure out how to classify story vs poetry, esp for Anomalous
+
+X make links to navigate through stories, 
+
+* design and branding.
+
+* feedback/include your journal link
+
+* figure out hosting
+
+* schedule stories for a few weeks and setup reminder to do more
+
+* launch.
+
+* use celery to automatically schedule the next day's story
 
 * Where on the VM filesystem can I move files to OS X, and vice versa?
 
@@ -10,13 +28,13 @@ TODO
 
 * Logging
 
-* Figure out how to classify story vs poetry, esp for Anomalous
-
 * Crawler hints: if story urls fit a certain pattern, can ignore_hints or not 
 
 * Journal infrastructure, views, templates
 
 * Figure out why postgres sometimes crashes during schema migration 
+
+* favicon
 
 * How to have a concept of today's story--
 Day model that has year, month, day, story fields
@@ -48,7 +66,7 @@ Daily Story pages/views
 Today's Story
 [story]
 [Yesterday's story] [More stories] [Get a random story]
-[About]
+[About] [Feedback] [This story doesn't look right]
 
 
 /story/year/month/date

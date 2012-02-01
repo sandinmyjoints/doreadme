@@ -6,6 +6,8 @@ from urlparse import urlparse, urljoin
 import re
 import logging
 import sys
+from django.core.management.base import NoArgsCommand, LabelCommand
+from django.conf import settings
 
 from journal.models import Journal
 
@@ -219,9 +221,9 @@ class Annalemma(StoryCrawler):
     seed_url = "annalemma.net"
 
     title = 're.findall(r"^(.*) \| Annalemma Magazine$", soup.title.text)[0]'
+    author = 'soup.find(attrs={"class": "post-meta-key"}).next.next.strip()'
     teaser = 'soup.find("div", "entry").next.next.text'
     additional_text = 'soup.find("div", "entry").findAll("p")[1].text'
-    author = 'soup.find(attrs={"class": "post-meta-key"}).next.next.strip()'
 
     # use \S instead of \" so that when it's eval'ed, Python doesn't interpret nested "s as ending the string
 #    url = 're.findall(r"url: \S(.*)\S }\);", soup.find("a", text=re.compile("SHARETHIS")))[0]'
@@ -232,10 +234,9 @@ class Ploughshares(StoryCrawler):
     seed_url = "pshares.org"
 
     title = 'soup.h1.text.strip()'
+    author = 'soup.find("span", "by").next.next.strip()'
     teaser = r"re.findall(r'^<p>(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
     additional_text = r"re.findall(r'^<p>.*<br />\n<br />\n(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
-    author = 'soup.find("span", "by").next.next.strip()'
-#    url = 'source'
 
 
 class AnomalousPress(StoryCrawler):
@@ -243,9 +244,9 @@ class AnomalousPress(StoryCrawler):
     seed_url = "anomalouspress.org"
 
     title = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChild(name="h1").text'
+    author = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChild(name="h3").text'
     teaser = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[0].text'
     additional_text = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[1].text'
-    author = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChild(name="h3").text'
 
 
 class FailBetter(StoryCrawler):
@@ -253,22 +254,64 @@ class FailBetter(StoryCrawler):
     seed_url = "failbetter.com"
 
     title = 'soup.findAll("div", {"id": "piece_data_display"})[0].findChild("h1").contents[0]'
+    author = 'soup.find("span", "byline").text'
     teaser = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[0].text'
     additional_text = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[1].text'
-    author = 'soup.find("span", "byline").text'
 
-def main(depth=3):
+
+class StorySouth(StoryCrawler):
+    journal_name = "StorySouth"
+    seed_url = "storysouth.com"
+
+    title = 'soup.find("h4").text'
+    author = 'soup.find("h5").findChild("a").text.capitalize()'
+    teaser = 'soup.find(attrs={"id": "closed"}).findChild("h1").text'
+    additional_text = 'soup.find(attrs={"id": "closed"}).findChildren("h1")[1].text'
+
+
+class AGNI(StoryCrawler):
+    journal_name = "AGNI"
+    seed_url = "http://www.bu.edu/agni"
+
+    title = 'soup.find("h1").text'
+    author = 'soup.find("h2").find("a").text'
+    teaser = 'soup.find("h2").findNextSibling().text'
+    additional_text = 'soup.find("h2").findNextSibling().findNextSibling().text'
+
+
+class HaydensFerryReview(StoryCrawler):
+    journal_name = "Hayden's Ferry Review"
+    seed_url = "http://www.asu.edu/pipercwcenter/publications/haydensferryreview/"
+
+    title = "soup.findAll(attrs={'class': 'style2'})[0].text.replace('&quot;', '')"
+    author = 'soup.findAll(attrs={"class": "style2"})[1].text.replace("by ", "")'
+    teaser = 'soup.findAll(attrs={"class": "style3"})[1].text'
+    additional_text = 'soup.findAll(attrs={"class": "style3"})[2].text'
+
+
+class TriQuarterly(StoryCrawler):
+    journal_name = "TriQuarterly"
+    seed_url = "triquarterly.org"
+
+    title = 'soup.find("title").text.split("|")[0].strip()'
+    author = 'soup.find(attrs={"class": "auth"}).find("a").text'
+    teaser = 'soup.find(attrs={"class": "content"}).find("p").text'
+    additional_text = 'soup.find(attrs={"class": "content"}).findAll("p")[1].text'
+
+
+def main(depth=3, verbose=False):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.INFO)
-    logging.info("Starting main at %s" % datetime.datetime.now())
+    logging.info("%s\nStarting crawl." % ('-' * 50, datetime.datetime.now()))
     journal_classes = [journal_class for journal_name, journal_class
                        in inspect.getmembers(sys.modules[__name__], inspect.isclass)
                        if StoryCrawler in inspect.getmro(journal_class) and journal_name != 'StoryParser']
     for journal in journal_classes:
-        journal(verbose=True).crawl(depth=depth)
+        logging.info("Crawling %s.")
+        journal(verbose=verbose).crawl(depth=depth)
 
 def test_main(depth=2):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.DEBUG)
-    logging.info("Starting test_main at %s" % datetime.datetime.now())
+    logging.info("%s\nStarting test_main at %s" % ("-" * 50, datetime.datetime.now()))
     a = Annalemma(verbose=True)
     a.crawl(depth=depth)
 
@@ -279,5 +322,15 @@ def test_main(depth=2):
     ap.crawl(depth=depth)
 
 if __name__ == "__main__":
-#    main()
-    pass
+    print "Usage: python manage.py crawl"
+    sys.exit(0)
+
+class Command(LabelCommand):
+    def handle_label(self, label, **options):
+        if label == "verbose":
+            main(verbose=True)
+        else:
+            main(verbose=False)
+
+
+
