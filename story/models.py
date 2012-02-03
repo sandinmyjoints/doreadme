@@ -26,6 +26,7 @@ class Story(models.Model):
 
     class Meta:
         verbose_name_plural = "stories"
+        unique_together = (("title", "author"),)
 
     def generate_slug(self):
         slug_prefix = full_slug = slugify(self.title)

@@ -1,9 +1,11 @@
 from datetime import datetime
 import random
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.db import models
 
 # Create your models here.
+from django.db.models import permalink
 from story.models import Story
 
 class Day(models.Model):
@@ -28,6 +30,10 @@ class Day(models.Model):
         all_days = [d for d in days]
         random.shuffle(all_days)
         return all_days.pop()
+
+    @permalink
+    def get_absolute_url(self):
+        return ('day_archive', [self.day.year, self.day.month, self.day.day])
 
     @classmethod
     def find_random_unfeatured_story(cls, num_days_recent=7):
