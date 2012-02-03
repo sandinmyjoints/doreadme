@@ -1,5 +1,8 @@
 import inspect
 import datetime
+from time import sleep
+from django.db import transaction
+from django.db.utils import IntegrityError
 import os
 import urllib2
 from urlparse import urlparse, urljoin
@@ -9,7 +12,7 @@ import sys
 from django.core.management.base import NoArgsCommand, LabelCommand
 from django.conf import settings
 
-from journal.models import Journal
+from journal.models import Journal, Crawl
 
 from story.models import Story
 
@@ -44,6 +47,9 @@ def get_soup(source):
 
 class StoryCrawler(object):
 
+    journal_name = ""
+    exclude_url_pattern = r're.search(r"(blog|author|contributor|about|contact|reviews|bios|nonfiction|poet|poem)", cur_url)'
+
     def __init__(self, min_teaser_length=20, max_teaser_length=600, max_title_length=256, max_author_length=128, verbose=False):
         super(StoryCrawler, self).__init__()
         self.crawled = set()
@@ -52,6 +58,7 @@ class StoryCrawler(object):
         self.MAX_TEASER_LENGTH = max_teaser_length
         self.MAX_TITLE_LENGTH = max_title_length
         self.MAX_AUTHOR_LENGTH = max_author_length
+
 #        self.journal_name = re.findall(r"'__\w+__\.(\S+)'>", str(self.__class__))[0]
 
         try:
@@ -64,11 +71,12 @@ class StoryCrawler(object):
             # no entry in Journal table, so create it
             self.log_msg("Creating db object for %s." % self.journal_name)
             self.db_object = Journal.objects.create(name=self.journal_name, url=self.seed_url)
-
-        self.previously_crawled = self.db_object.crawled_pages or set()
+        except AttributeError:
+            self.log_msg("Running without journal_name or db_object.", logging.WARN)
+            self.db_object = None
 
     def log_msg(self, msg, level=logging.INFO):
-        msg = ": ".join(["%s" % self.journal_name, msg])
+        msg = ": ".join(["%s" % self.journal_name if self.journal_name else "no journal_name", msg])
         logging.log(level, msg)
         if self.verbose:
             print "%s: %s" % (level, msg)
@@ -77,7 +85,7 @@ class StoryCrawler(object):
         self.crawled.add(url)
 
     def has_been_crawled(self, url):
-        return url in self.crawled
+        return (url in self.crawled) or ("".join([url, "/"]) in self.crawled)
 
     def crawl(self, depth=2, ignore_previously_crawled_pages=False, verbose=None):
         """Crawls a site, starting from seed_url. Starting with seed_url, for each page it:
@@ -97,6 +105,8 @@ class StoryCrawler(object):
 
         be_verbose = self.verbose if verbose is None else verbose
 
+        crawl = Crawl.objects.create(journal=self.db_object, seed_url=self.seed_url)
+
         if not self.seed_url.startswith("http://"):
             self.seed_url = "http://" + self.seed_url
 
@@ -111,14 +121,21 @@ class StoryCrawler(object):
             new_urls = set()
 
             for j, cur_url in enumerate(urls_to_process):
+
                 if ignore_previously_crawled_pages and cur_url in self.previously_crawled:
                     if be_verbose:
                         print "Round %d: skipping url %d/%d." % (i, j, len(urls_to_process))
                     continue
 
+                self.add_to_crawled(cur_url)
+
+                if self.exclude_url_pattern and eval(self.exclude_url_pattern):
+                    continue
+
                 if be_verbose:
                     print "Round %d: processing url %d/%d: %s." % (i, j, len(urls_to_process), cur_url)
 
+                sleep(1)
                 soup = get_soup(cur_url)
                 if not soup:
                     self.log_msg("Could not open %s." % cur_url)
@@ -130,8 +147,6 @@ class StoryCrawler(object):
                 except (IndexError), ex:
                     self.log_msg("Caught in parse_story for %s: %s." % (cur_url, ex))
 
-                self.add_to_crawled(cur_url)
-
                 # regex checks if href has the domain in it, or if it doesn't start with http, meaning it's a relative link
                 links = soup.findAll("a", {'href': re.compile(r"(%s|^(?!http))" % site_domain)})
 
@@ -140,7 +155,8 @@ class StoryCrawler(object):
 #                    if ('href' in dict(link.attrs)):
                     link = urljoin(cur_url, link['href']) # computes absolute url if link is a relative url
 
-                    if link.find("'") != -1: continue
+                    if link.find("'") != -1:
+                        continue
 
                     link = link.split('#')[0] # remove location portion
 
@@ -151,16 +167,19 @@ class StoryCrawler(object):
             urls_to_process = new_urls
 
         # dump all the crawled urls to the db and update the last time crawled
-        self.log_msg("Updating db_object for %s..." % self.journal_name)
-        self.db_object.last_crawled = datetime.datetime.now()
-        self.db_object.crawled_pages = self.crawled.union(self.previously_crawled)
-        self.db_object.save()
-        self.log_msg("Finished updating db_object for %s." % self.journal_name)
+        previously_crawled = self.db_object.crawl_set.order_by('when_crawled')
+        previously_crawled = previously_crawled[0] if previously_crawled.count() else set()
+        self.log_msg("Updating %s..." % crawl)
+        crawl.end = datetime.datetime.now()
+        crawl.crawled_pages = self.crawled.union(previously_crawled)
+        crawl.save()
+        self.log_msg("Finished updating %s." % crawl)
 
 #    def crawl_for_stories(self, urls):
 #        for url in self.crawled:
 #            self.parse_story(url)
 
+    @transaction.commit_manually
     def parse_story(self, source):
         soup = get_soup(source)
 
@@ -169,12 +188,11 @@ class StoryCrawler(object):
             self.log_msg("Failed to open %s." % source)
             return None
 
-#        import pdb; pdb.set_trace()
         try:
-            title = convert_entities(eval(self.title))
-            teaser = convert_entities(eval(self.teaser))
-            additional_text = convert_entities(eval(self.additional_text))
-            author = convert_entities(eval(self.author))
+            title = convert_entities(eval(self.title)).strip()
+            teaser = convert_entities(eval(self.teaser)).strip()
+            additional_text = convert_entities(eval(self.additional_text)).strip()
+            author = convert_entities(eval(self.author)).strip()
         except (TypeError, IndexError, AttributeError):
             self.log_msg("Couldn't find story in %s." % source, logging.DEBUG)
             return None
@@ -182,35 +200,47 @@ class StoryCrawler(object):
         # sanity check on author
         if len(author) > self.MAX_AUTHOR_LENGTH:
             self.log_msg("Author too long: %s" % author)
-            author = author[:self.MAX_AUTHOR_LENGTH]
+            author = author[:self.MAX_AUTHOR_LENGTH] + "..."
+
+        if author.lower().strip() in ["interview", "interviews"]:
+            self.log_msg("Author was interview.")
+            return
 
         if len(title) > self.MAX_TITLE_LENGTH:
             self.log_msg("Title too long: %s" % title)
-            title = title[:self.MAX_TITLE_LENGTH]
+            title = title[:self.MAX_TITLE_LENGTH] + "..."
+
+        if title.strip().lower() == "from":
+            self.log_msg("Title consists only of 'from' at %s" % source)
 
         if len(teaser) < self.MIN_TEASER_LENGTH:
-            self.log_msg("Teaser too short: %s" % teaser)
-            teaser = "<br />".join([teaser, additional_text])
+            self.log_msg("Teaser too short: %s\nAdding: %s" % (teaser, additional_text))
+            teaser = teaser + "<br />" if teaser else ""
+            teaser = "".join([teaser, additional_text])
 
         # check if teaser is > max_length
         if len(teaser) > self.MAX_TEASER_LENGTH:
             self.log_msg("Teaser too long: %s" % teaser)
-            teaser = teaser[:self.MAX_TEASER_LENGTH]
+            teaser = teaser[:self.MAX_TEASER_LENGTH] + "..."
 
         if title and (title != "") and \
         teaser and (teaser != "") and \
         author and (author != ""):
-            story = Story.objects.create(title=title,
-                                        author=author,
-                                        teaser=teaser,
-                                        url=source,
-                                        journal=self.db_object,
-                                        )
+            try:
+                story = Story.objects.create(title=title,
+                                            author=author,
+                                            teaser=teaser,
+                                            url=source,
+                                            journal=self.db_object,
+                                            )
 
-            # log it
-            self.log_msg("Added '%s' by %s at %s." % (title, author, source))
-
-            return story
+            except IntegrityError, ex:
+                transaction.rollback()
+                self.log_msg("Skipping duplicate story at %s." % source, logging.DEBUG)
+            else:
+                self.log_msg("Added '%s' by %s at %s." % (title, author, source))
+                transaction.commit()
+                return story
 
         self.log_msg("Got non-story or invalid story from %s." % source, logging.DEBUG)
         return None
@@ -224,6 +254,7 @@ class Annalemma(StoryCrawler):
     author = 'soup.find(attrs={"class": "post-meta-key"}).next.next.strip()'
     teaser = 'soup.find("div", "entry").next.next.text'
     additional_text = 'soup.find("div", "entry").findAll("p")[1].text'
+    exclude_url_pattern = r're.search(r"(contributor|blog|about|contact|print|subscribe)", cur_url)'
 
     # use \S instead of \" so that when it's eval'ed, Python doesn't interpret nested "s as ending the string
 #    url = 're.findall(r"url: \S(.*)\S }\);", soup.find("a", text=re.compile("SHARETHIS")))[0]'
@@ -257,6 +288,7 @@ class FailBetter(StoryCrawler):
     author = 'soup.find("span", "byline").text'
     teaser = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[0].text'
     additional_text = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[1].text'
+    exclude_url_pattern = r're.search(r"(Interview)", cur_url)'
 
 
 class StorySouth(StoryCrawler):
@@ -264,24 +296,25 @@ class StorySouth(StoryCrawler):
     seed_url = "storysouth.com"
 
     title = 'soup.find("h4").text'
-    author = 'soup.find("h5").findChild("a").text.capitalize()'
+    author = '" ".join([n.capitalize() for n in soup.find("h5").findChild("a").text.split]'
     teaser = 'soup.find(attrs={"id": "closed"}).findChild("h1").text'
     additional_text = 'soup.find(attrs={"id": "closed"}).findChildren("h1")[1].text'
 
 
 class AGNI(StoryCrawler):
     journal_name = "AGNI"
-    seed_url = "http://www.bu.edu/agni"
+    seed_url = r"bu.edu/agni"
 
     title = 'soup.find("h1").text'
     author = 'soup.find("h2").find("a").text'
     teaser = 'soup.find("h2").findNextSibling().text'
     additional_text = 'soup.find("h2").findNextSibling().findNextSibling().text'
+    exclude_url_pattern = r're.search(r"(authors)", cur_url)'
 
 
 class HaydensFerryReview(StoryCrawler):
     journal_name = "Hayden's Ferry Review"
-    seed_url = "http://www.asu.edu/pipercwcenter/publications/haydensferryreview/"
+    seed_url = "asu.edu/pipercwcenter/publications/haydensferryreview/"
 
     title = "soup.findAll(attrs={'class': 'style2'})[0].text.replace('&quot;', '')"
     author = 'soup.findAll(attrs={"class": "style2"})[1].text.replace("by ", "")'
@@ -299,27 +332,45 @@ class TriQuarterly(StoryCrawler):
     additional_text = 'soup.find(attrs={"class": "content"}).findAll("p")[1].text'
 
 
+class Shenandoah(StoryCrawler):
+    journal_name = "Shenandoah"
+    seed_url = "shenandoahliterary.org"
+
+    title = 'soup.find(attrs={"class": "entry-title"}).text'
+    author = 'soup.find(attrs={"class": "about-author"}).findChild("h3").findChild("span").findChild("a").next.strip()'
+    teaser = 'soup.find("div", "entry-content").findChild().text'
+    additional_text = 'soup.find("div", "entry-content").findChildren("p")[1].text'
+
+
+class AdirondackReview(StoryCrawler):
+    journal_name = "The Adirondack Review"
+    seed_url = "theadirondackreview.com"
+
+    title = 'soup.find("font").text'
+    author = '" ".join([n.capitalize() for n in soup.findChildren("font")[2].text.split()])'
+    teaser = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[0]'
+    additional_text = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[2]'
+
+
 def main(depth=3, verbose=False):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.INFO)
-    logging.info("%s\nStarting crawl." % ('-' * 50, datetime.datetime.now()))
+
     journal_classes = [journal_class for journal_name, journal_class
                        in inspect.getmembers(sys.modules[__name__], inspect.isclass)
-                       if StoryCrawler in inspect.getmro(journal_class) and journal_name != 'StoryParser']
+                       if StoryCrawler in inspect.getmro(journal_class) and journal_name != "StoryCrawler"]
+    logging.info("%s\nStarting crawl of %s." % ('=' * 50, ",".join([str(j) for j in journal_classes])))
     for journal in journal_classes:
-        logging.info("Crawling %s.")
+        logging.info("%s\nCrawling %s." % ('-' * 50, journal))
         journal(verbose=verbose).crawl(depth=depth)
 
 def test_main(depth=2):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.DEBUG)
     logging.info("%s\nStarting test_main at %s" % ("-" * 50, datetime.datetime.now()))
-    a = Annalemma(verbose=True)
+    a = TriQuarterly(verbose=True)
     a.crawl(depth=depth)
 
-    p = Ploughshares(verbose=True)
+    p = StorySouth(verbose=True)
     p.crawl(depth=depth)
-
-    ap = AnomalousPress(verbose=True)
-    ap.crawl(depth=depth)
 
 if __name__ == "__main__":
     print "Usage: python manage.py crawl"
