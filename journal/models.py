@@ -4,6 +4,24 @@ from django.template.defaultfilters import slugify
 from picklefield.fields import PickledObjectField
 
 
+class Crawl(models.Model):
+    """
+    Represents a crawl of a Journal.
+    """
+
+    journal = models.ForeignKey("Journal")
+    seed_url = models.URLField()
+    start = models.DateTimeField(auto_now=True)
+    end = models.DateTimeField(null=True)
+    crawled_pages = PickledObjectField(null=True)
+
+    def __unicode__(self):
+        return "%s crawl starting %s %sof %d pages." % (self.journal.name,
+                                                        self.start.strftime("%Y-%m-%d %H:%m:%S"),
+                                                        ("ending %s " % self.end.strftime("%Y-%m-%d %H:%m:%S")) if self.end else "",
+                                                        len(self.crawled_pages) if self.crawled_pages else 0)
+
+
 class Journal(models.Model):
     """A website that publishes stories.
 
@@ -14,8 +32,6 @@ class Journal(models.Model):
     seed_url = models.URLField()  # where to start crawling.
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
-    last_crawled = models.DateTimeField(null=True)
-    crawled_pages = PickledObjectField(null=True)
 
     # These fields are BeautifulSoup code for scraping stories from a page on the Journal's website
     title_pattern = models.CharField(max_length=256, blank=True, default="")
