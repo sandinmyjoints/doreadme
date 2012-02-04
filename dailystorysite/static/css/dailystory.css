@@ -1,12 +1,13 @@
-h1.title a{
+h1.title a, h1.title {
     text-shadow: 0px 2px 3px #555;
-}
-h1.title a {
     text-decoration: none;
 }
 
 h1#site_header {
     text-shadow: 0px 2px 3px #ddd;
+    font-size: 54px;
+    padding: .25em 0 .25em 0;
+    margin: 1em 0 0 0;
 
 }
 
@@ -14,9 +15,12 @@ h1.title a:hover {
     text-decoration: underline;
 }
 
-h1#site_header {
-    margin-top: 1em;
-    text-align:center;
+#site_header_container {
+/*h1#site_header {*/
+    /*margin-top: 1em;*/
+    /*text-align:center;*/
+    padding: 0em .5em .3em .5em;
+    margin-right: -1em;
 }
 
 h6#site_footer {
@@ -74,9 +78,25 @@ header.container {
 }
 
 a.full_story {
-    -webkit-transition: opacity .2s ease-in-out;
-    opacity: .2;
+    /*-webkit-transition: opacity .2s ease-in-out;*/
+    -webkit-transition: color .2s ease-in-out;
+    /*opacity: .3;*/
+    color: #AAA;
     /*height: 0;*/
     /*overflow: hidden;*/
 }
 
+#contact_form {
+    display: hidden;
+}
+
+div.day {
+    /*background-color: #eee;*/
+    border-left: 1px dotted #ddd;
+    border-right: 1px dotted #ddd;
+    padding-left: 10px;
+}
+
+.center {
+    text-align: center;
+}
