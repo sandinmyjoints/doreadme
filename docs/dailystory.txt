@@ -1,0 +1,50 @@
+Daily Story pages/views
+=======================
+
+* Design for blank/initial/first, regular, and error
+
+/ 
+/story
+Today's Story
+[story. initial cap of first paragraph is big]
+[Yesterday's story] [More stories] [Get a random story]
+[About] [Feedback] [This story doesn't look right]
+
+blank/initial/first=
+error=Blank page. This is embarrassing. 
+
+
+/story/year/month/date
+Jan 1 2012's Story
+[Dec 31 2011] [Jan 2 2012]
+
+
+/story/archives (list in reverse order, paginate)
+Jan 1 2012's Story
+Dec 31 2011's Story
+
+
+/story/slug
+Story detail page
+Featured on date
+
+
+/about
+
+
+/journal/slug
+Journal detail page
+
+
+/journal/list
+list in alpha order
+
+
+/journal
+
+[Include your journal]
+
+
+UI
+==
+Stories slide like turning pages

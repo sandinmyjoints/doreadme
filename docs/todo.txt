@@ -8,7 +8,7 @@ X Install sqlite for ipython history (note this in instructions for setting up a
 
 * Figure out how to classify story vs poetry, esp for Anomalous
 
-X make links to navigate through stories, 
+X make links to navigate through days, 
 
 * design and branding.
 
@@ -36,6 +36,8 @@ X make links to navigate through stories,
 
 * favicon
 
+* User accounts, favorite stories, story ratings, open story links in a new tab or in an iframe or something like that, so they stay on the site
+
 * How to have a concept of today's story--
 Day model that has year, month, day, story fields
 and an instance for every day. Use that to schedule stories through the admin and programmatically. 
@@ -57,49 +59,3 @@ If it doesn't exist:
  point today's Day to selected Story
 Show the Story that today's Day points to.
 
-
-Daily Story pages/views
-=======================
-
-/ 
-/story
-Today's Story
-[story]
-[Yesterday's story] [More stories] [Get a random story]
-[About] [Feedback] [This story doesn't look right]
-
-
-/story/year/month/date
-Jan 1 2012's Story
-[Dec 31 2011] [Jan 2 2012]
-
-
-/story/archives (list in reverse order, paginate)
-Jan 1 2012's Story
-Dec 31 2011's Story
-
-
-/story/slug
-Story detail page
-Featured on date
-
-
-/about
-
-
-/journal/slug
-Journal detail page
-
-
-/journal/list
-list in alpha order
-
-
-/journal
-
-[Include your journal]
-
-
-UI
-==
-Stories slide like turning pages
