@@ -45,15 +45,22 @@
 </header>
 
 <div id="main_container" class="container">
-    <div id="main" class="fourteen columns alpha">
+    <div id="main" class="ten columns alpha">
         {% block content %}
         {% endblock content %}
     </div>
 
-    <div id="sidebar" class="two columns omega">
+{#    <div id="gutter" class="one column"><p></p></div>#}
+
+    <div id="sidebar" class="five columns omega row offset-by-one">
+            {% include "dailystorysite/sidebar_header.html" %}
+    </div>
+    <div class="five columns omega row offset-by-one">
         {% block sidebar %}
-            {% include "sidebar.html" %}
+                {% include "dailystorysite/description.html" %}
+                {% include "dailystorysite/sidebar_content.html" %}
         {% endblock %}
+
     </div>
 
 </div>

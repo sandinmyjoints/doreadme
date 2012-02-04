@@ -2,6 +2,7 @@
 *.pot
 local_settings*
 *.py[co]
+workspace.xml
 
 # Packages
 *.egg
