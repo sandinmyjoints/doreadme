@@ -10,6 +10,10 @@ X Install sqlite for ipython history (note this in instructions for setting up a
 
 X make links to navigate through days, 
 
+* Day picker
+
+* Journal infrastructure, views, templates, links
+
 * design and branding.
 
 * feedback/include your journal link
@@ -29,8 +33,6 @@ X make links to navigate through days,
 * Logging
 
 * Crawler hints: if story urls fit a certain pattern, can ignore_hints or not 
-
-* Journal infrastructure, views, templates
 
 * Figure out why postgres sometimes crashes during schema migration 
 

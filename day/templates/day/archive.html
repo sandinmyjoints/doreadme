@@ -3,6 +3,8 @@
 {% block content %}
 
 {% for day in day_list %}
+    <div class="day">
+
     <a href="{% url day_day_archive day.day.year day.day.month day.day.day %}" class="small day">{{ day.day }}</a>
     {% with story=day.story %}
         {% include "story/story.html" %}
@@ -14,9 +16,10 @@
     {% if next_day %}
         <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}">Next</a>
     {% endif %}
+    </div>
 
     {% if not forloop.last %}
-    <p>***</p>
+    <p class="center">&#167;</p>
     {% endif %}
 {% endfor %}
 

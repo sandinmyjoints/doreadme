@@ -1,15 +1,24 @@
-    <div id="story{{ story.id }}" class="wrapper clearfix story">
+{#    <div  class="wrapper clearfix story">#}
 
-        <article>
-                <h1 class="title"><a href="{{ story.url }}">{{ story.title }}</a></h1>
-                {% if story.author %}<h4 class="author">by {{ story.author }}</h4>{% endif %}
-                <p class="lead teaser">
-                    {{ story.teaser }}
-                    <br /> <a href="{{ story.url }}" class="full_story">Read the rest of the story. &#187;</a>
-                </p>
-                <h4 class="from_journal">
-                    {% if story.journal %}From {{ story.journal }}{% endif %}
-                </h4>
-        </article>
+<article id="story{{ story.id }}" class="wrapper clearfix story">
+    <h4 class="from_journal">
+        {% if story.journal %}From {{ story.journal }}{% endif %}
+    </h4>
 
-    </div> <!-- #main -->
+    <h1 class="title">
+{#        <a href="{{ story.url }}">{{ story.title }}</a>#}
+        {{ story.title }}
+    </h1>
+
+    {% if story.author %}
+        <h4 class="author">by {{ story.author }}</h4>
+    {% endif %}
+
+    <p class="lead teaser">
+        {{ story.teaser }}
+        <br/> <a href="{{ story.url }}" class="full_story">Read the rest of the story. &#187;</a>
+    </p>
+
+</article>
+
+{#    </div> <!-- #main -->#}
