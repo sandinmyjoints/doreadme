@@ -1,0 +1,66 @@
+font-family: 'Bitter', serif;
+font-family: 'Crimson Text', serif;
+
+h1.title a {
+    font-size: 75%;
+    text-decoration: none;
+}
+
+h1.title a:hover {
+    text-decoration: underline;
+}
+
+h1#site_header {
+    margin-top: 1em;
+    text-align:center;
+}
+
+h6#site_footer {
+    margin-top: 5em;
+    text-align:center;
+}
+
+.day {
+    text-decoration: none;
+    color: #ddd;
+}
+
+a.day {
+    color: #ddd;
+}
+
+a:link.day {
+    color: #ddd; !important
+}
+
+a:hover.day {
+    color: #b3b3b3;
+
+}
+
+
+.big {
+    font-size: 48px;
+}
+
+.small {
+    font-size: 16px;
+}
+
+.lead:first-letter {
+    font-size: xx-large;
+    position: relative;
+    top: -.25em;
+}
+
+p.teaser {
+    line-height: 2em;
+}
+
+#sidebar {
+    background-color: #aaaaaa;
+}
+
+header.container {
+    padding-top: 2em;
+}

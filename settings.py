@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'journal',
     'day',
     'south',
+    'dailystorysite',
 
 )
 

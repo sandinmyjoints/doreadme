@@ -30,7 +30,8 @@
 		padding: 0;
 		border: 0;
 		font-size: 100%;
-		font: inherit;
+		/*font: inherit;*/
+        font-family: 'Crimson Text', serif;
 		vertical-align: baseline; }
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 		display: block; }
@@ -64,9 +65,14 @@
 ================================================== */
 	h1, h2, h3, h4, h5, h6 {
 		color: #181818;
-		font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+		/*font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;*/
+		font-family: 'Bitter', serif;
 		font-weight: normal; }
-	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+        font-weight: inherit;
+        font-family: 'Bitter', serif;
+        text-decoration: none;
+    }
 	h1 { font-size: 46px; line-height: 50px; margin-bottom: 14px;}
 	h2 { font-size: 35px; line-height: 40px; margin-bottom: 10px; }
 	h3 { font-size: 28px; line-height: 34px; margin-bottom: 8px; }
@@ -75,7 +81,7 @@
 	h6 { font-size: 14px; line-height: 21px; }
 	.subheader { color: #777; }
 
-	p { margin: 0 0 20px 0; }
+	p { font-family: 'Crimson Text', serif; margin: 0 0 20px 0; }
 	p img { margin: 0; }
 	p.lead { font-size: 21px; line-height: 27px; color: #777;  }
 

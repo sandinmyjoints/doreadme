@@ -34,13 +34,13 @@ def get_soup(source):
     try:
         # this will open files if they are prefixed with 'file:`
         soup = BeautifulSoup(urllib2.urlopen(source))
-    except:
+    except Exception:
         pass
 
     try:
         # is it a file?
         soup = BeautifulSoup(open(source))
-    except:
+    except Exception:
         pass
     return soup
 
@@ -48,16 +48,33 @@ def get_soup(source):
 class StoryCrawler(object):
 
     journal_name = ""
-    exclude_url_pattern = r're.search(r"(blog|author|contributor|about|contact|reviews|bios|nonfiction|poet|poem)", cur_url)'
+    # TODO don't override this in inherited classes, but rather extend it. Generalize it to be just the regex string, and add to it
+    base_exclude_from_urls = [
+        "blog",
+        "author",
+        "contributor",
+        "about",
+        "contact",
+        "reviews",
+        "bios",
+        "nonfiction",
+        "poet",
+        "poem",
+        "essay",
+    ]
+#    exclude_from_urls = r're.search(r"(blog|author|contributor|about|contact|reviews|bios|nonfiction|poet|poem|essay)", cur_url)'
 
-    def __init__(self, min_teaser_length=20, max_teaser_length=600, max_title_length=256, max_author_length=128, verbose=False):
+    def __init__(self, min_teaser_length=20, max_teaser_length=1000, max_title_length=256, max_author_length=128, verbose=False):
         super(StoryCrawler, self).__init__()
-        self.crawled = set()
+        self.crawled_pages = set()
         self.verbose = verbose
         self.MIN_TEASER_LENGTH = min_teaser_length
         self.MAX_TEASER_LENGTH = max_teaser_length
         self.MAX_TITLE_LENGTH = max_title_length
         self.MAX_AUTHOR_LENGTH = max_author_length
+
+        self.exclude_from_urls.extend(self.base_exclude_from_urls)
+        self.exclude_url_pattern = 're.search(r"' + "|".join(self.exclude_from_urls) + '", cur_url)'
 
 #        self.journal_name = re.findall(r"'__\w+__\.(\S+)'>", str(self.__class__))[0]
 
@@ -82,10 +99,10 @@ class StoryCrawler(object):
             print "%s: %s" % (level, msg)
 
     def add_to_crawled(self, url):
-        self.crawled.add(url)
+        self.crawled_pages.add(url)
 
     def has_been_crawled(self, url):
-        return (url in self.crawled) or ("".join([url, "/"]) in self.crawled)
+        return (url in self.crawled_pages) or ("".join([url, "/"]) in self.crawled_pages)
 
     def crawl(self, depth=2, ignore_previously_crawled_pages=False, verbose=None):
         """Crawls a site, starting from seed_url. Starting with seed_url, for each page it:
@@ -105,7 +122,7 @@ class StoryCrawler(object):
 
         be_verbose = self.verbose if verbose is None else verbose
 
-        crawl = Crawl.objects.create(journal=self.db_object, seed_url=self.seed_url)
+        this_crawl = Crawl.objects.create(journal=self.db_object, seed_url=self.seed_url)
 
         if not self.seed_url.startswith("http://"):
             self.seed_url = "http://" + self.seed_url
@@ -167,13 +184,14 @@ class StoryCrawler(object):
             urls_to_process = new_urls
 
         # dump all the crawled urls to the db and update the last time crawled
-        previously_crawled = self.db_object.crawl_set.order_by('when_crawled')
-        previously_crawled = previously_crawled[0] if previously_crawled.count() else set()
-        self.log_msg("Updating %s..." % crawl)
-        crawl.end = datetime.datetime.now()
-        crawl.crawled_pages = self.crawled.union(previously_crawled)
-        crawl.save()
-        self.log_msg("Finished updating %s." % crawl)
+        # TODO what if end is not set because the crawl did not end? of course, then it wouldn't have crawled_pages, either
+        previously_crawled = self.db_object.crawl_set.order_by('-end').order_by('-start')
+        previously_crawled_pages = previously_crawled[0].crawled_pages if (previously_crawled.count() and previously_crawled[0].crawled_pages) else set()
+        self.log_msg("Updating %s..." % this_crawl)
+        this_crawl.end = datetime.datetime.now()
+        this_crawl.crawled_pages = self.crawled_pages.union(previously_crawled_pages) if self.crawled_pages else previously_crawled_pages
+        this_crawl.save()
+        self.log_msg("Finished updating %s." % this_crawl)
 
 #    def crawl_for_stories(self, urls):
 #        for url in self.crawled:
@@ -196,6 +214,8 @@ class StoryCrawler(object):
         except (TypeError, IndexError, AttributeError):
             self.log_msg("Couldn't find story in %s." % source, logging.DEBUG)
             return None
+        except SyntaxError, ex:
+            self.log_msg("Syntax error parsing %s: %s." % (source, ex), logging.WARN)
 
         # sanity check on author
         if len(author) > self.MAX_AUTHOR_LENGTH:
@@ -237,13 +257,14 @@ class StoryCrawler(object):
             except IntegrityError, ex:
                 transaction.rollback()
                 self.log_msg("Skipping duplicate story at %s." % source, logging.DEBUG)
+                return None
             else:
                 self.log_msg("Added '%s' by %s at %s." % (title, author, source))
                 transaction.commit()
                 return story
-
-        self.log_msg("Got non-story or invalid story from %s." % source, logging.DEBUG)
-        return None
+        else:
+            self.log_msg("Got non-story or invalid story from %s." % source, logging.DEBUG)
+            return None
 
 
 class Annalemma(StoryCrawler):
@@ -254,7 +275,7 @@ class Annalemma(StoryCrawler):
     author = 'soup.find(attrs={"class": "post-meta-key"}).next.next.strip()'
     teaser = 'soup.find("div", "entry").next.next.text'
     additional_text = 'soup.find("div", "entry").findAll("p")[1].text'
-    exclude_url_pattern = r're.search(r"(contributor|blog|about|contact|print|subscribe)", cur_url)'
+    exclude_from_urls = r're.search(r"(contributor|blog|about|contact|print|subscribe)", cur_url)'
 
     # use \S instead of \" so that when it's eval'ed, Python doesn't interpret nested "s as ending the string
 #    url = 're.findall(r"url: \S(.*)\S }\);", soup.find("a", text=re.compile("SHARETHIS")))[0]'
@@ -267,7 +288,7 @@ class Ploughshares(StoryCrawler):
     title = 'soup.h1.text.strip()'
     author = 'soup.find("span", "by").next.next.strip()'
     teaser = r"re.findall(r'^<p>(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
-    additional_text = r"re.findall(r'^<p>.*<br />\n<br />\n(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
+    exclude_from_urls = r"re.findall(r'^<p>.*<br />\n<br />\n(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
 
 
 class AnomalousPress(StoryCrawler):
@@ -277,7 +298,7 @@ class AnomalousPress(StoryCrawler):
     title = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChild(name="h1").text'
     author = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChild(name="h3").text'
     teaser = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[0].text'
-    additional_text = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[1].text'
+    exclude_from_urls = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[1].text'
 
 
 class FailBetter(StoryCrawler):
@@ -288,7 +309,7 @@ class FailBetter(StoryCrawler):
     author = 'soup.find("span", "byline").text'
     teaser = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[0].text'
     additional_text = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[1].text'
-    exclude_url_pattern = r're.search(r"(Interview)", cur_url)'
+    exclude_from_urls = r're.search(r"(Interview)", cur_url)'
 
 
 class StorySouth(StoryCrawler):
@@ -296,9 +317,9 @@ class StorySouth(StoryCrawler):
     seed_url = "storysouth.com"
 
     title = 'soup.find("h4").text'
-    author = '" ".join([n.capitalize() for n in soup.find("h5").findChild("a").text.split]'
+    author = '" ".join([n.capitalize() for n in soup.find("h5").findChild("a").text.split])'
     teaser = 'soup.find(attrs={"id": "closed"}).findChild("h1").text'
-    additional_text = 'soup.find(attrs={"id": "closed"}).findChildren("h1")[1].text'
+    exclude_from_urls = 'soup.find(attrs={"id": "closed"}).findChildren("h1")[1].text'
 
 
 class AGNI(StoryCrawler):
@@ -309,7 +330,7 @@ class AGNI(StoryCrawler):
     author = 'soup.find("h2").find("a").text'
     teaser = 'soup.find("h2").findNextSibling().text'
     additional_text = 'soup.find("h2").findNextSibling().findNextSibling().text'
-    exclude_url_pattern = r're.search(r"(authors)", cur_url)'
+    exclude_from_urls = r're.search(r"(authors)", cur_url)'
 
 
 class HaydensFerryReview(StoryCrawler):
@@ -319,7 +340,7 @@ class HaydensFerryReview(StoryCrawler):
     title = "soup.findAll(attrs={'class': 'style2'})[0].text.replace('&quot;', '')"
     author = 'soup.findAll(attrs={"class": "style2"})[1].text.replace("by ", "")'
     teaser = 'soup.findAll(attrs={"class": "style3"})[1].text'
-    additional_text = 'soup.findAll(attrs={"class": "style3"})[2].text'
+    exclude_from_urls = 'soup.findAll(attrs={"class": "style3"})[2].text'
 
 
 class TriQuarterly(StoryCrawler):
@@ -329,7 +350,7 @@ class TriQuarterly(StoryCrawler):
     title = 'soup.find("title").text.split("|")[0].strip()'
     author = 'soup.find(attrs={"class": "auth"}).find("a").text'
     teaser = 'soup.find(attrs={"class": "content"}).find("p").text'
-    additional_text = 'soup.find(attrs={"class": "content"}).findAll("p")[1].text'
+    exclude_from_urls = 'soup.find(attrs={"class": "content"}).findAll("p")[1].text'
 
 
 class Shenandoah(StoryCrawler):
@@ -339,7 +360,7 @@ class Shenandoah(StoryCrawler):
     title = 'soup.find(attrs={"class": "entry-title"}).text'
     author = 'soup.find(attrs={"class": "about-author"}).findChild("h3").findChild("span").findChild("a").next.strip()'
     teaser = 'soup.find("div", "entry-content").findChild().text'
-    additional_text = 'soup.find("div", "entry-content").findChildren("p")[1].text'
+    exclude_from_urls = 'soup.find("div", "entry-content").findChildren("p")[1].text'
 
 
 class AdirondackReview(StoryCrawler):
@@ -349,7 +370,7 @@ class AdirondackReview(StoryCrawler):
     title = 'soup.find("font").text'
     author = '" ".join([n.capitalize() for n in soup.findChildren("font")[2].text.split()])'
     teaser = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[0]'
-    additional_text = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[2]'
+    exclude_from_urls = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[2]'
 
 
 def main(depth=3, verbose=False):
@@ -366,6 +387,9 @@ def main(depth=3, verbose=False):
 def test_main(depth=2):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.DEBUG)
     logging.info("%s\nStarting test_main at %s" % ("-" * 50, datetime.datetime.now()))
+    s = Shenandoah(verbose=True)
+    s.crawl(depth=depth)
+
     a = TriQuarterly(verbose=True)
     a.crawl(depth=depth)
 

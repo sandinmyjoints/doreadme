@@ -1,16 +1,23 @@
+{# Specialized singleday template for the site's front page. #}
+{# This is going to be redundant with singleday_archive.html... #}
+
 {% extends "base.html" %}
 
-{% block title %}Daily Story{% endblock title %}
+{% block content %}
 
-{% block main %}
-<div id="main" class="sixteen column">
+    {% for day in day_list %}
+        <span class="big day">{{ day.day }}</span>
+        {% with story=day.story %}
+            {% include "story/story.html" %}
+        {% endwith %}
 
-    <h1>Today's story</h1>
-    {% include "story/story.html" %}
+        {% if previous_day %}
+            <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}">Yesterday</a>
+        {% endif %}
 
-{#    <a href="{% url story_archive date.year date.month date.date %}">Yesterday's story</a>#}
+    {% endfor %}
+
     <a href="{% url random_story %}">Random story</a>
     <a href="">Even more stories</a>
 
-</div> <!-- #main -->
-{% endblock main %}
+{% endblock content %}

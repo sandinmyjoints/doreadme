@@ -1,0 +1,3 @@
+/templates is global site-specific templates that pull in app specific templates
+
+app specific templates do not extend anything, make no assumptions, have no styling but do have classes and ids

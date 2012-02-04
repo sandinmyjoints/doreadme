@@ -9,7 +9,6 @@ from dailystorysite.views import AboutView
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^story/', include('dailystory.story.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -17,7 +16,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-#    url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'story/login.html'}),
-    url(r'^about/$', AboutView.as_view(), name="about"),
-    url(r'^', include('dailystory.day.urls')),
+    url(r'^', include('dailystory.dailystorysite.urls')),
 )

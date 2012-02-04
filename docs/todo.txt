@@ -36,6 +36,8 @@ X make links to navigate through days,
 
 * favicon
 
+* icons/images for journals
+
 * User accounts, favorite stories, story ratings, open story links in a new tab or in an iframe or something like that, so they stay on the site
 
 * How to have a concept of today's story--

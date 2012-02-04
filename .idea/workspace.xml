@@ -2,13 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1859055-bb94-401f-9443-efe6426536bc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/archive_list.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/dailystory.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/todo.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dailystorysite/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/day/templates/day/singleday_archive.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/archive.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/sidebar.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/apple-touch-icon-114x114-precomposed.png" afterPath="$PROJECT_DIR$/dailystorysite/static/apple-touch-icon-114x114-precomposed.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/apple-touch-icon-57x57-precomposed.png" afterPath="$PROJECT_DIR$/dailystorysite/static/apple-touch-icon-57x57-precomposed.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/apple-touch-icon-72x72-precomposed.png" afterPath="$PROJECT_DIR$/dailystorysite/static/apple-touch-icon-72x72-precomposed.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/apple-touch-icon-precomposed.png" afterPath="$PROJECT_DIR$/dailystorysite/static/apple-touch-icon-precomposed.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/apple-touch-icon.png" afterPath="$PROJECT_DIR$/dailystorysite/static/apple-touch-icon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/css/base.css" afterPath="$PROJECT_DIR$/dailystorysite/static/css/base.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/css/layout.css" afterPath="$PROJECT_DIR$/dailystorysite/static/css/layout.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/css/skeleton.css" afterPath="$PROJECT_DIR$/dailystorysite/static/css/skeleton.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/css/story.css" afterPath="$PROJECT_DIR$/dailystorysite/static/css/dailystory.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/favicon.ico" afterPath="$PROJECT_DIR$/dailystorysite/static/favicon.ico" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/images/apple-touch-icon-114x114.png" afterPath="$PROJECT_DIR$/dailystorysite/static/images/apple-touch-icon-114x114.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/images/apple-touch-icon-72x72.png" afterPath="$PROJECT_DIR$/dailystorysite/static/images/apple-touch-icon-72x72.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/images/apple-touch-icon.png" afterPath="$PROJECT_DIR$/dailystorysite/static/images/apple-touch-icon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/images/favicon.ico" afterPath="$PROJECT_DIR$/dailystorysite/static/images/favicon.ico" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/js/libs/jquery-1.7.1.js" afterPath="$PROJECT_DIR$/dailystorysite/static/js/libs/jquery-1.7.1.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/js/libs/jquery-1.7.1.min.js" afterPath="$PROJECT_DIR$/dailystorysite/static/js/libs/jquery-1.7.1.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/js/libs/modernizr-2.0.6.min.js" afterPath="$PROJECT_DIR$/dailystorysite/static/js/libs/modernizr-2.0.6.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/js/plugins.js" afterPath="$PROJECT_DIR$/dailystorysite/static/js/plugins.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/js/script.js" afterPath="$PROJECT_DIR$/dailystorysite/static/js/script.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/story/static/js/tabs.js" afterPath="$PROJECT_DIR$/dailystorysite/static/js/tabs.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/day/templates/day/archive.html" afterPath="$PROJECT_DIR$/day/templates/day/archive.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/day/urls.py" afterPath="$PROJECT_DIR$/day/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/day/views.py" afterPath="$PROJECT_DIR$/day/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/todo.txt" afterPath="$PROJECT_DIR$/docs/todo.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/journal/management/commands/crawl.py" afterPath="$PROJECT_DIR$/journal/management/commands/crawl.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/journal/models.py" afterPath="$PROJECT_DIR$/journal/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/story/models.py" afterPath="$PROJECT_DIR$/story/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/story/templates/story/story.html" afterPath="$PROJECT_DIR$/story/templates/story/story.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/footer.html" afterPath="$PROJECT_DIR$/templates/footer.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/header.html" afterPath="$PROJECT_DIR$/templates/header.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/urls.py" afterPath="$PROJECT_DIR$/urls.py" />
     </list>
     <ignored path="dailystory.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,75 +62,82 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/story/models.py">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="48" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0">
+            <state line="22" column="0" selection-start="641" selection-end="641" vertical-scroll-proportion="-14.384615">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/day/models.py">
+      <file leaf-file-name="dailystory.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dailystorysite/static/css/dailystory.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="15" selection-start="1108" selection-end="1108" vertical-scroll-proportion="0.0">
+            <state line="2" column="0" selection-start="66" selection-end="66" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/day/urls.py">
+      <file leaf-file-name="base.css" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dailystorysite/static/css/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="26" selection-start="401" selection-end="401" vertical-scroll-proportion="0.0">
+            <state line="70" column="40" selection-start="2070" selection-end="2070" vertical-scroll-proportion="0.63123643">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="crawl.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/journal/management/commands/crawl.py">
+      <file leaf-file-name="skeleton.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dailystorysite/static/css/skeleton.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="130" selection-start="1641" selection-end="1642" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/day/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="8" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0">
+            <state line="207" column="7" selection-start="8972" selection-end="8972" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="archive.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/day/templates/day/archive.html">
+      <file leaf-file-name="header.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="445" selection-end="445" vertical-scroll-proportion="0.0">
+            <state line="0" column="3" selection-start="3" selection-end="3" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/urls.py">
+      <file leaf-file-name="singleday_archive.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/day/templates/day/singleday_archive.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="11" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0">
+            <state line="16" column="32" selection-start="699" selection-end="699" vertical-scroll-proportion="-10.461538">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/journal/models.py">
+      <file leaf-file-name="story.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/story/templates/story/story.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="5" selection-start="176" selection-end="176" vertical-scroll-proportion="0.1053719">
+            <state line="11" column="18" selection-start="561" selection-end="561" vertical-scroll-proportion="-7.1923075">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="3" selection-start="275" selection-end="275" vertical-scroll-proportion="-3.0769231">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sidebar.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/sidebar.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -118,22 +157,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/story/views.py" />
-        <option value="$PROJECT_DIR$/dailystorysite/views.py" />
-        <option value="$PROJECT_DIR$/day/templates/archive.html" />
-        <option value="$PROJECT_DIR$/dailystorysite/admin.py" />
-        <option value="$PROJECT_DIR$/story/urls.py" />
-        <option value="$PROJECT_DIR$/day/templates/day/archive.html" />
-        <option value="$PROJECT_DIR$/day/urls.py" />
-        <option value="$PROJECT_DIR$/journal/crawler/crawler.py" />
-        <option value="$PROJECT_DIR$/story/models.py" />
-        <option value="$PROJECT_DIR$/settings.py" />
-        <option value="$PROJECT_DIR$/day/models.py" />
-        <option value="$PROJECT_DIR$/journal/admin.py" />
         <option value="$PROJECT_DIR$/urls.py" />
-        <option value="$PROJECT_DIR$/day/views.py" />
-        <option value="$PROJECT_DIR$/journal/management/commands/crawl.py" />
-        <option value="$PROJECT_DIR$/journal/models.py" />
+        <option value="$PROJECT_DIR$/settings.py" />
+        <option value="$PROJECT_DIR$/dailystorysite/urls.py" />
+        <option value="$PROJECT_DIR$/day/templates/day/day.html" />
+        <option value="$PROJECT_DIR$/day/urls.py" />
+        <option value="$PROJECT_DIR$/templates/archive.html" />
+        <option value="$PROJECT_DIR$/day/templates/day/archive.html" />
+        <option value="$PROJECT_DIR$/day/templates/day/singleday_archive.html" />
+        <option value="$PROJECT_DIR$/templates/footer.html" />
+        <option value="$PROJECT_DIR$/story/templates/story/story.html" />
+        <option value="$PROJECT_DIR$/templates/header.html" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/templates/sidebar.html" />
+        <option value="$PROJECT_DIR$/templates/base.html" />
+        <option value="$PROJECT_DIR$/dailystorysite/static/css/dailystory.css" />
+        <option value="$PROJECT_DIR$/dailystorysite/static/css/base.css" />
       </list>
     </option>
   </component>
@@ -150,7 +189,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -247,47 +286,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="journal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dailystory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dailystory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="journal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dailystory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dailystory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="journal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="commands" />
+              <option name="myItemId" value="docs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -341,6 +340,46 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dailystory" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dailystory" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dailystorysite" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dailystory" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dailystory" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dailystorysite" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -363,7 +402,7 @@
       <PyConsoleSettings />
     </option>
   </component>
-  <component name="RunManager" selected="Django server.dailystory localhost">
+  <component name="RunManager" selected="Django server.dailystory lan">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -483,6 +522,29 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
+    <configuration default="false" name="dailystory lan" type="Python.DjangoServer" factoryName="Django server">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/virtualenvs/dailystory/bin/python2.7" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="dailystory" />
+      <option name="port" value="8000" />
+      <option name="host" value="192.168.199.143" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
     <configuration default="false" name="all story tests" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -500,9 +562,10 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Django server.dailystory localhost" />
-      <item index="1" class="java.lang.String" itemvalue="Django tests.all story tests" />
+      <item index="1" class="java.lang.String" itemvalue="Django server.dailystory lan" />
+      <item index="2" class="java.lang.String" itemvalue="Django tests.all story tests" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -607,100 +670,118 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dailystorysite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="32" selection-start="115" selection-end="115" vertical-scroll-proportion="0.08457711" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/story/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="91" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/day/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="19" selection-start="0" selection-end="85" vertical-scroll-proportion="0.10782241" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fabfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="16" selection-start="175" selection-end="175" vertical-scroll-proportion="0.21518987" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dailystorysite/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="4" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/journal/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="25" selection-start="130" selection-end="130" vertical-scroll-proportion="0.14345992" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/story/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="48" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/day/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="15" selection-start="1108" selection-end="1108" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/day/templates/day/archive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="445" selection-end="445" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="11" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/story/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="32" selection-start="546" selection-end="546" vertical-scroll-proportion="0.33188722">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="0" selection-start="3550" selection-end="3550" vertical-scroll-proportion="0.37763712">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/day/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="8" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/day/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="26" selection-start="401" selection-end="401" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/journal/management/commands/crawl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="130" selection-start="1641" selection-end="1642" vertical-scroll-proportion="0.0">
+        <state line="23" column="67" selection-start="1040" selection-end="1040" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/journal/models.py">
+    <entry file="file://$PROJECT_DIR$/templates/archive.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="5" selection-start="176" selection-end="176" vertical-scroll-proportion="0.1053719">
+        <state line="3" column="38" selection-start="85" selection-end="85" vertical-scroll-proportion="-1.9615384">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/day/templates/day/archive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="19" selection-start="599" selection-end="599" vertical-scroll-proportion="-11.769231">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dailystorysite/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="31" selection-start="435" selection-end="435" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#22#82#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dailystorysite/static/css/skeleton.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="207" column="7" selection-start="8972" selection-end="8972" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dailystorysite/static/css/layout.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="2" selection-start="52" selection-end="52" vertical-scroll-proportion="0.10759494">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/day/templates/day/singleday_archive.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="32" selection-start="699" selection-end="699" vertical-scroll-proportion="-10.461538">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/story/templates/story/story.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="18" selection-start="561" selection-end="561" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="0" selection-start="641" selection-end="641" vertical-scroll-proportion="-14.384615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/sidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="3" selection-start="3" selection-end="3" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="3" selection-start="275" selection-end="275" vertical-scroll-proportion="-3.0769231">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dailystorysite/static/css/dailystory.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="66" selection-end="66" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dailystorysite/static/css/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="40" selection-start="2070" selection-end="2070" vertical-scroll-proportion="0.63123643">
           <folding />
         </state>
       </provider>

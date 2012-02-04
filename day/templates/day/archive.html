@@ -1,14 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 {% for day in day_list %}
-    Featured story on {{ day.day }}
+    <a href="{% url day_day_archive day.day.year day.day.month day.day.day %}" class="small day">{{ day.day }}</a>
     {% with story=day.story %}
         {% include "story/story.html" %}
     {% endwith %}
 
     {% if previous_day %}
-        <a href="{% url day_archive previous_day.year previous_day.month previous_day.day %}">Previous</a>
+        <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}">Previous</a>
     {% endif %}
     {% if next_day %}
-        <a href="{% url day_archive next_day.year next_day.month next_day.day %}">Next</a>
+        <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}">Next</a>
     {% endif %}
 {% endfor %}
 
+{% endblock content %}

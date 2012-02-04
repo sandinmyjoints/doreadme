@@ -7,9 +7,26 @@ from django.template.defaultfilters import slugify
 from journal.models import Journal
 
 
+GENRE_CHOICES = (
+    ('FI', "Fiction"),
+    ('PO', "Poetry"),
+    ("NF", "Nonfiction"),
+    ("OT", "Other"),
+    ("RE", "Review"),
+    ("IN", "Interview"),
+)
+
+
+class FictionStoryManager(models.Manager):
+    def get_query_set(self):
+        return super(FictionStoryManager, self).get_query_set().filter(genre="FI")
+
+
 class Story(models.Model):
     """Represents a story on a literary journal site somewhere.
         """
+
+    fiction = FictionStoryManager()
 
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique=True)  # If not supplied, will be auto-generated in save()
@@ -18,6 +35,7 @@ class Story(models.Model):
     author = models.CharField(max_length=128, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    genre = models.CharField(max_length=2, choices=GENRE_CHOICES, default='FI')
     # Featured, for a past date, means it was shown as Today's Story on the front page on that date. This can only happen once. If null, it has never been shown.
     # For a future date, date_featured means it is scheduled to run on that date.
     # If date_featured is None, this story hasn't been scheduled yet.
