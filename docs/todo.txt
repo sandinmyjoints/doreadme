@@ -4,27 +4,47 @@ X Install git, git init
 
 X Install sqlite for ipython history (note this in instructions for setting up an image)
 
-* scrape 12 sites, get at least 100 stories
-
-* Figure out how to classify story vs poetry, esp for Anomalous
+X scrape 12 sites, get at least 100 stories
 
 X make links to navigate through days, 
 
 * Day picker
 
+* Get contact form into modal dialog
+
+* feedback/include your journal link
+
 * Journal infrastructure, views, templates, links
 
 * design and branding.
 
-* feedback/include your journal link
+* EXTEND THE VERTICAL BARS TO COVER YESTERDAY' STORY, RANDOM, THIS MONTH, ETC
+
+* cssSandpaper
+
+X fonts: http://www.google.com/webfonts#UsePlace:use/Collection:Bitter:400,700|Crimson+Text:400,400italic,700
 
 * figure out hosting
+
+* classify story genres manually
 
 * schedule stories for a few weeks and setup reminder to do more
 
 * launch.
 
+* Setup remote git repo at webfaction, or on github
+
 * use celery to automatically schedule the next day's story
+
+* Different versions of site for different personas
+
+* Adwords
+
+* Add Disqus? Add share links
+
+* Add user accounts, taste preferences, etc
+
+* User accounts, favorite stories, story ratings, open story links in a new tab or in an iframe or something like that, so they stay on the site
 
 * Where on the VM filesystem can I move files to OS X, and vice versa?
 
@@ -34,15 +54,16 @@ X make links to navigate through days,
 
 * Crawler hints: if story urls fit a certain pattern, can ignore_hints or not 
 
-* Figure out why postgres sometimes crashes during schema migration 
+X Figure out why postgres sometimes crashes during schema migration 
+
+* Figure out how to classify story vs poetry, esp for Anomalous
 
 * favicon
 
 * icons/images for journals
 
-* User accounts, favorite stories, story ratings, open story links in a new tab or in an iframe or something like that, so they stay on the site
 
-* How to have a concept of today's story--
+X How to have a concept of today's story--
 Day model that has year, month, day, story fields
 and an instance for every day. Use that to schedule stories through the admin and programmatically. 
 
