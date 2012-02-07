@@ -1,0 +1,35 @@
+probably_poetry = doesn't end with .
+starts with lowercase
+starts with "for" or "after"
+
+has_html in it = has < or > in it
+
+
+two possibilities:
+either use jquery ready ajax to load the contact form from an ajax endpoint into the #contact_form div, so that is available when the modal dialog is opened,
+
+or
+
+write the DailyStoryHomePageView to combine the get of both the FormView and the BaseDateView
+
+How can I write a class based view that both shows a date-based object and a form? The use case is a site index page view that both displays today's object and has a contact form.
+
+At first I thought of using TodayArchiveView and [ContactFormView](https://github.com/madisona/django-contact-form) as mixins for my site index page view. However, TodayArchiveView inherits from BaseDateListView, and ContactFormView inherits from ProcessFormView. Both ProcessFormView and BaseDateListView implement get() and ultimately call render_to_response with very different data, so I'm thinking this won't work because even if I could call both through super, which would be returned? (I'm not even sure my thinking on this is correct; I'm still wrapping my head around multi-inheritance.)
+
+Then I thought of writing my own get() that combines the functionality of the two gets, since their functionality doesn't collide, as far as I can tell. So that ended up looking like:
+
+[code]
+    def get(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+
+        self.date_list, self.object_list, extra_context = self.get_dated_items()
+        context = self.get_context_data(form=form, object_list=self.object_list,
+            date_list=self.date_list)
+        context.update(extra_context)
+        return self.render_to_response(context)
+[/code]
+
+Is this the right approach?
+
+As a larger question, how do you know which mixins can be used with each other? I had to go to the django source to realize that both classes were implementing get().

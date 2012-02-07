@@ -1,10 +1,8 @@
 from django.conf.urls.defaults import patterns, include, url
-from django.views.generic import ListView, DetailView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 
-from dailystorysite.views import AboutView
 
 admin.autodiscover()
 
@@ -16,7 +14,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^contact/', include('contact_form.urls')),
-
+    url(r'^contact/', include("contact_form.urls", namespace="contact_form")),
     url(r'^', include('dailystory.dailystorysite.urls')),
 )

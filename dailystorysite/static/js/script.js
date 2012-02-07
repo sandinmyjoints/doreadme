@@ -14,7 +14,11 @@ $(document).ready(function () {
 
     $("a.contact_form_link").click(function(event) {
         event.preventDefault();
-        $("div#contact_form").dialog();
+        $("div#contact_form").dialog({
+            modal: true,
+            title: "Contact us"
+
+        });
     });
 });
 

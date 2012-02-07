@@ -87,7 +87,7 @@ a.full_story {
 }
 
 #contact_form {
-    display: hidden;
+    display: none;
 }
 
 div.day {
