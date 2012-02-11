@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic.dates import DayArchiveView, MonthArchiveView, TodayArchiveView, DateDetailView
-from django.views.generic.list import ListView
 from day.models import Day
+from day.views import TodayRandomView, random_day_view
 
 urlpatterns = patterns('',
     # /year/month/date => Story archive
@@ -22,4 +22,8 @@ urlpatterns = patterns('',
         date_field="day",
         context_object_name="day_list",
         template_name='day/singleday_archive.html'), {}, name="day_today"),
+
+    # /day/random => random Day
+    # TODO redo as a class-based view
+    url(r'^random$', random_day_view, {}, name="random_day"),
 )

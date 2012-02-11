@@ -12,11 +12,20 @@ $(document).ready(function () {
             $(this).find("a.full_story").css("color", "#AAA");
         });
 
-    $("a.contact_form_link").click(function(event) {
+    $("a.contact_form_link").click(function (event) {
         event.preventDefault();
+        $send_button = $("div#contact_form input[type='submit']").hide();
         $("div#contact_form").dialog({
-            modal: true,
-            title: "Contact us"
+            modal:true,
+            title:"Contact us",
+            buttons:{
+                "Cancel":function () {
+                    $(this).dialog("close");
+                },
+                "Send":function () {
+                    $send_button.click();
+                }
+            }
 
         });
     });

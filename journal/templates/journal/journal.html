@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dotted-border">
+    <h1>{{ journal.name }}</h1>
+
+    <p><a href="{{ journal.url }}">{{ journal.url }}</a></p>
+
+    {% if journal.description %}<p>{{ journal.description }}</p>{% endif %}
+</div>
+
+{% if journal.story_set %}
+    <div class="dotted-border">
+        <h3>Stories from {{ journal.name }}</h3>
+        <ul>
+            {% for story in journals_featured_stories_set %}
+                <li><a href="{% url story_detail_slug story.slug %}">{{ story.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% endblock %}

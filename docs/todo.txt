@@ -48,7 +48,15 @@ X fonts: http://www.google.com/webfonts#UsePlace:use/Collection:Bitter:400,700|C
 
 * Where on the VM filesystem can I move files to OS X, and vice versa?
 
-* Get unit testing working with postgres
+X Get unit testing working with postgres
+
+* News page
+
+* Write unit tests
+
+* Write Selenium tests
+
+* Object-oriented CSS, what was it called? Ask Bill?
 
 * Logging
 
@@ -83,4 +91,18 @@ If it doesn't exist:
  create a Day for today
  point today's Day to selected Story
 Show the Story that today's Day points to.
+
+= Path to Launch =
+
+1. Write celery task to select new stories for days ahead of time
+
+2. Install Google Analytics
+
+3. Manually scrub the existing stories. Record patterns for use in future crawling.
+
+4. Put in Chrome app-specific files 
+
+4. Deploy site to webfaction.
+
+
 

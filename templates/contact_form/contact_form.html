@@ -1,12 +1,10 @@
-<h1>We want to hear from you.</h1>
-<p>Got an idea for DailyStory? A journal you'd like to see featured? A suggestion? <a
-        href="{% url contact_form:contact %}"
-        class="contact_form_link">Let us
-    know!</a></p>
+<div class="dotted-border">
 
-<div id="contact_form">
-    <form action="" method="post">{% csrf_token %}
-        <p>{{ form.as_ul }}</p>
-        <input type="submit" value="Contact Us"/>
-    </form>
+
+    <div id="contact_form">
+        <form action="" method="post">{% csrf_token %}
+            <p>{{ form.as_ul }}</p>
+            <input type="submit" value="Send"/>
+        </form>
+    </div>
 </div>

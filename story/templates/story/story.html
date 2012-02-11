@@ -2,7 +2,7 @@
 
 <article id="story{{ story.id }}" class="wrapper clearfix story">
     <h4 class="from_journal">
-        {% if story.journal %}From {{ story.journal }}{% endif %}
+        {% if story.journal %}From <a href="{% url journal_detail story.journal.slug %}">{{ story.journal }}</a>{% endif %}
     </h4>
 
     <h1 class="title">

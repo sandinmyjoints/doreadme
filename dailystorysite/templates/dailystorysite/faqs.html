@@ -1,0 +1,36 @@
+<div class="dotted-border">
+    <h3>Just one story a day? I want more!</h3>
+
+    <p>All the stories that have ever been featured on {{ SITE_NAME }} are still available. For example,
+        check out {% if today %}<a
+                href="{% url day_month_archive today.year today.month %}">this month's featured stories.</a>,
+            or{% endif %} a <a href="{% url random_day %}">random past featured story</a>.
+    </p>
+</div>
+<div class="dotted-border">
+    <h3>Why show only the first paragraph or two?</h3>
+
+    <p>Several reasons.</p>
+
+    <ul class="disc">
+        <li>We have no desire to take traffic away from
+            the site that originally published the story. In fact, we want to <em>increase</em> their traffic&mdash;they
+            deserve your attention!
+        </li>
+        <li>Your time is valuable. If you're hooked by a taste, read on. Otherwise, check out another, or come back
+            tomorrow.
+        </li>
+    </ul>
+
+</div>
+
+<div class="dotted-border">
+
+    <h3>Won't people miss out on good stories from deciding based only on one or two paragraphs?</h3>
+
+    <p>
+        Maybe. But we think it's better than if they never saw any part of the story at all, which is what likely would
+        have
+        happened if {{ SITE_NAME }} wasn't around.
+    </p>
+</div>

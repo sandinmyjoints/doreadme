@@ -4,6 +4,8 @@ starts with "for" or "after"
 
 has_html in it = has < or > in it
 
+has_junk = has adobe, flash, javascript, audio, download, clip
+
 
 two possibilities:
 either use jquery ready ajax to load the contact form from an ajax endpoint into the #contact_form div, so that is available when the modal dialog is opened,

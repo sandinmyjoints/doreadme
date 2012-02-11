@@ -3,13 +3,22 @@ from contact_form.views import ContactFormView
 from contact_form.forms import BasicContactForm
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
-from django.views.generic.dates import TodayArchiveView
+from django.views.generic.dates import TodayArchiveView, MonthMixin, YearMixin
 
 from day.models import Day
 
 
 class AboutView(TemplateView):
-    template_name = "about.html"
+    template_name = "dailystorysite/about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
+        context["today"] = datetime.today()
+        return context
+
+
+class NewsView(TemplateView):
+    template_name = "dailystorysite/news.html"
 
 
 class DailyStoryContactFormMixin(ContactFormView):

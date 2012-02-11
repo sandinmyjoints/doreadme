@@ -3,7 +3,7 @@
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en"> <!--<![endif]-->
+<html lang="en" class="no-js"> <!--<![endif]-->
 <head>
     <link href='http://fonts.googleapis.com/css?family=Bitter:400,700|Crimson+Text:400,400italic,700' rel='stylesheet' type='text/css'>
 
@@ -30,6 +30,8 @@
     <link type="text/css" href="{{ STATIC_URL }}css/dailystory-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
     {% block extracss %}{% endblock extracss %}
 
+    <script type="text/javascript" src="{{ STATIC_URL }}js/libs/modernizr-2.0.6.min.js"></script>
+
     <!-- Favicons
      ================================================== -->
     <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">
@@ -55,8 +57,8 @@
 
     <div id="sidebar" class="five columns omega row offset-by-one">
             {% include "dailystorysite/sidebar_header.html" %}
-    </div>
-    <div class="five columns omega row offset-by-one">
+{#    </div>#}
+{#    <div class="five columns omega row offset-by-one">#}
         {% block sidebar %}
                 {% include "dailystorysite/description.html" %}
                 {% include "dailystorysite/sidebar_content.html" %}
@@ -71,9 +73,9 @@
     {% include "footer.html" %}
 </footer>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery-ui-1.8.17.custom.min.js"></script>
 
 <!-- scripts concatenated and minified via ant build script-->
 <script src="{{ STATIC_URL }}js/plugins.js"></script>

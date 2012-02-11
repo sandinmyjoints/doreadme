@@ -1,1 +1,13 @@
-{% include "contact_form/contact_form.html" %}
+<div id="sidebar_content">
+    <h2>We want to hear from you.</h2>
+
+    <p>Got an idea for {{ SITE_NAME }}? A journal you'd like to see featured? A suggestion? <a
+            href="{% url contact_form:contact %}"
+            class="contact_form_link">Let us
+        know!</a></p>
+    {% include "contact_form/contact_form.html" %}
+
+    <div>
+        <a href="{% url news %}">News</a>
+    </div>
+</div>

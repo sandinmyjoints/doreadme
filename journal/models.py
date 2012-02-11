@@ -23,6 +23,10 @@ class Crawl(models.Model):
                                                         )
 
 
+#class JournalFeaturedStorySet(models.Manager):
+#    def get_query_set(self):
+#        return super(JournalFeaturedStorySet, self).get_query_set().exclude(story__featured_days__isnull=False)
+
 class Journal(models.Model):
     """A website that publishes stories.
 

@@ -18,15 +18,25 @@ GENRE_CHOICES = (
 
 
 class FictionStoryManager(models.Manager):
+    """Returns only fiction.
+    """
     def get_query_set(self):
         return super(FictionStoryManager, self).get_query_set().filter(genre="FI")
+
+class FeaturedFictionStoryManager(models.Manager):
+    """
+    Returns only fiction that has been featured on a Day.
+    """
+    def get_query_set(self):
+        return super(FeaturedFictionStoryManager, self).get_query_set().filter(featured_days__isnull=False)
 
 
 class Story(models.Model):
     """Represents a story on a literary journal site somewhere.
         """
 
-    fiction = FictionStoryManager()
+    all_fiction = FictionStoryManager()
+    featured_fiction = FeaturedFictionStoryManager()
 
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique=True)  # If not supplied, will be auto-generated in save()
@@ -61,10 +71,6 @@ class Story(models.Model):
     def save(self, force_insert=False, force_update=False, using=None):
         if not self.slug or self.slug == "":
             self.slug = self.generate_slug()
-
-        #        if not self.date_featured:
-        #            # Careful, setting save=True here will generate an infinite loop.
-        #            self.schedule_featured_date(save=False)
 
         super(Story, self).save(force_insert=force_insert, force_update=force_update, using=using)
 

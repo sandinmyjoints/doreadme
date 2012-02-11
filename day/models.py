@@ -26,14 +26,14 @@ class Day(models.Model):
     def random(cls, allow_future=False):
         days = cls.objects.all()
         if not allow_future:
-            days = days.filter(day__le=datetime.today().date())
+            days = days.filter(day__lte=datetime.today().date())
         all_days = [d for d in days]
         random.shuffle(all_days)
         return all_days.pop()
 
     @permalink
     def get_absolute_url(self):
-        return ('day_archive', [self.day.year, self.day.month, self.day.day])
+        return ('day_day_archive', [self.day.year, self.day.month, self.day.day])
 
     @classmethod
     def find_random_unfeatured_story(cls, num_days_recent=7):

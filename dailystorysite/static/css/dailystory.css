@@ -1,4 +1,8 @@
-h1.title a, h1.title {
+html {
+    overflow-y: scroll;
+}
+
+h1.title a, h1.title, h1 {
     text-shadow: 0px 2px 3px #555;
     text-decoration: none;
 }
@@ -9,6 +13,10 @@ h1#site_header {
     padding: .25em 0 .25em 0;
     margin: 1em 0 0 0;
 
+}
+
+h1#site_header a {
+    text-decoration: none;
 }
 
 h1.title a:hover {
@@ -28,7 +36,7 @@ h6#site_footer {
     text-align:center;
 }
 
-.day {
+.day, {
     text-decoration: none;
     color: #ddd;
 }
@@ -90,7 +98,7 @@ a.full_story {
     display: none;
 }
 
-div.day {
+div.day, .dotted-border {
     /*background-color: #eee;*/
     border-left: 1px dotted #ddd;
     border-right: 1px dotted #ddd;
