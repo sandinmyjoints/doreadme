@@ -1,10 +1,8 @@
+{#{% extends "base.html" %}#}
+
+{% block content %}
 <div class="dotted-border">
-
-
-    <div id="contact_form">
-        <form action="" method="post">{% csrf_token %}
-            <p>{{ form.as_ul }}</p>
-            <input type="submit" value="Send"/>
-        </form>
-    </div>
+    {% include "contact_form/contact_form_include.html" %}
 </div>
+
+{% endblock %}

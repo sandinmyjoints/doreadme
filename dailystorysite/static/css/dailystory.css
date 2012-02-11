@@ -1,5 +1,11 @@
 html {
     overflow-y: scroll;
+    /*background-color: #f0eee3;*/
+}
+
+body {
+    background-color: #f0eee3;
+
 }
 
 h1.title a, h1.title, h1 {
@@ -78,7 +84,7 @@ p.teaser {
 }
 
 #site_header_container {
-    background-color: #aaaaaa;
+    background-color: #b4b3ad;
 }
 
 header.container {
@@ -100,8 +106,8 @@ a.full_story {
 
 div.day, .dotted-border {
     /*background-color: #eee;*/
-    border-left: 1px dotted #ddd;
-    border-right: 1px dotted #ddd;
+    border-left: 1px dotted #b4b3ad;
+    border-right: 1px dotted #b4b3ad;
     padding-left: 10px;
 }
 

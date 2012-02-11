@@ -7,7 +7,7 @@
 
     <a href="{% url day_day_archive day.day.year day.day.month day.day.day %}" class="small day">{{ day.day }}</a>
     {% with story=day.story %}
-        {% include "story/story.html" %}
+        {% include "story/story_include.html" %}
     {% endwith %}
 
     {% if previous_day %}

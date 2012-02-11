@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="dotted-border">
-    <h1>About {{ SITE_NAME }}</h1>
-</div>
+    <div class="dotted-border">
+        <h1>About {{ SITE_NAME }}</h1>
+    </div>
 
-<div class="dotted-border">
-{% include "dailystorysite/description.html" %}
-</div>
+    <div class="dotted-border">
+        {% include "dailystorysite/description_include.html" %}
+    </div>
 
-{% include "dailystorysite/faqs.html" %}
+    <div class="dotted-border">
+        {% include "dailystorysite/faqs_include.html" %}
+    </div>
 {% endblock content %}

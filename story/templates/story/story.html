@@ -1,24 +1,7 @@
-{#    <div  class="wrapper clearfix story">#}
+{% extends "base.html" %}
 
-<article id="story{{ story.id }}" class="wrapper clearfix story">
-    <h4 class="from_journal">
-        {% if story.journal %}From <a href="{% url journal_detail story.journal.slug %}">{{ story.journal }}</a>{% endif %}
-    </h4>
-
-    <h1 class="title">
-{#        <a href="{{ story.url }}">{{ story.title }}</a>#}
-        {{ story.title }}
-    </h1>
-
-    {% if story.author %}
-        <h4 class="author">by {{ story.author }}</h4>
-    {% endif %}
-
-    <p class="lead teaser">
-        {{ story.teaser }}
-        <br/> <a href="{{ story.url }}" class="full_story">Read the rest of the story. &#187;</a>
-    </p>
-
-</article>
-
-{#    </div> <!-- #main -->#}
+{% block content %}
+    <div class="dotted-border">
+        {% include "story/story_include.html" %}
+    </div>
+{% endblock content %}

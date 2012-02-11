@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function () {
-    $("article").hover(function (event) {
+    $("div.story").hover(function (event) {
 //            $(this).find("a.full_story").css("opacity", 1);
             $(this).find("a.full_story").css("color", "#333");
         },

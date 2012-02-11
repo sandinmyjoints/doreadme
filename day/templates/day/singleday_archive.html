@@ -4,20 +4,5 @@
 {# if you use the single object generic views they need a slug or pk, which we don't have for days. #}
 
 {% block content %}
-    {% for day in day_list %}
-        <div class="day">
-        <span class="big day">{{ day.day }}</span>
-        {% with story=day.story %}
-            {% include "story/story.html" %}
-        {% endwith %}
-
-        {% if previous_day %}
-            <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}">Previous</a>
-        {% endif %}
-        {% if next_day %}
-            <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}">Next</a>
-        {% endif %}
-        </div>
-
-    {% endfor %}
+    {% include "day/day_list_include.html" %}
 {% endblock content %}

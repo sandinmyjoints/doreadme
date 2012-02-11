@@ -10,7 +10,7 @@
     <!-- Basic Page Needs
    ================================================== -->
     <meta charset="utf-8">
-    <title>{% block title %}{% endblock title %} - DailyStory</title>
+    <title>{% block title %}{% endblock title %} - {{ SITE_NAME }}</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <!--[if lt IE 9]>
@@ -60,7 +60,7 @@
 {#    </div>#}
 {#    <div class="five columns omega row offset-by-one">#}
         {% block sidebar %}
-                {% include "dailystorysite/description.html" %}
+                {% include "dailystorysite/description_include.html" %}
                 {% include "dailystorysite/sidebar_content.html" %}
         {% endblock %}
 

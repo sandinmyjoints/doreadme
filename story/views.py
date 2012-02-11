@@ -5,7 +5,7 @@ from story.models import Story
 
 
 class StoryArchiveView(ListView):
-    template_name = "story/list.html"
+    template_name = "story/list_include.html"
 
 
 #class RandomStory(TemplateView):
