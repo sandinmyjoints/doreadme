@@ -13,7 +13,7 @@ class Crawl(models.Model):
     seed_url = models.URLField()
     start = models.DateTimeField(auto_now_add=True)
     end = models.DateTimeField(null=True)
-    crawled_pages = PickledObjectField(null=True)
+    crawled_pages = PickledObjectField(null=True)  # a set() of urls
 
     def __unicode__(self):
         return "%s crawl of %d pages starting %s %s" % (self.journal.name,
@@ -37,6 +37,8 @@ class Journal(models.Model):
     seed_url = models.URLField()  # where to start crawling.
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
+#    logo = models.ImageField(null=True)
+    description = models.TextField(max_length=1024, null=True)
 
     # These fields are BeautifulSoup code for scraping stories from a page on the Journal's website
     title_pattern = models.CharField(max_length=256, blank=True, default="")
@@ -45,7 +47,7 @@ class Journal(models.Model):
     author_pattern = models.CharField(max_length=256, blank=True, default="")
 
     def save(self, force_insert=False, force_update=False, using=None):
-        if not self.slug or self.slug=="":
+        if not self.slug:
             self.slug = slugify(self.name)
             i = 0
             while Journal.objects.filter(slug=self.slug).count() > 0:
