@@ -1,9 +1,11 @@
 from datetime import datetime
 from contact_form.views import ContactFormView
 from contact_form.forms import BasicContactForm
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from django.views.generic.dates import TodayArchiveView, MonthMixin, YearMixin
+from django.utils import simplejson as json
 
 from day.models import Day
 
@@ -21,8 +23,43 @@ class NewsView(TemplateView):
     template_name = "dailystorysite/news.html"
 
 
-class DailyStoryContactFormMixin(ContactFormView):
+class JSONResponseMixin(object):
+    def render_to_response(self, context):
+        """Returns a JSON response containing 'context' as payload"""
+        return self.get_json_response(self.convert_context_to_json(context))
+
+    def get_json_response(self, content, **httpresponse_kwargs):
+        """Construct an `HttpResponse` object."""
+        return HttpResponse(content,
+            content_type='application/json',
+            **httpresponse_kwargs)
+
+    def convert_context_to_json(self, context):
+        """Convert the context dictionary into a JSON object"""
+        # Note: This is *EXTREMELY* naive; in reality, you'll need
+        # to do much more complex handling to ensure that arbitrary
+        # objects -- such as Django model instances or querysets
+        # -- can be serialized as JSON.
+        return json.dumps(context)
+
+
+class DailyStoryContactFormView(ContactFormView, JSONResponseMixin):
+    template_name = "contact_form/contact_form.html"
     form_class = BasicContactForm
+
+    def get(self, request, *args, **kwargs):
+        super(DailyStoryContactFormView, self).get(request, *args, **kwargs)
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        context = self.get_context_data(form=form)
+
+        if request.is_ajax():
+            return JSONResponseMixin.render_to_response(self, context=context)
+        else:
+            return ContactFormView.render_to_response(self, context=context)
+
+    def get_success_url(self):
+        return reverse("contact_form_completed")
 
 
 class DailyStoryTodayArchiveView(TodayArchiveView):
@@ -38,27 +75,17 @@ class DailyStoryTodayArchiveView(TodayArchiveView):
         return context
 
 
-class SiteHomePageView(DailyStoryTodayArchiveView, DailyStoryContactFormMixin):
+class SiteHomePageView(DailyStoryTodayArchiveView):
     """
     Shows today's story, as well as a (hidden) form for contact through a modal dialog.
     """
 
     def get(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-
         self.date_list, self.object_list, extra_context = self.get_dated_items()
-        context = self.get_context_data(form=form, object_list=self.object_list,
+        context = self.get_context_data(object_list=self.object_list,
             date_list=self.date_list)
         context.update(extra_context)
         return self.render_to_response(context)
 
-    def get_context_data(self, **kwargs):
-        context = super(SiteHomePageView, self).get_context_data(**kwargs)
-        return context
 
-    def failure(self):
-        return HttpResponse("form not ok")
 
-    def success(self):
-        return HttpResponse("form sent")

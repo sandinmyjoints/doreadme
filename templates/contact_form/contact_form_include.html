@@ -1,6 +1,7 @@
 <div id="contact_form">
-    <form action="" method="post">{% csrf_token %}
+    <form action="{% url contact_form %}" method="post">{% csrf_token %}
         <p>{{ form.as_ul }}</p>
         <input type="submit" value="Send"/>
+        <input type="button" value="Cancel"/>
     </form>
 </div>
