@@ -3,7 +3,6 @@ html {
     /*background-color: #f0eee3;*/
 }
 
-
 body {
     background-color: #ccc;
 }
@@ -30,11 +29,8 @@ footer.row {
 
 h6#site_footer, h6#site_footer a {
     color: #ccc;
-    text-align:center;
+    text-align: center;
 }
-
-
-
 
 header h1 {
     /* uncomment these for an effect of sitting on the dotted border */
@@ -49,24 +45,22 @@ header h1 {
 header h1 a {
     color: #333;
     text-decoration: none;
-    padding-left: .25em;
-    font-size: 4em;
+    padding-left: 10px;
+    font-size: 3em;
 
     /*text-shadow: 1px -1px 1px rgba(0, 0, 0, 0.7); *//* subtle emboss */
     /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7); *//* subtle drop shadow */
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5),  /* more emboss */
-                 0 1px 0 rgba(255, 255, 255, 0.4);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5), /* more emboss */ 0 1px 0 rgba(255, 255, 255, 0.4);
 
     /* uncomment these for an effect of sitting on the dotted border */
     line-height: .8em;
 }
 
 header.container {
-    padding-top: 1em;
+    padding-top: .6em;
 
     /* uncomment these for an effect of sitting on the dotted border */
-    padding-bottom: 1em;
-
+    padding-bottom: .4em;
 
 }
 
@@ -80,24 +74,27 @@ h1.title a, h1.title, h1 {
     text-decoration: none;
 }
 
-
+div#sidebar {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #bbb;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
+}
 
 /* #site_header is the sidebar side header -- should probably be renamed */
 #site_header_container {
-    /*h1#site_header {*/
     margin-bottom: 1em;
-    /*text-align:center;*/
-    padding: 0em .5em .3em .5em;
-    margin-right: -1em;
 }
 
 h1#site_header {
     /*text-shadow: 0px 2px 3px rgba(221, 221, 221, 0.9);*/
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15),
-                 0 1px 0 rgba(221, 221, 221, 0.9);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 0 rgba(221, 221, 221, 0.9);
     font-size: 54px;
     padding: .25em 0 .25em 0;
-    margin: .25em 0 0 0;
 }
 
 h1#site_header a {
@@ -108,8 +105,6 @@ h1.title a:hover {
     text-decoration: underline;
 }
 
-
-
 #main_container.container {
 }
 
@@ -119,10 +114,10 @@ div.day {
 
 a.day {
     color: #888;
-    -webkit-transition:color 0.2s ease-in;
-    -moz-transition:color 0.2s ease-in;
-    -o-transition:color 0.2s ease-in;
-    transition:color 0.2s ease-in;
+    -webkit-transition: color 0.2s ease-in;
+    -moz-transition: color 0.2s ease-in;
+    -o-transition: color 0.2s ease-in;
+    transition: color 0.2s ease-in;
 }
 
 a:link.day {
@@ -155,9 +150,9 @@ p.teaser {
 a.full_story {
     /*-webkit-transition: opacity .2s ease-in-out;*/
     -webkit-transition: color 0.4s ease-in-out;
-    -moz-transition:color 0.2s ease-in;
-    -o-transition:color 0.2s ease-in;
-    transition:color 0.2s ease-in;
+    -moz-transition: color 0.2s ease-in;
+    -o-transition: color 0.2s ease-in;
+    transition: color 0.2s ease-in;
     /*opacity: .3;*/
     color: #888;
     /*height: 0;*/
