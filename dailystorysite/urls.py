@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^about/$', AboutView.as_view(), name="about"),
     url(r'^news/$', NewsView.as_view(), name="news"),
 
-    url(r'^$', SiteHomePageView.as_view(), {}, name="today"),
+    url(r'^$', SiteHomePageView.as_view(), {}, name="index"),
 
     url(r'^day/', include('dailystory.day.urls')),
 

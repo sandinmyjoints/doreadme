@@ -3,22 +3,101 @@ html {
     /*background-color: #f0eee3;*/
 }
 
-body {
-    background-color: #f0eee3;
 
+body {
+    background-color: #ccc;
+}
+
+/*header.container {*/
+.header_wrapper, .footer_wrapper {
+    background-color: #006699;
+    border-bottom: dotted black 1px;
+    border-top: dotted black 1px;
+}
+
+div.footer_wrapper {
+    margin-top: 10px;
+}
+
+div.header_wrapper {
+
+}
+
+footer.row {
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+h6#site_footer, h6#site_footer a {
+    color: #ccc;
+    text-align:center;
+}
+
+
+
+
+header h1 {
+    /* uncomment these for an effect of sitting on the dotted border */
+    /*position: relative;*/
+    /*top: .91em;*/
+
+    /* uncomment these for an effect of sitting in the middle */
+    padding-bottom: 0.3em;
+
+}
+
+header h1 a {
+    color: #333;
+    text-decoration: none;
+    padding-left: .25em;
+    font-size: 4em;
+
+    /*text-shadow: 1px -1px 1px rgba(0, 0, 0, 0.7); *//* subtle emboss */
+    /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7); *//* subtle drop shadow */
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5),  /* more emboss */
+                 0 1px 0 rgba(255, 255, 255, 0.4);
+
+    /* uncomment these for an effect of sitting on the dotted border */
+    line-height: .8em;
+}
+
+header.container {
+    padding-top: 1em;
+
+    /* uncomment these for an effect of sitting on the dotted border */
+    padding-bottom: 1em;
+
+
+}
+
+header h1 a:visited {
+    color: #333;
 }
 
 h1.title a, h1.title, h1 {
-    text-shadow: 0px 2px 3px #555;
+    /*text-shadow: 0px 2px 3px #555;*/
+    text-shadow: 0 2px 3px rgba(85, 85, 85, 0.5);
     text-decoration: none;
 }
 
+
+
+/* #site_header is the sidebar side header -- should probably be renamed */
+#site_header_container {
+    /*h1#site_header {*/
+    margin-bottom: 1em;
+    /*text-align:center;*/
+    padding: 0em .5em .3em .5em;
+    margin-right: -1em;
+}
+
 h1#site_header {
-    text-shadow: 0px 2px 3px #ddd;
+    /*text-shadow: 0px 2px 3px rgba(221, 221, 221, 0.9);*/
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15),
+                 0 1px 0 rgba(221, 221, 221, 0.9);
     font-size: 54px;
     padding: .25em 0 .25em 0;
-    margin: 1em 0 0 0;
-
+    margin: .25em 0 0 0;
 }
 
 h1#site_header a {
@@ -29,41 +108,31 @@ h1.title a:hover {
     text-decoration: underline;
 }
 
-#site_header_container {
-/*h1#site_header {*/
-    /*margin-top: 1em;*/
-    /*text-align:center;*/
-    padding: 0em .5em .3em .5em;
-    margin-right: -1em;
+
+
+#main_container.container {
 }
 
-h6#site_footer {
-    margin-top: 5em;
-    text-align:center;
-}
-
-.day, {
-    text-decoration: none;
-    color: #ddd;
+div.day {
+    line-height: 3em;
 }
 
 a.day {
-    color: #bbb;
-    -webkit-transition:color 0.1s ease-in;
-    -moz-transition:color 0.1s ease-in;
-    -o-transition:color 0.1s ease-in;
-    transition:color 0.1s ease-in;
+    color: #888;
+    -webkit-transition:color 0.2s ease-in;
+    -moz-transition:color 0.2s ease-in;
+    -o-transition:color 0.2s ease-in;
+    transition:color 0.2s ease-in;
 }
 
 a:link.day {
-    color: #bbb; !important
+    color: #444 !important;
 }
 
 a:hover.day {
     color: #959696;
 
 }
-
 
 .big {
     font-size: 48px;
@@ -83,19 +152,14 @@ p.teaser {
     line-height: 2em;
 }
 
-#site_header_container {
-    background-color: #b4b3ad;
-}
-
-header.container {
-    padding-top: 2em;
-}
-
 a.full_story {
     /*-webkit-transition: opacity .2s ease-in-out;*/
-    -webkit-transition: color .2s ease-in-out;
+    -webkit-transition: color 0.4s ease-in-out;
+    -moz-transition:color 0.2s ease-in;
+    -o-transition:color 0.2s ease-in;
+    transition:color 0.2s ease-in;
     /*opacity: .3;*/
-    color: #AAA;
+    color: #888;
     /*height: 0;*/
     /*overflow: hidden;*/
 }
@@ -106,9 +170,10 @@ a.full_story {
 
 div.day, .dotted-border {
     /*background-color: #eee;*/
-    border-left: 1px dotted #b4b3ad;
-    border-right: 1px dotted #b4b3ad;
-    padding-left: 10px;
+    border-left: 1px dotted black;
+    border-right: 1px dotted black;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .center {

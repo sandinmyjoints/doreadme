@@ -42,14 +42,10 @@ class Story(models.Model):
     slug = models.SlugField(max_length=256, unique=True)  # If not supplied, will be auto-generated in save()
     teaser = models.TextField(blank=True)
     url = models.URLField()
-    author = models.CharField(max_length=128, blank=True)
+    author = models.CharField(max_length=128, blank=True)  # TODO convert to a ForeignKey to Author
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     genre = models.CharField(max_length=2, choices=GENRE_CHOICES, default='FI')
-    # Featured, for a past date, means it was shown as Today's Story on the front page on that date. This can only happen once. If null, it has never been shown.
-    # For a future date, date_featured means it is scheduled to run on that date.
-    # If date_featured is None, this story hasn't been scheduled yet.
-#    date_featured = models.ForeignKey(Day, blank=True, null=True)
     journal = models.ForeignKey(Journal, null=True)
 
     class Meta:

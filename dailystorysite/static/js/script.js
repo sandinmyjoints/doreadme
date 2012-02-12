@@ -3,13 +3,14 @@
  */
 
 $(document).ready(function () {
-    $("div.story").hover(function (event) {
+//    $("div.story").hover(function (event) {
+    $("div.day").hover(function (event) {
 //            $(this).find("a.full_story").css("opacity", 1);
-            $(this).find("a.full_story").css("color", "#333");
+            $(this).find("a.full_story").css("color", "#069");
         },
         function (event) {
 //            $(this).find("a.full_story").css("opacity", .2);
-            $(this).find("a.full_story").css("color", "#AAA");
+            $(this).find("a.full_story").css("color", "#888");
         });
 
     $("a.contact_form_link").click(function (event) {
