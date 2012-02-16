@@ -39,7 +39,21 @@ header h1 {
 
     /* uncomment these for an effect of sitting in the middle */
     padding-bottom: 0.3em;
+    padding-top: 0.3em;
 
+}
+
+header h1 span.do, span.do {
+    color: #AAA;
+    /*color: #DDD;*/
+}
+
+header h1 span.read, span.read {
+    color: #996699;
+}
+
+header h1 span.me, span.me {
+    color: #333;
 }
 
 header h1 a {
@@ -79,6 +93,7 @@ div#sidebar {
     padding-right: 30px;
     padding-top: 12px;
     padding-bottom: 12px;
+    margin-left: 30px;
     background-color: #bbb;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -159,7 +174,7 @@ a.full_story {
     /*overflow: hidden;*/
 }
 
-#contact_form {
+#contact_form_hider {
     display: none;
 }
 

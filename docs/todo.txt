@@ -14,7 +14,7 @@ X make links to navigate through days,
 
 X Journal infrastructure, views, templates, links
 
-* design and branding.
+X design and branding.
 
 X EXTEND THE dotted-borders TO COVER YESTERDAY' STORY, RANDOM, THIS MONTH, ETC
 
@@ -24,11 +24,15 @@ X fonts: http://www.google.com/webfonts#UsePlace:use/Collection:Bitter:400,700|C
 
 * figure out hosting
 
+* choose a name and register a domain
+
 * scrub and classify story genres manually
 
 * schedule stories for a few weeks and setup reminder to do more
 
 * launch.
+
+* integrate with Goodreads api
 
 * Setup remote git repo at webfaction, or on github
 

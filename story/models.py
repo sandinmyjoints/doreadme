@@ -35,6 +35,7 @@ class Story(models.Model):
     """Represents a story on a literary journal site somewhere.
         """
 
+    objects = models.Manager()
     all_fiction = FictionStoryManager()
     featured_fiction = FeaturedFictionStoryManager()
 

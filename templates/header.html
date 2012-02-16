@@ -1,1 +1,3 @@
-<h1 id="site_title center"><a href="{% url index %}">{{ SITE_NAME }}</a></h1>
+{% load dailystorysite_tags %}
+{#<h1 id="site_title center"><a href="{% url index %}">{{ SITE_NAME|safe }}</a></h1>#}
+<h1 id="site_title center"><a href="{% url index %}">{% include_site_name_header %}</a></h1>
