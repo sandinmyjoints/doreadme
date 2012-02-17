@@ -114,8 +114,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.static",
+    'django.core.context_processors.request',
     "django.contrib.messages.context_processors.messages",
     'dailystorysite.context_processors.site_name',
+    'zinnia.context_processors.version', # Optional
+#    'zinnia.context_processors.media',
     )
 
 INSTALLED_APPS = (
@@ -125,6 +128,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.comments',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -137,7 +141,9 @@ INSTALLED_APPS = (
     'south',
     'dailystorysite',
     'contact_form',
-
+    'tagging',
+    'mptt',
+    'zinnia',
 )
 
 # A sample logging configuration. The only tangible logging
