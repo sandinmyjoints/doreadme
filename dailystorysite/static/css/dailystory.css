@@ -82,7 +82,7 @@ header h1 a:visited {
     color: #333;
 }
 
-h1.title a, h1.title, h1 {
+h1.title a, h1.title, h1, h2.entry-title {
     /*text-shadow: 0px 2px 3px #555;*/
     text-shadow: 0 2px 3px rgba(85, 85, 85, 0.5);
     text-decoration: none;
@@ -163,13 +163,12 @@ p.teaser {
 }
 
 a.full_story {
-    /*-webkit-transition: opacity .2s ease-in-out;*/
+    color: #333;
     -webkit-transition: color 0.4s ease-in-out;
-    -moz-transition: color 0.2s ease-in;
-    -o-transition: color 0.2s ease-in;
-    transition: color 0.2s ease-in;
+    -moz-transition: color 0.4s ease-in;
+    -o-transition: color 0.4s ease-in;
+    transition: color 0.4s ease-in;
     /*opacity: .3;*/
-    color: #888;
     /*height: 0;*/
     /*overflow: hidden;*/
 }
