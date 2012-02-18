@@ -89,7 +89,11 @@
 <!-- scripts concatenated and minified via ant build script-->
 <script src="{{ STATIC_URL }}js/plugins.js"></script>
 <script src="{{ STATIC_URL }}js/script.js"></script>
-<script src="{{ STATIC_URL }}js/tabs.js"></script>
+{#<script src="{{ STATIC_URL }}js/tabs.js"></script>#}
+<script src="{{ STATIC_URL }}js/jquery.spinner.js"></script>
+<script type="text/javascript">
+    var STATIC_URL = "{{ STATIC_URL }}";
+</script>
 <!-- end scripts-->
 {% block extrajs %}{% endblock extrajs %}
 

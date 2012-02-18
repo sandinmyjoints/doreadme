@@ -188,3 +188,11 @@ div.day, .dotted-border {
 .center {
     text-align: center;
 }
+
+.error {
+    color: #9c483b;
+}
+
+#spinner {
+    display: none;
+}

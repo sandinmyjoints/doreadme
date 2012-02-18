@@ -2,19 +2,11 @@
 
  */
 
-$(document).ready(function () {
-//    $("div.story").hover(function (event) {
-    $("div.day").hover(function (event) {
-            $(this).find("a.full_story").css("color", "#069");
-        },
-        function (event) {
-            $(this).find("a.full_story").css("color", "#333");
-        });
+function create_dialog($elem) {
+    var $form = $elem.find("form");
+    $form.find("input[type=submit], input[type=button]").hide();  // the dialog box wil provide the buttons
 
-    var $contact_form_div = $("div#contact_form");
-    var $form = $contact_form_div.find("form");
-
-    var $contact_dialog = $("div#contact_form").dialog({
+    $elem.dialog({
         resizable:false,
         autoOpen:false,
         animate:true,
@@ -26,36 +18,35 @@ $(document).ready(function () {
         modal:true,
         title:"Contact us",
         close:function (event, ui) {
-            $(this).dialog("destroy");
+//            $(this).dialog("destroy");
+//            $(this).dialog().remove();
         },
         buttons:{
             "Cancel":function () {
                 $(this).dialog("close");
             },
             "Send":function () {
+                $elem.dialog("option", "disabled", true);
+                $elem.spinner({
+                    position: 'center',
+                    img: STATIC_URL + "images/spinner_big.gif"
+                });
                 $.ajax($form.attr("action"),
-//                $.ajax($(this).find("form").attr("action"),
                     {
                         type:"POST",
                         dataType:"json",
                         data:{
                             'name':$form.find("input#id_name").val(),
-//                            'name':$(this).find("form").find("input#id_name").val(),
                             'email':$form.find("input#id_email").val(),
-//                            'email':$(this).find("form").find("input#id_email").val(),
                             'body':$form.find("textarea#id_body").val()
-//                            'body':$(this).find("form").find("textarea#id_body").val()
                         },
                         error:function (jqXHR, textStatus, errorThrown) {
-                            $contact_form_div.html("Sorry, we weren't able to send your message. Please try again.");
-//                            $(this).html("Sorry, we weren't able to send your message. Please try again.");
-
+                            $elem.html("Sorry, we weren't able to send your message. Please try again.");
                         },
                         success:function (data, textStatus, jqXHR) {
                             if (!data.error) {
-                                $contact_form_div.find("input[type=submit], input[type=button]").hide(); // the dialog box wil provide the buttons
-                                $contact_form_div.html("<p>" + data.message + "</p>");
-                                $contact_form_div.dialog("option", "buttons",
+                                $elem.html("<p>" + data.message + "</p>");
+                                $elem.dialog("option", "buttons",
                                     {
                                         "Close":function () {
                                             $(this).dialog("close");
@@ -63,7 +54,7 @@ $(document).ready(function () {
                                     });
                             }
                             else {
-                                $contact_form_div.find("span.error").remove();
+                                $elem.find("span.error").remove();
                                 if (data.data.name) {
                                     $("#id_name").prevUntil("li").before("<span class='error'>" + data.data.name + "</span>");
                                 }
@@ -76,6 +67,8 @@ $(document).ready(function () {
                             }
                         },
                         complete:function (jqXHR, textStatus) {
+                            $elem.spinner('remove');
+                            $elem.dialog("option", "disabled", false);
                             $form.find("input[type=submit], input[type=button]").hide();  // the dialog box wil provide the buttons
                         }
                     }
@@ -83,12 +76,23 @@ $(document).ready(function () {
             }
         }
     });
+    return $elem.dialog();
+}
+
+$(document).ready(function () {
+    $("div.day").hover(function (event) {
+            $(this).find("a.full_story").css("color", "#069");
+        },
+        function (event) {
+            $(this).find("a.full_story").css("color", "#333");
+        });
+
+    var $contact_form_div = $("div#contact_form");
+    var $contact_dialog = create_dialog($contact_form_div);
 
     $("a.contact_form_link").live("click", function (event) {
         event.preventDefault();
-        $form.find("input[type=submit], input[type=button]").hide();  // the dialog box wil provide the buttons
         $contact_dialog.dialog("open");
-
     });
 });
 
