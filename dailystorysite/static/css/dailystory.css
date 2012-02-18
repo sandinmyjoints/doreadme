@@ -173,7 +173,7 @@ a.full_story {
     /*overflow: hidden;*/
 }
 
-#contact_form_hider {
+.hidden {
     display: none;
 }
 
@@ -190,7 +190,7 @@ div.day, .dotted-border {
 }
 
 .error {
-    color: #9c483b;
+    color: #9A001A;
 }
 
 #spinner {

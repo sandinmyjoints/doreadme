@@ -29,6 +29,8 @@ function create_dialog($elem) {
                 $elem.dialog("option", "disabled", true);
                 $elem.spinner({
                     position: 'center',
+                    height:32,
+                    width:32,
                     img: STATIC_URL + "images/spinner_big.gif"
                 });
                 $.ajax($form.attr("action"),
@@ -56,13 +58,13 @@ function create_dialog($elem) {
                             else {
                                 $elem.find("span.error").remove();
                                 if (data.data.name) {
-                                    $("#id_name").prevUntil("li").before("<span class='error'>" + data.data.name + "</span>");
+                                    $elem.find("#id_name").prevUntil("li").before("<span class='error'>" + data.data.name + "</span>");
                                 }
                                 if (data.data.email) {
-                                    $("#id_email").prevUntil("li").before("<span class='error'>" + data.data.email + "</span>");
+                                    $elem.find("#id_email").prevUntil("li").before("<span class='error'>" + data.data.email + "</span>");
                                 }
                                 if (data.data.body) {
-                                    $("#id_body").prevUntil("li").before("<span class='error'>" + data.data.body + "</span>");
+                                    $elem.find("#id_body").prevUntil("li").before("<span class='error'>" + data.data.body + "</span>");
                                 }
                             }
                         },
@@ -87,7 +89,7 @@ $(document).ready(function () {
             $(this).find("a.full_story").css("color", "#333");
         });
 
-    var $contact_form_div = $("div#contact_form");
+    var $contact_form_div = $("#contact_form_hider div#contact_form");
     var $contact_dialog = create_dialog($contact_form_div);
 
     $("a.contact_form_link").live("click", function (event) {
