@@ -11,9 +11,10 @@ GENRE_CHOICES = (
     ('FI', "Fiction"),
     ('PO', "Poetry"),
     ("NF", "Nonfiction"),
-    ("OT", "Other"),
+    ("OT", "Other Writing"),
     ("RE", "Review"),
     ("IN", "Interview"),
+    ("NW", "Not Writing"),
 )
 
 
