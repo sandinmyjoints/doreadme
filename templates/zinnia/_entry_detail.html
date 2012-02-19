@@ -79,45 +79,45 @@
 {#            </a>#}
 {#        </p>#}
 
-        <p class="entry-comments">
-            <strong>{% trans "Discussions" %}</strong> :
-            {% with comment_count=object.comments.count %}
-                {% if comment_count %}
-                    <a href="{{ object.get_absolute_url }}#comments"
-                       title="{% blocktrans with object=object.title %}Comments on {{ object }}{% endblocktrans %}">
-                        {% blocktrans count comment_count=comment_count %}{{ comment_count }} comment
-                            {% plural %}{{ comment_count }} comments{% endblocktrans %}
-                    </a>
-                {% else %}
-                    {% if object.comments_are_open %}
-                        {% trans "No comments yet." %}
-                        <a href="{{ object.get_absolute_url }}#comments"
-                           title="{% blocktrans with object=object.title %}Leave a comment on {{ object }}{% endblocktrans %}">
-                            {% trans "Be first to comment!" %}
-                        </a>
-                    {% else %}
-                        {% trans "Comments are closed." %}
-                    {% endif %}
-                {% endif %}
-            {% endwith %}
-            {% with pingback_count=object.pingbacks.count %}
-                {% if pingback_count %}
-                    , <a href="{{ object.get_absolute_url }}#pingbacks"
-                         title="{% blocktrans with object=object.title %}Pingbacks on {{ object }}{% endblocktrans %}">
-                    {% blocktrans count pingback_count=pingback_count %}{{ pingback_count }} pingback
-                        {% plural %}{{ pingback_count }} pingbacks{% endblocktrans %}
-                </a>
-                {% endif %}
-            {% endwith %}
-            {% with trackback_count=object.trackbacks.count %}
-                {% if trackback_count %}
-                    , <a href="{{ object.get_absolute_url }}#trackbacks"
-                         title="{% blocktrans with object=object.title %}Trackbacks on {{ object }}{% endblocktrans %}">
-                    {% blocktrans count trackback_count=trackback_count %}{{ trackback_count }} trackback
-                        {% plural %}{{ trackback_count }} trackbacks{% endblocktrans %}
-                </a>
-                {% endif %}
-            {% endwith %}
-        </p>
+{#        <p class="entry-comments">#}
+{#            <strong>{% trans "Discussions" %}</strong> :#}
+{#            {% with comment_count=object.comments.count %}#}
+{#                {% if comment_count %}#}
+{#                    <a href="{{ object.get_absolute_url }}#comments"#}
+{#                       title="{% blocktrans with object=object.title %}Comments on {{ object }}{% endblocktrans %}">#}
+{#                        {% blocktrans count comment_count=comment_count %}{{ comment_count }} comment#}
+{#                            {% plural %}{{ comment_count }} comments{% endblocktrans %}#}
+{#                    </a>#}
+{#                {% else %}#}
+{#                    {% if object.comments_are_open %}#}
+{#                        {% trans "No comments yet." %}#}
+{#                        <a href="{{ object.get_absolute_url }}#comments"#}
+{#                           title="{% blocktrans with object=object.title %}Leave a comment on {{ object }}{% endblocktrans %}">#}
+{#                            {% trans "Be first to comment!" %}#}
+{#                        </a>#}
+{#                    {% else %}#}
+{#                        {% trans "Comments are closed." %}#}
+{#                    {% endif %}#}
+{#                {% endif %}#}
+{#            {% endwith %}#}
+{#            {% with pingback_count=object.pingbacks.count %}#}
+{#                {% if pingback_count %}#}
+{#                    , <a href="{{ object.get_absolute_url }}#pingbacks"#}
+{#                         title="{% blocktrans with object=object.title %}Pingbacks on {{ object }}{% endblocktrans %}">#}
+{#                    {% blocktrans count pingback_count=pingback_count %}{{ pingback_count }} pingback#}
+{#                        {% plural %}{{ pingback_count }} pingbacks{% endblocktrans %}#}
+{#                </a>#}
+{#                {% endif %}#}
+{#            {% endwith %}#}
+{#            {% with trackback_count=object.trackbacks.count %}#}
+{#                {% if trackback_count %}#}
+{#                    , <a href="{{ object.get_absolute_url }}#trackbacks"#}
+{#                         title="{% blocktrans with object=object.title %}Trackbacks on {{ object }}{% endblocktrans %}">#}
+{#                    {% blocktrans count trackback_count=trackback_count %}{{ trackback_count }} trackback#}
+{#                        {% plural %}{{ trackback_count }} trackbacks{% endblocktrans %}#}
+{#                </a>#}
+{#                {% endif %}#}
+{#            {% endwith %}#}
+{#        </p>#}
     </div>
 </div>
