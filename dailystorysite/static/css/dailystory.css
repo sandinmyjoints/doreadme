@@ -43,16 +43,16 @@ header h1 {
 
 }
 
-header h1 span.do, span.do {
+header h1 span.do, span.do, span.gray {
     color: #AAA;
     /*color: #DDD;*/
 }
 
-header h1 span.read, span.read {
+header h1 span.read, span.read, span.pink {
     color: #996699;
 }
 
-header h1 span.me, span.me {
+header h1 span.me, span.me, span.black {
     color: #333;
 }
 
@@ -82,7 +82,7 @@ header h1 a:visited {
     color: #333;
 }
 
-h1.title a, h1.title, h1, h2.entry-title {
+h1.title a, h1.title, h1, h2.entry-title, h2.entry-title a {
     /*text-shadow: 0px 2px 3px #555;*/
     text-shadow: 0 2px 3px rgba(85, 85, 85, 0.5);
     text-decoration: none;
@@ -148,6 +148,10 @@ a:hover.day {
     font-size: 48px;
 }
 
+.medium {
+    font-size: 24px;
+}
+
 .small {
     font-size: 16px;
 }
@@ -171,6 +175,14 @@ a.full_story {
     /*opacity: .3;*/
     /*height: 0;*/
     /*overflow: hidden;*/
+}
+
+span.previous {
+    float: left;
+}
+
+span.next {
+    float: right;
 }
 
 .hidden {

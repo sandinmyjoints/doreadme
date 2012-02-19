@@ -1,10 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+<div class="day clearfix">
+    <span class="big day">{{ day.day }}</span>
+    {% with story=day.story %}
+        {% include "story/story_include.html" %}
+    {% endwith %}
 
-</body>
-</html>
+    {% if previous_day %}
+        <span class="previous">
+        <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}" class="medium">&#171;
+            Previous</a>
+        </span>
+    {% endif %}
+    {% if next_day %}
+        <span class="next">
+        <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}" class="medium">Next &#187;</a>
+        </span>
+    {% endif %}
+</div>
