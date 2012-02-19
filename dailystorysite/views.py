@@ -122,7 +122,7 @@ class DailyStoryContactFormView(ContactFormView, JSONResponseMixin):
 class DailyStoryTodayArchiveView(TodayArchiveView):
     model = Day
     context_object_name="day_list"
-    template_name='index.html'
+    template_name= 'dailystorysite/index.html'
     date_field = "day"
 
     def get_context_data(self, **kwargs):
