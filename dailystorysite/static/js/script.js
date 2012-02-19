@@ -28,10 +28,10 @@ function create_dialog($elem) {
             "Send":function () {
                 $elem.dialog("option", "disabled", true);
                 $elem.spinner({
-                    position: 'center',
+                    position:'center',
                     height:32,
                     width:32,
-                    img: STATIC_URL + "images/spinner_big.gif"
+                    img:STATIC_URL + "images/spinner_big.gif"
                 });
                 $.ajax($form.attr("action"),
                     {
@@ -96,6 +96,18 @@ $(document).ready(function () {
         event.preventDefault();
         $contact_dialog.dialog("open");
     });
+
+    $("#calendar-widget").datepicker({
+            minDate:-20,
+            maxDate:0,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            onSelect: function(dateText, inst) {
+                var day = new Date(dateText);
+                window.location = DAY_REDIRECT_URL + "?year=" + day.getFullYear() + "&month=" + (day.getMonth()+1) + "&day=" + day.getDate();
+            }
+        }
+    );
 });
 
 $(document).ajaxSend(function (event, xhr, settings) {

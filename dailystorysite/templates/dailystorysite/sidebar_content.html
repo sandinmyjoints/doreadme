@@ -1,19 +1,28 @@
 {% load dailystorysite_tags %}
+{% load day_tags %}
+{% load zinnia_tags i18n %}
 
 <div id="sidebar_content">
-    <h2>We want to hear from you.</h2>
 
-
-    <p>Got an idea for {{ SITE_NAME }}? A journal you'd like to see featured? A suggestion? <a
-            href="{% url contact_form %}"
-            class="contact_form_link">Let us
-        know!</a></p>
-
-    <div id="contact_form_hider" class="hidden">
-        {% include_contact_form %}
+    <div id="widget-calendar" class="widget">
+        <h3>Stories</h3>
+        {% get_calendar_widget %}
     </div>
 
-    <div>
-        <a href="{% url news %}">News</a>
+    <div id="widget-recent-entries" class="widget">
+        <h3>News</h3>
+        {% get_recent_entries 3 %}
+    </div>
+
+    <div id="widget-contact" class="widget">
+        <h3>We want to hear from you.</h3>
+
+        <p>Got an idea for {{ SITE_NAME }}? A journal you'd like to see featured? A suggestion? <a
+                href="{% url contact_form %}"
+                class="contact_form_link">Don't be shy!</a></p>
+
+        <div id="contact_form_hider" class="hidden">
+            {% include_contact_form %}
+        </div>
     </div>
 </div>

@@ -1,7 +1,9 @@
 from django.conf.urls.defaults import patterns, url
+from django.core.urlresolvers import reverse
+from django.views.generic.base import RedirectView
 from django.views.generic.dates import DayArchiveView, MonthArchiveView, TodayArchiveView, DateDetailView
 from day.models import Day
-from day.views import TodayRandomView, random_day_view
+from day.views import TodayRandomView, random_day_view, DayRedirectView
 
 urlpatterns = patterns('',
     # /year/month/date => Story archive
@@ -26,4 +28,6 @@ urlpatterns = patterns('',
     # /day/random => random Day
     # TODO redo as a class-based view
     url(r'^random$', random_day_view, {}, name="random_day"),
+
+    url(r'^day_redirect$', DayRedirectView.as_view(), name="day_redirect"),
 )
