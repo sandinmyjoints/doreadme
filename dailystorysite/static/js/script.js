@@ -113,24 +113,29 @@ $(document).ready(function () {
 
     $("a.yes, a.no, a.maybe").button();
 
-    $("a.maybe").on("click", function (event) {
-        event.preventDefault();
-        $("p.additional").slideToggle(250, "swing");
-        $(this).button("option", "disabled", true);
+    $("div.day").each(function(i, elem) {
+        var $self=$(this);
+        $self.find("a.maybe").on("click", function (event) {
+            event.preventDefault();
+            $self.find("p.additional").slideToggle(250, "swing");
+            $(this).button("option", "disabled", true);
 //        $(this).off("click").on("click", function (event) {
 //            event.preventDefault();
 //        });
+        });
 
-    });
-
-    $("a.no").on("click", function (event) {
-        event.preventDefault();
-        $("div.more_actions").slideToggle(250, "swing");
-        $(this).button("option", "disabled", true);
+        $self.find("a.no").on("click", function (event) {
+            event.preventDefault();
+            $self.find("div.more_actions").slideToggle(750, "easeOutBounce");
+            $(this).button("option", "disabled", true);
 //        $(this).off("click").on("click", function (event) {
 //            event.preventDefault();
 //        });
+        });
     });
+
+
+
 });
 
 $(document).ajaxSend(function (event, xhr, settings) {

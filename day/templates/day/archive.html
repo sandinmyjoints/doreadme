@@ -1,26 +1,29 @@
 {% extends "base.html" %}
 
+{% block extracss %}
+<style>.no { display: none; }</style>
+{% endblock extracss %}
+
 {% block content %}
 
-{% for day in day_list %}
-    <div class="day">
+{#{% for day in day_list %}#}
 
-    <a href="{% url day_day_archive day.day.year day.day.month day.day.day %}" class="small day">{{ day.day }}</a>
-    {% with story=day.story %}
-        {% include "story/story_include.html" %}
-    {% endwith %}
+    {% include "day/day_list_include.html" %}
 
-    {% if previous_day %}
-        <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}">Previous</a>
-    {% endif %}
-    {% if next_day %}
-        <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}">Next</a>
-    {% endif %}
-    </div>
-
-{#    {% if not forloop.last %}#}
-{#    <p class="center">&#167;</p>#}
+{#    <div class="day">#}
+{#    <a href="{% url day_day_archive day.day.year day.day.month day.day.day %}" class="small day">{{ day.day }}</a>#}
+{#    {% with story=day.story %}#}
+{#        {% include "story/story_include.html" %}#}
+{#    {% endwith %}#}
+{##}
+{#    {% if previous_day %}#}
+{#        <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}">Previous</a>#}
 {#    {% endif %}#}
-{% endfor %}
+{#    {% if next_day %}#}
+{#        <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}">Next</a>#}
+{#    {% endif %}#}
+{#    </div>#}
+
+{#{% endfor %}#}
 
 {% endblock content %}

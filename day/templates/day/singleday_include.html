@@ -6,19 +6,17 @@
         {% include "story/story_include.html" %}
     {% endwith %}
 
-{#    {% if previous_day %}#}
-{#        <span class="previous">#}
-{#        <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}" class="medium">&#171;#}
-{#            Previous</a>#}
-{#        </span>#}
-{#    {% endif %}#}
-{#    {% if next_day %}#}
-{#        <span class="next">#}
-{#        <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}" class="medium">Next &#187;</a>#}
-{#        </span>#}
-{#    {% endif %}#}
+    {#    {% if previous_day %}#}
+    {#        <span class="previous">#}
+    {#        <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}" class="medium">&#171;#}
+    {#            Previous</a>#}
+    {#        </span>#}
+    {#    {% endif %}#}
+    {#    {% if next_day %}#}
+    {#        <span class="next">#}
+    {#        <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}" class="medium">Next &#187;</a>#}
+    {#        </span>#}
+    {#    {% endif %}#}
 
-    <div class="more_actions">
-        {% include_more_actions day %}
-    </div>
+    {% include_more_actions day %}
 </div>

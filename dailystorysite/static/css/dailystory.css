@@ -147,7 +147,7 @@ a:hover.day {
 }
 
 .big {
-    font-size: 48px;
+    font-size: 42px;
 }
 
 .medium {
@@ -170,6 +170,7 @@ div.day {
     border-bottom: 1px dotted black;
     padding-top: .6em;
     margin-bottom: 1em;
+    padding-bottom: 1em;
 }
 
 div.day, .dotted-border {
@@ -229,7 +230,7 @@ span.next {
     text-transform: uppercase;
     color: #CCC;
     position: relative;
-    top: 30px;
+    top: 0.5em;
 }
 
 .right {
@@ -252,8 +253,35 @@ a.yes, a.no, a.maybe {
     text-transform: uppercase;
     font-size: smaller;
     font-weight: bold;
+    margin-left: .4em;
+    margin-right: .4em;
 }
 
 .ui-button.yes {
+
+}
+
+div.more_actions {
+    width: 80%;
+    margin: 0px auto;
+    border: 1px dotted #bbb;
+    background-color: #e5e5e5;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    margin-top: 1em;
+}
+
+.more_actions {
+    font-size: 1.1em;
+    line-height: 1.4em;
+}
+
+.more_actions p {
+    padding: .4em;
+}
+
+.more_actions h4 {
+    margin: .4em;
 
 }
