@@ -34,3 +34,4 @@ def include_description_short():
 @register.simple_tag()
 def include_headless_description():
     return HEADLESS_DESCRIPTION
+

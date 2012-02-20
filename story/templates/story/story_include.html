@@ -1,7 +1,8 @@
 <div id="story{{ story.id }}" class="wrapper clearfix story">
     <h4 class="from_journal">
         {% if story.journal %}From <a
-                href="{% url journal_detail story.journal.slug %}">{{ story.journal }}</a>{% endif %}
+                href="{% url journal_detail story.journal.slug %}">{{ story.journal }}</a>
+        {% endif %}
     </h4>
 
     <h1 class="title">
@@ -14,7 +15,14 @@
 
     <p class="lead teaser sweet-justice">
         {{ story.teaser }}
-        <br/> <a href="{{ story.url }}" class="full_story">Read the rest of the story. &#187;</a>
+    </p>
+
+    <p class="additional teaser sweet-justice">
+        {{ story.additional }}
+    </p>
+
+    <p>
+        {% include "story/actions_after_story.html" %}
     </p>
 
 </div>

@@ -1,0 +1,24 @@
+{% if previous_day %}
+    <h3>
+        <span class="center">&#167;</span>
+        <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}">Previous day's story</a>
+    </h3>
+
+{% endif %}
+{% if next_day %}
+    <h3>
+        <span class="center">&#167;</span>
+        <a href="{% url day_day_archive next_day.year next_day.month next_day.day %}">Next day's story</a>
+    </h3>
+
+{% endif %}
+<h3>
+    <span class="center">&#167;</span>
+    <a href="{% url random_day %}">Random story</a>
+</h3>
+{% if nice_month and current_day %}
+    <h3>
+        <span class="center">&#167;</span>
+        <a href="{% url day_month_archive current_day.year current_day.month %}">All {{ nice_month }}'s Stories</a>
+    </h3>
+{% endif %}

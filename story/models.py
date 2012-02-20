@@ -42,7 +42,8 @@ class Story(models.Model):
 
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique=True)  # If not supplied, will be auto-generated in save()
-    teaser = models.TextField(blank=True)
+    teaser = models.TextField(blank=True)  # first paragraph or so
+    additional = models.TextField(blank=True)  # next paragraph
     url = models.URLField()
     author = models.CharField(max_length=128, blank=True)  # TODO convert to a ForeignKey to Author
     date_created = models.DateTimeField(auto_now_add=True)

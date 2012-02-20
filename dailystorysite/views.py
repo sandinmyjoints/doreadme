@@ -125,11 +125,11 @@ class DailyStoryTodayArchiveView(TodayArchiveView):
     template_name= 'dailystorysite/index.html'
     date_field = "day"
 
-    def get_context_data(self, **kwargs):
-        context = super(DailyStoryTodayArchiveView, self).get_context_data(**kwargs)
-        context['nice_month'] = datetime.strftime(datetime.today(), "%B")
-        context['today'] = datetime.today()
-        return context
+#    def get_context_data(self, **kwargs):
+#        context = super(DailyStoryTodayArchiveView, self).get_context_data(**kwargs)
+#        context['nice_month'] = datetime.strftime(datetime.today(), "%B")
+#        context['today'] = datetime.today()
+#        return context
 
 
 class SiteHomePageView(DailyStoryTodayArchiveView):

@@ -89,6 +89,8 @@ $(document).ready(function () {
             $(this).find("a.full_story").css("color", "#333");
         });
 
+    $(".additional, .more_actions").hide();
+
     var $contact_form_div = $("#contact_form_hider div#contact_form");
     var $contact_dialog = create_dialog($contact_form_div);
 
@@ -100,14 +102,35 @@ $(document).ready(function () {
     $("#calendar-widget").datepicker({
             minDate:-20,
             maxDate:0,
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            onSelect: function(dateText, inst) {
+            showOtherMonths:true,
+            selectOtherMonths:true,
+            onSelect:function (dateText, inst) {
                 var day = new Date(dateText);
-                window.location = DAY_REDIRECT_URL + "?year=" + day.getFullYear() + "&month=" + (day.getMonth()+1) + "&day=" + day.getDate();
+                window.location = DAY_REDIRECT_URL + "?year=" + day.getFullYear() + "&month=" + (day.getMonth() + 1) + "&day=" + day.getDate();
             }
         }
     );
+
+    $("a.yes, a.no, a.maybe").button();
+
+    $("a.maybe").on("click", function (event) {
+        event.preventDefault();
+        $("p.additional").slideToggle(250, "swing");
+        $(this).button("option", "disabled", true);
+//        $(this).off("click").on("click", function (event) {
+//            event.preventDefault();
+//        });
+
+    });
+
+    $("a.no").on("click", function (event) {
+        event.preventDefault();
+        $("div.more_actions").slideToggle(250, "swing");
+        $(this).button("option", "disabled", true);
+//        $(this).off("click").on("click", function (event) {
+//            event.preventDefault();
+//        });
+    });
 });
 
 $(document).ajaxSend(function (event, xhr, settings) {
