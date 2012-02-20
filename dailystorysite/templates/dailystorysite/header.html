@@ -1,10 +1,6 @@
 {% load dailystorysite_tags %}
 {#<h1 id="site_title center"><a href="{% url index %}">{{ SITE_NAME|safe }}</a></h1>#}
-<div class="eleven columns">
-    <h1 id="site_title center"><a href="{% url index %}">{% include_site_name_header %}</a></h1>
-
-</div>
-
-<div class="five columns">
-    <h3>{% include_description_short %}</h3>
+<div class="sixteen columns">
+    <h1 id="site_title center" class="left"><a href="{% url index %}">{% include_site_name_header %}</a></h1>
+    <h3 class="right">{% include_description_short %}</h3>
 </div>

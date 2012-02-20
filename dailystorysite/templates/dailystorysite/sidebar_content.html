@@ -4,14 +4,23 @@
 
 <div id="sidebar_content">
 
-    <div id="widget-calendar" class="widget">
-        <h3>Stories</h3>
-        {% get_calendar_widget %}
+    <div id="widget-info" class="widget">
+        <h3>How is the story selected each day?</h3>
+
+        <p>It's a mix of an algorithm
+            and tried-and-true human input. <a
+                    href="{% url about %}">The answers to this and other questions are on the FAQ page</a>.
+        </p>
     </div>
 
     <div id="widget-recent-entries" class="widget">
         <h3>News</h3>
         {% get_recent_entries 3 %}
+    </div>
+
+    <div id="widget-calendar" class="widget">
+        <h3>Stories</h3>
+        {% get_calendar_widget %}
     </div>
 
     <div id="widget-contact" class="widget">

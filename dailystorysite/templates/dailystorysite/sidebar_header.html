@@ -1,3 +1,4 @@
-<div id="site_header_container">
-    <h1 id="site_header" class="center"><a href="{% url index %}">{{ SITE_NAME }}</a></h1>
-</div>
+{% load dailystorysite_tags %}
+
+<h1 id="sidebar_site_header" class="center"><a href="{% url index %}">{{ SITE_NAME }}</a></h1>
+<p class="description sweet-justice">{% include_headless_description %}</p>
