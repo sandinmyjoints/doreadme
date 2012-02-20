@@ -1,6 +1,7 @@
 probably_poetry = doesn't end with .
 starts with lowercase
 starts with "for" or "after"
+starts with punctuation [(-
 
 possibly_subtitle = first paragraph doesn't end with .
 

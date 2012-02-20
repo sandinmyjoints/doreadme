@@ -8,9 +8,7 @@ X scrape 12 sites, get at least 100 stories
 
 X make links to navigate through days, 
 
-* Day picker
-
-* Get contact form into inclusion tag, use modal dialog/feedback/include your journal link/message submitted 
+X Get contact form into inclusion tag, use modal dialog/feedbac
 
 X Journal infrastructure, views, templates, links
 
@@ -18,13 +16,17 @@ X design and branding.
 
 X EXTEND THE dotted-borders TO COVER YESTERDAY' STORY, RANDOM, THIS MONTH, ETC
 
-* cssSandpaper
-
 X fonts: http://www.google.com/webfonts#UsePlace:use/Collection:Bitter:400,700|Crimson+Text:400,400italic,700
 
 * figure out hosting
 
-* choose a name and register a domain
+* Add a stats inclusion tag
+
+X choose a name 
+
+X register a domain
+
+* crawl and store additional text 
 
 * scrub and classify story genres manually
 
@@ -32,13 +34,25 @@ X fonts: http://www.google.com/webfonts#UsePlace:use/Collection:Bitter:400,700|C
 
 * launch.
 
+* include your journal link/story link to form  
+ 
 * integrate with Goodreads api
+
+* cssSandpaper
+
+* Switch to bootstrap fluid
+
+* Compass
 
 * Setup remote git repo at webfaction, or on github
 
 * use celery to automatically schedule the next day's story
 
 * use celery to automatically run new crawls
+
+X Day picker
+
+* Make next/previous into sidebars > to the side of the story lead
 
 * Different versions of site for different personas
 
@@ -56,7 +70,7 @@ X fonts: http://www.google.com/webfonts#UsePlace:use/Collection:Bitter:400,700|C
 
 X Get unit testing working with postgres
 
-* install blogging app for News page
+X install blogging app for News page
 
 * Write unit tests
 

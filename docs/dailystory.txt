@@ -3,73 +3,35 @@ Daily Story concept ideas
 
 * A social news reader for stories/poems? People can upvote somehow, share, discuss? Gameify it, but how? badges, reputation, recognition—critic, reviewer, salon, 
 
-Literary Salon
-Saloon
-Nolsan
-Zalon
-storyskim
-jrnlr
-narrativ
-narratv
-journalskim
-seize the story
-storysize
-storyizr
-narratizr
-readzr
-dayreadr
-wordr
-dayword
-rhythm
-wordlog
-wordfeed
-storylog
-storyfeed
-narralog
-storypal
-Story7
 
-storybreak
-storyspell
-narrespose
-storwry
-wryte
-storyneck
-ryneck
-more story
-morstory
-moarstory
-morestry
-morestry
-morning story
-1story
-plustory
-glimpse
-peer
-enthrall
-rapt
-narrat.or
-nar.ru
-
-everstory
-storyfree
-narralude
-break , breathing spell, free time, freedom, halt, interim, interlude, intermission, letup, lull, pause, recess, repose, respite, rest, spare time, spell, stay, suspension, time on one's hands, time out, time to burn, time to kill
-
-Stor.ie
-Stor.ee
-storied.com
-storyed
-storyd
-stor.yt
-narr.it
-store.se
-stor.io
-stori.es
 
 
 Daily Story pages/views
 =======================
+
+Sharing X stories from X journals since X (X days).
+
+There's a lot of stories out there. doread.me helps you find them.
+
+A fun and sane way to find new fiction.
+
+The enjoyable, manageable way to find new fiction.
+
+Fiction from across the internet, one day & story at a time.
+Take control of your reading.
+Reading at your fingertips.
+Stories at your pace. 
+
+Actions:
+Random Story
+Yesterday's Story
+This Month's Stories
+Contact
+Submit a Story
+
+
+I'm a journal editor, and I'd like stories from my journal included.
+I'm a writer, and I'd like my stories included. 
 
 * Design for blank/initial/first, regular, and error
 
