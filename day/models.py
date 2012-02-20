@@ -12,8 +12,11 @@ class Day(models.Model):
     day = models.DateField()
     story = models.ForeignKey(Story, null=True, related_name="featured_days")
 
+    class Meta:
+        ordering = ['-day']
+
     def __unicode__(self):
-        return "%s -> %s" % (self.day, self.story)
+        return "%s -> %s" % (self.day, self.story if self.story else "")
 
     def save(self, force_insert=False, force_update=False, using=None):
         if not self.story:
