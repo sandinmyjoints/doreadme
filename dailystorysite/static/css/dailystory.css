@@ -33,26 +33,21 @@ h6#site_footer, h6#site_footer a {
 }
 
 header h1 {
-    /* uncomment these for an effect of sitting on the dotted border */
-    /*position: relative;*/
-    /*top: .91em;*/
-
-    /* uncomment these for an effect of sitting in the middle */
-    padding-bottom: 0.3em;
-    padding-top: 0.3em;
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;
 
 }
 
-header h1 span.do, span.do, span.gray {
-    color: #AAA;
+header h1 span.read, span.read, span.gray {
+    color: #BBB;
     /*color: #DDD;*/
 }
 
-header h1 span.read, span.read, span.pink {
+header h1 span.me, span.me, span.pink {
     color: #996699;
 }
 
-header h1 span.me, span.me, span.black {
+header h1 span.do, span.do, span.black {
     color: #333;
 }
 
@@ -60,7 +55,7 @@ header h1 a {
     color: #333;
     text-decoration: none;
     padding-left: 10px;
-    font-size: 3em;
+    font-size: 2.5em;
 
     /*text-shadow: 1px -1px 1px rgba(0, 0, 0, 0.7); *//* subtle emboss */
     /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7); *//* subtle drop shadow */
@@ -72,12 +67,13 @@ header h1 a {
 
 header h3 {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5), /* more emboss */ 0 1px 0 rgba(255, 255, 255, 0.4);
-    font-size: 2em;
+    font-size: 1.8em;
     line-height: 1.5em;
+    padding-right: 1em;
 }
 
 header.container {
-    padding-top: .6em;
+    padding-top: .5em;
 
     /* uncomment these for an effect of sitting on the dotted border */
     padding-bottom: .4em;
@@ -88,19 +84,6 @@ header h1 a:visited {
     color: #333;
 }
 
-header h3 {
-    padding-right: 1em;
-}
-
-h1.title a, h1.title, h1, h2.entry-title, h2.entry-title a {
-    /*text-shadow: 0px 2px 3px #555;*/
-    text-shadow: 0 2px 3px rgba(85, 85, 85, 0.5);
-    text-decoration: none;
-}
-
-h1.title a:hover {
-    text-decoration: underline;
-}
 
 div#sidebar {
     padding-left: 30px;
@@ -131,8 +114,19 @@ div#sidebar {
     text-align: center;
 }
 
+
+h1.title a, h1.title, h1, h2.entry-title, h2.entry-title a {
+    /*text-shadow: 0px 2px 3px #555;*/
+    text-shadow: 0 2px 3px rgba(85, 85, 85, 0.5);
+    text-decoration: none;
+}
+
+h1.title a:hover {
+    text-decoration: underline;
+}
+
 div.day {
-    line-height: 3em;
+    line-height: 2.8em;
 }
 
 a.day {
@@ -170,9 +164,31 @@ a:hover.day {
     top: -.25em;
 }
 
-p.teaser {
-    line-height: 2em;
+div.day {
+    background-color: #F5F5F5;
+    border-top: 1px dotted black;
+    border-bottom: 1px dotted black;
+    padding-top: .6em;
+    margin-bottom: 1em;
 }
+
+div.day, .dotted-border {
+    /*background-color: #eee;*/
+    border-left: 1px dotted black;
+    border-right: 1px dotted black;
+    padding-left: 1.1em;
+    padding-right: 1.2em;
+}
+
+p.lead {
+    padding-top: 0.3em;
+}
+
+p.teaser {
+    line-height: 1.8em;
+    font-size: 20px;
+}
+
 
 a.full_story {
     color: #333;
@@ -195,21 +211,6 @@ span.next {
 
 .hidden {
     display: none;
-}
-
-div.day {
-    background-color: #EEE;
-    border-top: 1px dotted black;
-    border-bottom: 1px dotted black;
-    margin-bottom: 1em;
-}
-
-div.day, .dotted-border {
-    /*background-color: #eee;*/
-    border-left: 1px dotted black;
-    border-right: 1px dotted black;
-    padding-left: 1.1em;
-    padding-right: 1.2em;
 }
 
 .center {
@@ -245,4 +246,14 @@ div.day, .dotted-border {
 
 .hasDatepicker {
     padding-bottom: 1em;
+}
+
+a.yes, a.no, a.maybe {
+    text-transform: uppercase;
+    font-size: smaller;
+    font-weight: bold;
+}
+
+.ui-button.yes {
+
 }
