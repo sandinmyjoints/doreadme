@@ -70,6 +70,12 @@ header h1 a {
     line-height: .8em;
 }
 
+header h3 {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5), /* more emboss */ 0 1px 0 rgba(255, 255, 255, 0.4);
+    font-size: 2em;
+    line-height: 1.5em;
+}
+
 header.container {
     padding-top: .6em;
 
@@ -82,10 +88,18 @@ header h1 a:visited {
     color: #333;
 }
 
+header h3 {
+    padding-right: 1em;
+}
+
 h1.title a, h1.title, h1, h2.entry-title, h2.entry-title a {
     /*text-shadow: 0px 2px 3px #555;*/
     text-shadow: 0 2px 3px rgba(85, 85, 85, 0.5);
     text-decoration: none;
+}
+
+h1.title a:hover {
+    text-decoration: underline;
 }
 
 div#sidebar {
@@ -100,27 +114,21 @@ div#sidebar {
     -o-border-radius: 10px;
 }
 
-/* #site_header is the sidebar side header -- should probably be renamed */
-#site_header_container {
-    margin-bottom: 1em;
-}
-
-h1#site_header {
+/* #site_header was the sidebar side header -- now it's found as #sidebar h1 */
+#sidebar h1 {
+    margin-bottom: 0;
     /*text-shadow: 0px 2px 3px rgba(221, 221, 221, 0.9);*/
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 0 rgba(221, 221, 221, 0.9);
     font-size: 54px;
-    padding: .25em 0 .25em 0;
+    padding: .25em 0 0 0;
 }
 
-h1#site_header a {
+#sidebar h1 a {
     text-decoration: none;
 }
 
-h1.title a:hover {
-    text-decoration: underline;
-}
-
-#main_container.container {
+#sidebar_content h3 {
+    text-align: center;
 }
 
 div.day {
@@ -189,12 +197,19 @@ span.next {
     display: none;
 }
 
+div.day {
+    background-color: #EEE;
+    border-top: 1px dotted black;
+    border-bottom: 1px dotted black;
+    margin-bottom: 1em;
+}
+
 div.day, .dotted-border {
     /*background-color: #eee;*/
     border-left: 1px dotted black;
     border-right: 1px dotted black;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 1.1em;
+    padding-right: 1.2em;
 }
 
 .center {
@@ -207,4 +222,27 @@ div.day, .dotted-border {
 
 #spinner {
     display: none;
+}
+
+.short_description {
+    text-transform: uppercase;
+    color: #CCC;
+    position: relative;
+    top: 30px;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.ui-datepicker {
+    width: 15.5em;
+}
+
+.hasDatepicker {
+    padding-bottom: 1em;
 }
