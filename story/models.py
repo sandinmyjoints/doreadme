@@ -42,14 +42,16 @@ class Story(models.Model):
 
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique=True)  # If not supplied, will be auto-generated in save()
-    teaser = models.TextField(blank=True)  # first paragraph or so
-    additional = models.TextField(blank=True)  # next paragraph
+    teaser = models.TextField(blank=True)  # first paragraph or two depending on length
+    additional_teaser = models.TextField(blank=True)  # next paragraph, provides additional text if necessary
+    extra_teaser = models.TextField(blank=True)  # next paragraph, provides additional text if necessary
     url = models.URLField()
     author = models.CharField(max_length=128, blank=True)  # TODO convert to a ForeignKey to Author
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     genre = models.CharField(max_length=2, choices=GENRE_CHOICES, default='FI')
     journal = models.ForeignKey(Journal, null=True)
+    crawl_flagged = models.BooleanField(default=False) # if a suspicious feature is found during a crawl, this is set to True for review
 
     class Meta:
         verbose_name_plural = "stories"
