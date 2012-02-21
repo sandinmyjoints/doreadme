@@ -64,7 +64,7 @@ class StoryCrawler(object):
     ]
 #    exclude_from_urls = r're.search(r"(blog|author|contributor|about|contact|reviews|bios|nonfiction|poet|poem|essay)", cur_url)'
 
-    def __init__(self, min_teaser_length=20, max_teaser_length=1000, max_title_length=256, max_author_length=128, verbose=False):
+    def __init__(self, min_teaser_length=20, max_teaser_length=2000, max_title_length=256, max_author_length=128, verbose=False):
         super(StoryCrawler, self).__init__()
         self.crawled_pages = set()
         self.verbose = verbose
@@ -206,10 +206,13 @@ class StoryCrawler(object):
             self.log_msg("Failed to open %s." % source)
             return None
 
+        crawl_flagged = False
+
         try:
             title = convert_entities(eval(self.title)).strip()
             teaser = convert_entities(eval(self.teaser)).strip()
-            additional_text = convert_entities(eval(self.additional_text)).strip()
+            additional_text1 = convert_entities(eval(self.additional_text1)).strip()
+            additional_text2 = convert_entities(eval(self.additional_text2)).strip()
             author = convert_entities(eval(self.author)).strip()
         except (TypeError, IndexError, AttributeError):
             self.log_msg("Couldn't find story in %s." % source, logging.DEBUG)
@@ -220,6 +223,7 @@ class StoryCrawler(object):
         # sanity check on author
         if len(author) > self.MAX_AUTHOR_LENGTH:
             self.log_msg("Author too long: %s" % author)
+            crawl_flagged = True
             author = author[:self.MAX_AUTHOR_LENGTH] + "..."
 
         if author.lower().strip() in ["interview", "interviews"]:
@@ -229,30 +233,75 @@ class StoryCrawler(object):
         if len(title) > self.MAX_TITLE_LENGTH:
             self.log_msg("Title too long: %s" % title)
             title = title[:self.MAX_TITLE_LENGTH] + "..."
+            crawl_flagged = True
 
         if title.strip().lower() == "from":
             self.log_msg("Title consists only of 'from' at %s" % source)
+            crawl_flagged = True
 
         if len(teaser) < self.MIN_TEASER_LENGTH:
-            self.log_msg("Teaser too short: %s\nAdding: %s" % (teaser, additional_text))
+            self.log_msg("Teaser too short: %s\nAdding: %s" % (teaser, additional_text1))
             teaser = teaser + "<br />" if teaser else ""
-            teaser = "".join([teaser, additional_text])
+            teaser = "".join([teaser, additional_text1])
+            # here we used up additional_text1 to make teaser long enough, so we use additional_text2 as the additiona on the db object
+            additional = additional_text2
+            crawl_flagged = True
+        else:
+            # here we didn't need additional_text1 for the teaser, so we can use it as additional on the db object
+            additional = additional_text1
+            # so what do we do with additional_text2?
+            extra = additional_text2
 
         # check if teaser is > max_length
         if len(teaser) > self.MAX_TEASER_LENGTH:
             self.log_msg("Teaser too long: %s" % teaser)
-            teaser = teaser[:self.MAX_TEASER_LENGTH] + "..."
+#            teaser = teaser[:self.MAX_TEASER_LENGTH] + "..."
+            crawl_flagged = True
+
+        # some additional checks for possible flags
+        if not teaser.strip().endswith("."):
+            # didn't end with a full stop = possibly poetry
+            crawl_flagged = True
+
+        if not teaser[0].istitle():
+            # first letter starts with lowercase
+            crawl_flagged = True
+
+        if teaser.lower().startswith("for") or teaser.lower().startswith("after"):
+            crawl_flagged = True
+
+        if teaser.startswith(("[", "(", "-", ":", ".", ",", "{")):
+            crawl_flagged = True
+
+        if not teaser.strip().endswith("."):
+            crawl_flagged = True
+
+        if teaser.find("<") > -1 or teaser.find(">") > -1:
+            crawl_flagged = True
+
+        if teaser.lower().find("adobe") > -1 or\
+           teaser.lower().find("flash") > -1 or\
+           teaser.lower().find("javascript") > -1 or\
+           teaser.lower().find("audio") > -1 or\
+           teaser.lower().find("download") > -1 or\
+           teaser.lower().find("clip"):
+            crawl_flagged = True
+
 
         if title and (title != "") and \
         teaser and (teaser != "") and \
+        additional and (additional != "") and \
         author and (author != ""):
             try:
                 story = Story.objects.create(title=title,
-                                            author=author,
-                                            teaser=teaser,
-                                            url=source,
-                                            journal=self.db_object,
-                                            )
+                    author=author,
+                    teaser=teaser,
+                    additional_teaser=additional,
+                    extra_teaser=extra,
+                    url=source,
+                    crawl_flagged=crawl_flagged,
+                    journal=self.db_object,
+                )
 
             except IntegrityError, ex:
                 transaction.rollback()
@@ -274,7 +323,8 @@ class Annalemma(StoryCrawler):
     title = 're.findall(r"^(.*) \| Annalemma Magazine$", soup.title.text)[0]'
     author = 'soup.find(attrs={"class": "post-meta-key"}).next.next.strip()'
     teaser = 'soup.find("div", "entry").next.next.text'
-    additional_text = 'soup.find("div", "entry").findAll("p")[1].text'
+    additional_text1 = 'soup.find("div", "entry").findAll("p")[1].text'
+    additional_text2 = 'soup.find("div", "entry").findAll("p")[2].text'
     exclude_from_urls = r're.search(r"(contributor|blog|about|contact|print|subscribe)", cur_url)'
 
     # use \S instead of \" so that when it's eval'ed, Python doesn't interpret nested "s as ending the string
@@ -287,7 +337,10 @@ class Ploughshares(StoryCrawler):
 
     title = 'soup.h1.text.strip()'
     author = 'soup.find("span", "by").next.next.strip()'
-    teaser = r"re.findall(r'^<p>(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
+#    teaser = r"re.findall(r'^<p>(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
+    teaser = r"re.findall(r'^<p>(.*)<br />', str(soup.find('p')))"
+    additional_text1 = r"re.findall(r'<br />\r\n(.*?)<br />', str(soup.find('p')))[0]"
+    additional_text2 = r"re.findall(r'<br />\r\n(.*?)<br />', str(soup.find('p')))[1]"
     exclude_from_urls = r"re.findall(r'^<p>.*<br />\n<br />\n(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
 
 
@@ -297,7 +350,9 @@ class AnomalousPress(StoryCrawler):
 
     title = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChild(name="h1").text'
     author = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChild(name="h3").text'
-    teaser = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[0].text'
+    teaser = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[1].text'
+    additional_text1 = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[2].text'
+    additional_text2 = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[3].text'
     exclude_from_urls = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[1].text'
 
 
@@ -308,7 +363,7 @@ class FailBetter(StoryCrawler):
     title = 'soup.findAll("div", {"id": "piece_data_display"})[0].findChild("h1").contents[0]'
     author = 'soup.find("span", "byline").text'
     teaser = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[0].text'
-    additional_text = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[1].text'
+    additional_text1 = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[1].text'
     exclude_from_urls = r're.search(r"(Interview)", cur_url)'
 
 
@@ -329,7 +384,7 @@ class AGNI(StoryCrawler):
     title = 'soup.find("h1").text'
     author = 'soup.find("h2").find("a").text'
     teaser = 'soup.find("h2").findNextSibling().text'
-    additional_text = 'soup.find("h2").findNextSibling().findNextSibling().text'
+    additional_text1 = 'soup.find("h2").findNextSibling().findNextSibling().text'
     exclude_from_urls = r're.search(r"(authors)", cur_url)'
 
 
