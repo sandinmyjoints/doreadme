@@ -17,5 +17,6 @@ urlpatterns = patterns('',
     url(r'^news/', include('zinnia.urls')),
     url(r'^comments/', include('django.contrib.comments.urls')),
 
-    url(r'^', include('dailystory.dailystorysite.urls')),
+#    url(r'^die', 'not_a_view'),
+    url(r'^', include('doreadme.dailystorysite.urls')),
 )

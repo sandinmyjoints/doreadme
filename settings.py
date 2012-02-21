@@ -104,7 +104,7 @@ MIDDLEWARE_CLASSES = (
 #    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-ROOT_URLCONF = 'dailystory.urls'
+ROOT_URLCONF = 'doreadme.urls'
 
 TEMPLATE_DIRS = (os.path.abspath(os.path.join(PROJECT_ROOT, "templates")))
 

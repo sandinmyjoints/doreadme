@@ -8,9 +8,9 @@ urlpatterns = patterns('',
     url(r'^contact_form/$', DailyStoryContactFormView.as_view(), name="contact_form"),
     url(r'^contact_form_completed/$', CompletedPage.as_view(template_name="contact_form/contact_completed.html"), name="contact_form_completed"),
 
-    url(r'^day/', include('dailystory.day.urls')),
-    url(r'^story/', include('dailystory.story.urls')),
-    url(r'^journal/', include('dailystory.journal.urls')),
+    url(r'^day/', include('doreadme.day.urls')),
+    url(r'^story/', include('doreadme.story.urls')),
+    url(r'^journal/', include('doreadme.journal.urls')),
 
     #    url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'story/login.html'}),
     url(r'^about/$', AboutView.as_view(), name="about"),
