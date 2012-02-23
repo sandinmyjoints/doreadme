@@ -9,8 +9,7 @@ from urlparse import urlparse, urljoin
 import re
 import logging
 import sys
-from django.core.management.base import NoArgsCommand, LabelCommand
-from django.conf import settings
+from django.core.management.base import LabelCommand
 
 from journal.models import Journal, Crawl
 
@@ -46,25 +45,46 @@ def get_soup(source):
 
 
 class StoryCrawler(object):
-
     journal_name = ""
-    # TODO don't override this in inherited classes, but rather extend it. Generalize it to be just the regex string, and add to it
-    base_exclude_from_urls = [
-        "blog",
-        "author",
-        "contributor",
-        "about",
-        "contact",
-        "reviews",
-        "bios",
-        "nonfiction",
-        "poet",
-        "poem",
-        "essay",
-    ]
-#    exclude_from_urls = r're.search(r"(blog|author|contributor|about|contact|reviews|bios|nonfiction|poet|poem|essay)", cur_url)'
 
-    def __init__(self, min_teaser_length=20, max_teaser_length=2000, max_title_length=256, max_author_length=128, verbose=False):
+    # This dict contains key, value pairs where key is a kind of pattern in the url to check for, and value are strings that signal a match of that pattern.
+    # So, eg, exclude contains strings such that if any of those strings are found in a url, that url is excluded from being crawled. So this is a good
+    # to put patterns that have a very high likelihood of not containing any writing that we want to crawl.
+    # The other pattern types are used to guess at the genre of the crawled page (eg, poetry patterns mean the crawl sets Story.genre = "PO").
+    # In inherited classes, you can extend these patterns by creating a list named "self.additional_<type of pattern>", eg,
+    # self.additional_poetry. Any items in that list will get added to the strings that are checked for in urls.
+    url_patterns_dict = {
+        "exclude": [
+            "blog",
+            "author",
+            "contributor",
+            "about",
+            "contact",
+            "bios",
+            "subscribe",
+            ],
+
+        "poetry": [
+            "poe",
+            ],
+
+        "nonfiction": [
+            "nonfiction",
+            "essay"
+        ],
+
+        "interview": [
+            "interview",
+            ],
+
+        "review": [
+            "reviews" # don't use "review" because too many journals have that in their name, eg, haydensferryreview
+        ],
+        }
+    #    exclude_from_urls = r're.search(r"(blog|author|contributor|about|contact|reviews|bios|nonfiction|poet|poem|essay)", cur_url)'
+
+    def __init__(self, min_teaser_length=20, max_teaser_length=2000, max_title_length=256, max_author_length=128,
+                 verbose=False):
         super(StoryCrawler, self).__init__()
         self.crawled_pages = set()
         self.verbose = verbose
@@ -73,10 +93,18 @@ class StoryCrawler(object):
         self.MAX_TITLE_LENGTH = max_title_length
         self.MAX_AUTHOR_LENGTH = max_author_length
 
-        self.exclude_from_urls.extend(self.base_exclude_from_urls)
-        self.exclude_url_pattern = 're.search(r"' + "|".join(self.exclude_from_urls) + '", cur_url)'
+        for exclude_pattern_name, exclude_patterns in self.url_patterns_dict.iteritems():
+            setattr(self, exclude_pattern_name, exclude_patterns)
+            if hasattr(self, "additional_" + exclude_pattern_name):
+                additional = getattr(self, "additional_" + exclude_pattern_name)
+                setattr(self, exclude_pattern_name, getattr(self, exclude_pattern_name).extend(additional))
+            url_patterns_attribute_name = exclude_pattern_name + "_url_patterns"
+            setattr(self,
+                url_patterns_attribute_name,
+                're.search(r"' + "|".join([pattern for pattern in getattr(self, exclude_pattern_name)]) + '", cur_url)')
+            print "%s.%s is %s" % (self, url_patterns_attribute_name, getattr(self, url_patterns_attribute_name))
 
-#        self.journal_name = re.findall(r"'__\w+__\.(\S+)'>", str(self.__class__))[0]
+        #        self.journal_name = re.findall(r"'__\w+__\.(\S+)'>", str(self.__class__))[0]
 
         try:
             journals = Journal.objects.filter(name=self.journal_name)
@@ -138,7 +166,6 @@ class StoryCrawler(object):
             new_urls = set()
 
             for j, cur_url in enumerate(urls_to_process):
-
                 if ignore_previously_crawled_pages and cur_url in self.previously_crawled:
                     if be_verbose:
                         print "Round %d: skipping url %d/%d." % (i, j, len(urls_to_process))
@@ -146,7 +173,7 @@ class StoryCrawler(object):
 
                 self.add_to_crawled(cur_url)
 
-                if self.exclude_url_pattern and eval(self.exclude_url_pattern):
+                if hasattr(self, "exclude_url_patterns") and self.exclude_url_patterns and eval(self.exclude_url_patterns):
                     continue
 
                 if be_verbose:
@@ -169,7 +196,7 @@ class StoryCrawler(object):
 
                 # grab all the links on this page, and save the ones that look like potential stories for the next round
                 for link in links:
-#                    if ('href' in dict(link.attrs)):
+                #                    if ('href' in dict(link.attrs)):
                     link = urljoin(cur_url, link['href']) # computes absolute url if link is a relative url
 
                     if link.find("'") != -1:
@@ -186,27 +213,28 @@ class StoryCrawler(object):
         # dump all the crawled urls to the db and update the last time crawled
         # TODO what if end is not set because the crawl did not end? of course, then it wouldn't have crawled_pages, either
         previously_crawled = self.db_object.crawl_set.order_by('-end').order_by('-start')
-        previously_crawled_pages = previously_crawled[0].crawled_pages if (previously_crawled.count() and previously_crawled[0].crawled_pages) else set()
+        previously_crawled_pages = previously_crawled[0].crawled_pages if (
+        previously_crawled.count() and previously_crawled[0].crawled_pages) else set()
         self.log_msg("Updating %s..." % this_crawl)
         this_crawl.end = datetime.datetime.now()
-        this_crawl.crawled_pages = self.crawled_pages.union(previously_crawled_pages) if self.crawled_pages else previously_crawled_pages
+        this_crawl.crawled_pages = self.crawled_pages.union(
+            previously_crawled_pages) if self.crawled_pages else previously_crawled_pages
         this_crawl.save()
         self.log_msg("Finished updating %s." % this_crawl)
 
-#    def crawl_for_stories(self, urls):
-#        for url in self.crawled:
-#            self.parse_story(url)
+    #    def crawl_for_stories(self, urls):
+    #        for url in self.crawled:
+    #            self.parse_story(url)
 
     @transaction.commit_manually
     def parse_story(self, source):
+        cur_url = source
         soup = get_soup(source)
 
         if not soup:
             # couldn't open it
             self.log_msg("Failed to open %s." % source)
             return None
-
-        crawl_flagged = False
 
         try:
             title = convert_entities(eval(self.title)).strip()
@@ -220,78 +248,104 @@ class StoryCrawler(object):
         except SyntaxError, ex:
             self.log_msg("Syntax error parsing %s: %s." % (source, ex), logging.WARN)
 
-        # sanity check on author
+        # Begin the processing. First, initialize some variables
+        genre = None # start off as None, and then we will set it if we see certain features. If it falls through all that without being set, the default
+        # is Fiction
+        crawl_flagged = False  # an experimental feature to see how well the crawl can flag suspicious pages
+
+        # sanity checks
         if len(author) > self.MAX_AUTHOR_LENGTH:
             self.log_msg("Author too long: %s" % author)
+            author = author[:self.MAX_AUTHOR_LENGTH-3] + "..."
             crawl_flagged = True
-            author = author[:self.MAX_AUTHOR_LENGTH] + "..."
 
         if author.lower().strip() in ["interview", "interviews"]:
             self.log_msg("Author was interview.")
-            return
+            genre = "IN"
 
         if len(title) > self.MAX_TITLE_LENGTH:
             self.log_msg("Title too long: %s" % title)
-            title = title[:self.MAX_TITLE_LENGTH] + "..."
+            title = title[:self.MAX_TITLE_LENGTH-3] + "..."
             crawl_flagged = True
 
         if title.strip().lower() == "from":
             self.log_msg("Title consists only of 'from' at %s" % source)
             crawl_flagged = True
 
+        extra = ""
         if len(teaser) < self.MIN_TEASER_LENGTH:
             self.log_msg("Teaser too short: %s\nAdding: %s" % (teaser, additional_text1))
             teaser = teaser + "<br />" if teaser else ""
             teaser = "".join([teaser, additional_text1])
-            # here we used up additional_text1 to make teaser long enough, so we use additional_text2 as the additiona on the db object
+            # we used up additional_text1 to make teaser long enough, so we use additional_text2 as .additional on the model object
             additional = additional_text2
             crawl_flagged = True
         else:
-            # here we didn't need additional_text1 for the teaser, so we can use it as additional on the db object
+            # we didn't need additional_text1 for the teaser, so we can use it as additional on the db object
             additional = additional_text1
-            # so what do we do with additional_text2?
+            # so what do we do with additional_text2? stash it in the extra field on the db model for now...
             extra = additional_text2
 
         # check if teaser is > max_length
         if len(teaser) > self.MAX_TEASER_LENGTH:
             self.log_msg("Teaser too long: %s" % teaser)
-#            teaser = teaser[:self.MAX_TEASER_LENGTH] + "..."
+            #            teaser = teaser[:self.MAX_TEASER_LENGTH] + "..."
             crawl_flagged = True
 
-        # some additional checks for possible flags
-        if not teaser.strip().endswith("."):
-            # didn't end with a full stop = possibly poetry
+        # Additional checks for possible flags and genre traits
+        if not teaser.endswith(".") and not teaser.endswith('"'):
             crawl_flagged = True
+            genre = "PO"
 
         if not teaser[0].istitle():
-            # first letter starts with lowercase
+            # checks the case of the first letter of teaser
             crawl_flagged = True
+            genre = "PO"
 
-        if teaser.lower().startswith("for") or teaser.lower().startswith("after"):
+        lower_teaser = teaser.lower()
+        if lower_teaser.startswith("for") or lower_teaser.startswith("after"):
             crawl_flagged = True
+            genre = "PO"
 
         if teaser.startswith(("[", "(", "-", ":", ".", ",", "{")):
             crawl_flagged = True
-
-        if not teaser.strip().endswith("."):
-            crawl_flagged = True
+            genre = "PO"
 
         if teaser.find("<") > -1 or teaser.find(">") > -1:
             crawl_flagged = True
+            genre = "OW"
 
-        if teaser.lower().find("adobe") > -1 or\
-           teaser.lower().find("flash") > -1 or\
-           teaser.lower().find("javascript") > -1 or\
-           teaser.lower().find("audio") > -1 or\
-           teaser.lower().find("download") > -1 or\
-           teaser.lower().find("clip"):
+        if lower_teaser.find("adobe") > -1 or\
+           lower_teaser.find("flash") > -1 or\
+           lower_teaser.find("javascript") > -1 or\
+           lower_teaser.find("audio") > -1 or\
+           lower_teaser.find("download") > -1 or\
+           lower_teaser.find("clip") > -1:
             crawl_flagged = True
+            genre = "OW"
 
+        # Guess at the genre.
+        # This has a dependency on Story.models.GENRE_CHOICES.
+        # These have a higher accuracy than the heuristic checks, so they can override them.
+        if hasattr(self, "fiction_url_patterns") and self.fiction_url_patterns and eval(self.fiction_url_patterns):
+            genre = "FI"
+        elif hasattr(self, "poetry_url_patterns") and self.poetry_url_patterns and eval(self.poetry_url_patterns):
+            genre = "PO"
+        elif hasattr(self, "interview_url_patterns") and self.interview_url_patterns and eval(self.interview_url_patterns):
+            genre = "IN"
+        elif hasattr(self, "nonfiction_url_patterns") and self.nonfiction_url_patterns and eval(self.nonfiction_url_patterns):
+            genre = "NF"
+        elif hasattr(self, "review_url_patterns") and self.review_url_patterns and eval(self.review_url_patterns):
+            genre = "RE"
 
-        if title and (title != "") and \
-        teaser and (teaser != "") and \
-        additional and (additional != "") and \
-        author and (author != ""):
+        # If genre still isn't set, we'll assume it's fiction
+        if not genre:
+            genre = "FI"
+
+        if title and (title != "") and\
+           teaser and (teaser != "") and\
+           additional and (additional != "") and\
+           author and (author != ""):
             try:
                 story = Story.objects.create(title=title,
                     author=author,
@@ -299,6 +353,7 @@ class StoryCrawler(object):
                     additional_teaser=additional,
                     extra_teaser=extra,
                     url=source,
+                    genre=genre,
                     crawl_flagged=crawl_flagged,
                     journal=self.db_object,
                 )
@@ -325,9 +380,9 @@ class Annalemma(StoryCrawler):
     teaser = 'soup.find("div", "entry").next.next.text'
     additional_text1 = 'soup.find("div", "entry").findAll("p")[1].text'
     additional_text2 = 'soup.find("div", "entry").findAll("p")[2].text'
-    exclude_from_urls = r're.search(r"(contributor|blog|about|contact|print|subscribe)", cur_url)'
 
     # use \S instead of \" so that when it's eval'ed, Python doesn't interpret nested "s as ending the string
+
 #    url = 're.findall(r"url: \S(.*)\S }\);", soup.find("a", text=re.compile("SHARETHIS")))[0]'
 
 
@@ -337,11 +392,11 @@ class Ploughshares(StoryCrawler):
 
     title = 'soup.h1.text.strip()'
     author = 'soup.find("span", "by").next.next.strip()'
-#    teaser = r"re.findall(r'^<p>(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
+    #    teaser = r"re.findall(r'^<p>(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
     teaser = r"re.findall(r'^<p>(.*)<br />', str(soup.find('p')))"
     additional_text1 = r"re.findall(r'<br />\r\n(.*?)<br />', str(soup.find('p')))[0]"
     additional_text2 = r"re.findall(r'<br />\r\n(.*?)<br />', str(soup.find('p')))[1]"
-    exclude_from_urls = r"re.findall(r'^<p>.*<br />\n<br />\n(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
+#    exclude_from_urls = r"re.findall(r'^<p>.*<br />\n<br />\n(.*)<br />', str(soup.find('span', 'by').next.next.next.next.next))[0]"
 
 
 class AnomalousPress(StoryCrawler):
@@ -353,7 +408,7 @@ class AnomalousPress(StoryCrawler):
     teaser = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[1].text'
     additional_text1 = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[2].text'
     additional_text2 = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[3].text'
-    exclude_from_urls = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[1].text'
+#    exclude_from_urls = 'soup.findAll("div", attrs={"id": "current_body"})[0].findChildren(name="p")[1].text'
 
 
 class FailBetter(StoryCrawler):
@@ -364,7 +419,7 @@ class FailBetter(StoryCrawler):
     author = 'soup.find("span", "byline").text'
     teaser = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[0].text'
     additional_text1 = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[1].text'
-    exclude_from_urls = r're.search(r"(Interview)", cur_url)'
+    additional_text2 = 'soup.find("div", attrs={"id": "share_menu"}).findNextSiblings("p", attrs={"class": None})[2].text'
 
 
 class StorySouth(StoryCrawler):
@@ -372,9 +427,10 @@ class StorySouth(StoryCrawler):
     seed_url = "storysouth.com"
 
     title = 'soup.find("h4").text'
-    author = '" ".join([n.capitalize() for n in soup.find("h5").findChild("a").text.split])'
-    teaser = 'soup.find(attrs={"id": "closed"}).findChild("h1").text'
-    exclude_from_urls = 'soup.find(attrs={"id": "closed"}).findChildren("h1")[1].text'
+    author = '" ".join([n.capitalize() for n in soup.find("h5").findChild("a").text.split()])'
+    teaser = 'soup.find(attrs={"id": "closed"}).findChildren("h1")[0].text'
+    additional_text1 = 'soup.find(attrs={"id": "closed"}).findChildren("h1")[1].text'
+    additional_text2 = 'soup.find(attrs={"id": "closed"}).findChildren("h1")[2].text'
 
 
 class AGNI(StoryCrawler):
@@ -385,7 +441,7 @@ class AGNI(StoryCrawler):
     author = 'soup.find("h2").find("a").text'
     teaser = 'soup.find("h2").findNextSibling().text'
     additional_text1 = 'soup.find("h2").findNextSibling().findNextSibling().text'
-    exclude_from_urls = r're.search(r"(authors)", cur_url)'
+    additional_text2 = 'soup.find("h2").findNextSibling().findNextSibling().findNextSibling().text'
 
 
 class HaydensFerryReview(StoryCrawler):
@@ -395,7 +451,8 @@ class HaydensFerryReview(StoryCrawler):
     title = "soup.findAll(attrs={'class': 'style2'})[0].text.replace('&quot;', '')"
     author = 'soup.findAll(attrs={"class": "style2"})[1].text.replace("by ", "")'
     teaser = 'soup.findAll(attrs={"class": "style3"})[1].text'
-    exclude_from_urls = 'soup.findAll(attrs={"class": "style3"})[2].text'
+    additional_text1 = 'soup.findAll(attrs={"class": "style3"})[2].text'
+    additional_text2 = 'soup.findAll(attrs={"class": "style3"})[3].text'
 
 
 class TriQuarterly(StoryCrawler):
@@ -404,8 +461,9 @@ class TriQuarterly(StoryCrawler):
 
     title = 'soup.find("title").text.split("|")[0].strip()'
     author = 'soup.find(attrs={"class": "auth"}).find("a").text'
-    teaser = 'soup.find(attrs={"class": "content"}).find("p").text'
-    exclude_from_urls = 'soup.find(attrs={"class": "content"}).findAll("p")[1].text'
+    teaser = 'soup.find(attrs={"class": "content"}).findAll("p")[0].text'
+    additional_text1 = 'soup.find(attrs={"class": "content"}).findAll("p")[1].text'
+    additional_text2 = 'soup.find(attrs={"class": "content"}).findAll("p")[2].text'
 
 
 class Shenandoah(StoryCrawler):
@@ -414,8 +472,9 @@ class Shenandoah(StoryCrawler):
 
     title = 'soup.find(attrs={"class": "entry-title"}).text'
     author = 'soup.find(attrs={"class": "about-author"}).findChild("h3").findChild("span").findChild("a").next.strip()'
-    teaser = 'soup.find("div", "entry-content").findChild().text'
-    exclude_from_urls = 'soup.find("div", "entry-content").findChildren("p")[1].text'
+    teaser = 'soup.find("div", "entry-content").findChildren()[0].text'
+    additional_text1 = 'soup.find("div", "entry-content").findChildren()[1].text'
+    additional_text2 = 'soup.find("div", "entry-content").findChildren()[2].text'
 
 
 class AdirondackReview(StoryCrawler):
@@ -424,8 +483,9 @@ class AdirondackReview(StoryCrawler):
 
     title = 'soup.find("font").text'
     author = '" ".join([n.capitalize() for n in soup.findChildren("font")[2].text.split()])'
-    teaser = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[0]'
-    exclude_from_urls = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[2]'
+    teaser = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[0].text'
+    additional_text1 = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[2].text' # number of font elements seems to be arbitrary
+    additional_text2 = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[5].text' # it might be specific to each story--how to deal with that?
 
 
 def main(depth=3, verbose=False):
@@ -439,17 +499,21 @@ def main(depth=3, verbose=False):
         logging.info("%s\nCrawling %s." % ('-' * 50, journal))
         journal(verbose=verbose).crawl(depth=depth)
 
+
 def test_main(depth=2):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.DEBUG)
     logging.info("%s\nStarting test_main at %s" % ("-" * 50, datetime.datetime.now()))
     s = Shenandoah(verbose=True)
     s.crawl(depth=depth)
 
-    a = TriQuarterly(verbose=True)
-    a.crawl(depth=depth)
+#    a = TriQuarterly(verbose=True)
+#    a.crawl(depth=depth)
 
-    p = StorySouth(verbose=True)
-    p.crawl(depth=depth)
+#    p = StorySouth(verbose=True)
+#    p.crawl(depth=depth)
+
+    hfr = HaydensFerryReview(verbose=True)
+    hfr.crawl(depth=depth)
 
 if __name__ == "__main__":
     print "Usage: python manage.py crawl"

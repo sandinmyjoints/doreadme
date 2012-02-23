@@ -11,9 +11,9 @@ GENRE_CHOICES = (
     ('FI', "Fiction"),
     ('PO', "Poetry"),
     ("NF", "Nonfiction"),
-    ("OT", "Other Writing"),
     ("RE", "Review"),
     ("IN", "Interview"),
+    ("OW", "Other Writing"),
     ("NW", "Not Writing"),
 )
 
@@ -23,6 +23,12 @@ class FictionStoryManager(models.Manager):
     """
     def get_query_set(self):
         return super(FictionStoryManager, self).get_query_set().filter(genre="FI")
+
+class VerifiedFictionStoryManager(models.Manager):
+    """Returns only fiction.
+    """
+    def get_query_set(self):
+        return super(VerifiedFictionStoryManager, self).get_query_set().filter(genre="FI").filter(verified=True)
 
 class FeaturedFictionStoryManager(models.Manager):
     """
@@ -38,6 +44,7 @@ class Story(models.Model):
 
     objects = models.Manager()
     all_fiction = FictionStoryManager()
+    all_verified_fiction = VerifiedFictionStoryManager()
     featured_fiction = FeaturedFictionStoryManager()
 
     title = models.CharField(max_length=256)
@@ -51,7 +58,10 @@ class Story(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     genre = models.CharField(max_length=2, choices=GENRE_CHOICES, default='FI')
     journal = models.ForeignKey(Journal, null=True)
-    crawl_flagged = models.BooleanField(default=False) # if a suspicious feature is found during a crawl, this is set to True for review
+    # verified indicates that a human verified that this Story is correct. A Story can only be shown live if this is True
+    verified = models.BooleanField(default=False)
+    # crawl_flagged is an experimental feature that indicates the crawler has flagged this Story as potentially having something that needs human attention.
+    crawl_flagged = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "stories"
