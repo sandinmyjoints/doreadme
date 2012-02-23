@@ -26,7 +26,7 @@ X choose a name
 
 X register a domain
 
-* crawl and store additional text 
+X crawl and store additional text 
 
 * scrub and classify story genres manually
 
@@ -43,6 +43,8 @@ X register a domain
 * Switch to bootstrap fluid
 
 * Compass
+
+* Figure out how to deal with sites that have inconsistent markup for stories
 
 * Setup remote git repo at webfaction, or on github
 
@@ -61,6 +63,8 @@ X Day picker
 * Adwords
 
 * Add Disqus? Add share links
+
+* Use Raphael.js to draw from No button to More actions dropdown div
 
 * Add user accounts, taste preferences, etc
 

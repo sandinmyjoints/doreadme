@@ -9,6 +9,8 @@ has_html in it = has < or > in it
 
 has_junk = has adobe, flash, javascript, audio, download, clip
 
+make a field on Story called crawl_flagged, and flag it if any of the above are true
+
 use jquery ready ajax to load the contact form from an ajax endpoint into the #contact_form div, so that is available when the modal dialog is opened?
 
 Contact page view
