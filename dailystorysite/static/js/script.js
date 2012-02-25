@@ -119,18 +119,12 @@ $(document).ready(function () {
             event.preventDefault();
             $self.find("p.additional").slideToggle(250, "swing");
             $(this).button("option", "disabled", true);
-//        $(this).off("click").on("click", function (event) {
-//            event.preventDefault();
-//        });
         });
 
         $self.find("a.no").on("click", function (event) {
             event.preventDefault();
             $self.find("div.more_actions").slideToggle(750, "easeOutBounce");
             $(this).button("option", "disabled", true);
-//        $(this).off("click").on("click", function (event) {
-//            event.preventDefault();
-//        });
         });
     });
 

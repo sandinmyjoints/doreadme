@@ -64,6 +64,14 @@ class StoryCrawler(object):
             "subscribe",
             ],
 
+        "only_include": [
+          # empty by default
+        ],
+
+        "fiction": [
+            'fiction',
+        ],
+
         "poetry": [
             "poe",
             ],
@@ -93,15 +101,15 @@ class StoryCrawler(object):
         self.MAX_TITLE_LENGTH = max_title_length
         self.MAX_AUTHOR_LENGTH = max_author_length
 
-        for exclude_pattern_name, exclude_patterns in self.url_patterns_dict.iteritems():
-            setattr(self, exclude_pattern_name, exclude_patterns)
-            if hasattr(self, "additional_" + exclude_pattern_name):
-                additional = getattr(self, "additional_" + exclude_pattern_name)
-                setattr(self, exclude_pattern_name, getattr(self, exclude_pattern_name).extend(additional))
-            url_patterns_attribute_name = exclude_pattern_name + "_url_patterns"
+        for pattern_name, patterns in self.url_patterns_dict.iteritems():
+            setattr(self, pattern_name, patterns)
+            if hasattr(self, "additional_" + pattern_name):
+                additional = getattr(self, "additional_" + pattern_name)
+                setattr(self, pattern_name, getattr(self, pattern_name).extend(additional))
+            url_patterns_attribute_name = pattern_name + "_url_patterns"
             setattr(self,
                 url_patterns_attribute_name,
-                're.search(r"' + "|".join([pattern for pattern in getattr(self, exclude_pattern_name)]) + '", cur_url)')
+                're.search(r"' + "|".join([pattern for pattern in getattr(self, pattern_name)]) + '", cur_url)')
             print "%s.%s is %s" % (self, url_patterns_attribute_name, getattr(self, url_patterns_attribute_name))
 
         #        self.journal_name = re.findall(r"'__\w+__\.(\S+)'>", str(self.__class__))[0]
@@ -386,6 +394,7 @@ class Annalemma(StoryCrawler):
 #    url = 're.findall(r"url: \S(.*)\S }\);", soup.find("a", text=re.compile("SHARETHIS")))[0]'
 
 
+# This one doesn't work too well
 class Ploughshares(StoryCrawler):
     journal_name = "Ploughshares"
     seed_url = "pshares.org"
@@ -435,7 +444,8 @@ class StorySouth(StoryCrawler):
 
 class AGNI(StoryCrawler):
     journal_name = "AGNI"
-    seed_url = r"bu.edu/agni"
+#    seed_url = r"bu.edu/agni"
+    seed_url = r"www.bu.edu/agni/fiction.html"
 
     title = 'soup.find("h1").text'
     author = 'soup.find("h2").find("a").text'
@@ -444,6 +454,7 @@ class AGNI(StoryCrawler):
     additional_text2 = 'soup.find("h2").findNextSibling().findNextSibling().findNextSibling().text'
 
 
+# TODO this one needs work--doesn't seem to find anything, and tries too many irrelevant links through asu.edu
 class HaydensFerryReview(StoryCrawler):
     journal_name = "Hayden's Ferry Review"
     seed_url = "asu.edu/pipercwcenter/publications/haydensferryreview/"
@@ -477,6 +488,7 @@ class Shenandoah(StoryCrawler):
     additional_text2 = 'soup.find("div", "entry-content").findChildren()[2].text'
 
 
+# This one has trouble with author--selects the wrong thing a lot of the time
 class AdirondackReview(StoryCrawler):
     journal_name = "The Adirondack Review"
     seed_url = "theadirondackreview.com"
@@ -487,6 +499,10 @@ class AdirondackReview(StoryCrawler):
     additional_text1 = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[2].text' # number of font elements seems to be arbitrary
     additional_text2 = 'soup.find("div", attrs={"id": "element13"}).findAll("font")[5].text' # it might be specific to each story--how to deal with that?
 
+
+def story_count():
+    for j in Journal.objects.all():
+        print "%s: %d" % (j, Story.all_verified_fiction.filter(journal__exact=j.id).count())
 
 def main(depth=3, verbose=False):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.INFO)
@@ -503,8 +519,8 @@ def main(depth=3, verbose=False):
 def test_main(depth=2):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.DEBUG)
     logging.info("%s\nStarting test_main at %s" % ("-" * 50, datetime.datetime.now()))
-    s = Shenandoah(verbose=True)
-    s.crawl(depth=depth)
+#    s = Shenandoah(verbose=True)
+#    s.crawl(depth=depth)
 
 #    a = TriQuarterly(verbose=True)
 #    a.crawl(depth=depth)
@@ -512,8 +528,26 @@ def test_main(depth=2):
 #    p = StorySouth(verbose=True)
 #    p.crawl(depth=depth)
 
-    hfr = HaydensFerryReview(verbose=True)
-    hfr.crawl(depth=depth)
+#    hfr = HaydensFerryReview(verbose=True)
+#    hfr.seed_url = "http://asu.edu/piper/publications/haydensferryreview/archive.html"
+#    hfr.additional_exclude = "www.asu.edu"
+    # TODO also need to exclude anything that doesn't have /piper/publications/haydensferryreview in the url
+#    hfr.crawl(depth=depth)
+
+#    a = AGNI(verbose=True)
+#    a.crawl(depth=3)
+
+#    a = AnomalousPress(verbose=True)
+#    a.seed_url = "http://www.anomalouspress.org/archive/then.php"
+#    a.crawl(depth=3)
+
+#    a = AdirondackReview(verbose=True)
+#    a.seed_url = "http://www.theadirondackreview.com/archives.html"
+#    a.crawl(depth=3)
+
+    a = Annalemma(verbose=True)
+    a.seed_url = "http://annalemma.net/category/features/page/2"
+    a.crawl(depth=3)
 
 if __name__ == "__main__":
     print "Usage: python manage.py crawl"

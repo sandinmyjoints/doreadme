@@ -39,7 +39,7 @@ header h1 {
 }
 
 header h1 span.read, span.read, span.gray {
-    color: #BBB;
+    color: #D5D5D5;
     /*color: #DDD;*/
 }
 
@@ -54,7 +54,6 @@ header h1 span.do, span.do, span.black {
 header h1 a {
     color: #333;
     text-decoration: none;
-    padding-left: 10px;
     font-size: 2.5em;
 
     /*text-shadow: 1px -1px 1px rgba(0, 0, 0, 0.7); *//* subtle emboss */
@@ -99,7 +98,7 @@ div#sidebar {
 
 /* #site_header was the sidebar side header -- now it's found as #sidebar h1 */
 #sidebar h1 {
-    margin-bottom: 0;
+    margin-bottom: 0.3em;
     /*text-shadow: 0px 2px 3px rgba(221, 221, 221, 0.9);*/
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 0 rgba(221, 221, 221, 0.9);
     font-size: 54px;
@@ -147,7 +146,11 @@ a:hover.day {
 }
 
 .big {
-    font-size: 42px;
+    font-size: 34px;
+}
+
+.date {
+    color: #666;
 }
 
 .medium {
@@ -158,14 +161,21 @@ a:hover.day {
     font-size: 16px;
 }
 
+.tag {
+    color: #eee;
+    padding-left: 1em;
+    position: relative;
+    top: -10px;
+}
+
 .lead:first-letter {
     font-size: xx-large;
     position: relative;
     top: -.25em;
 }
 
-div.day {
-    background-color: #F5F5F5;
+div.day, div.story-container {
+    background-color: #FFF;
     border-top: 1px dotted black;
     border-bottom: 1px dotted black;
     padding-top: .6em;
@@ -173,12 +183,16 @@ div.day {
     padding-bottom: 1em;
 }
 
-div.day, .dotted-border {
+div.day, div.story-container, .dotted-border {
     /*background-color: #eee;*/
     border-left: 1px dotted black;
     border-right: 1px dotted black;
     padding-left: 1.1em;
     padding-right: 1.2em;
+}
+
+div.story {
+    background-color: #FFF;
 }
 
 p.lead {

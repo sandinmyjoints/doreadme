@@ -14,11 +14,11 @@
     {% endif %}
 
     <p class="lead teaser sweet-justice">
-        {{ story.teaser }}
+        {{ story.teaser|linebreaksbr }}
     </p>
 
     <p class="additional teaser sweet-justice">
-        {{ story.additional }}
+        {{ story.additional_teaser|linebreaksbr }}
     </p>
 
     {% include "story/actions_after_story.html" %}

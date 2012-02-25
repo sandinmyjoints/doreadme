@@ -1,7 +1,7 @@
 {% load day_tags %}
 
 <div class="day clearfix">
-    <span class="big day">{{ day.day }}</span>
+    <span class="big date">{{ day.day }}</span>
     {% with story=day.story %}
         {% include "story/story_include.html" %}
     {% endwith %}
