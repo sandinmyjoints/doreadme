@@ -1,6 +1,6 @@
 *.log
 *.pot
-local_settings*
+local_settings.py
 *.py[co]
 workspace.xml
 

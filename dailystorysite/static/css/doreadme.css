@@ -98,9 +98,14 @@ header .sidebar .statistics {
 }
 
 header .sidebar .statistics a {
-    text-decoration: none;
+    /*text-decoration: none;*/
     /*background-color: #996699;*/
-    background-color: rgba(153, 102, 153, 0.6);
+    /*background-color: rgba(153, 102, 153, 0.1);*/
+}
+
+header .sidebar .statistics a:link,
+header .sidebar .statistics a:visited {
+    /*color: rgba(153, 102, 153, 1);*/
 }
 
 div.sidebar {
