@@ -1,18 +1,24 @@
-<h1>{{ journal.name }}</h1>
+<div class="journal-container">
 
-<p><a href="http://{{ journal.url }}">{{ journal.url }}</a></p>
+    <h1><a href="{% url journal_detail journal.slug %}">{{ journal.name }}</a></h1>
 
-{% if journal.description %}<p>{{ journal.description }}</p>{% endif %}
+    <p><a href="http://{{ journal.url }}">{{ journal.url }}</a></p>
 
-{% if journal.story_set %}
-    <h3>Stories from {{ journal.name }}</h3>
-    <ul>
-        {% for story in journals_featured_stories_set %}
-            <li>{% for day in story.featured_days.all %}
-                {# story.featured_days should only ever have one day in it #}
-                <a href="{% url day_day_archive day.day.year day.day.month day.day.day %}">
-                {{ day.day }}{% endfor %}</a> {{ story }}
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+    {% if journal.description %}<p>{{ journal.description }}</p>{% endif %}
+
+    {% if journal.featured_stories %}
+        <h3>Stories from {{ journal.name }}</h3>
+        <ul>
+            {% for story in journal.featured_stories %}
+                <li>{% for day in story.featured_days.all %}
+                    {# story.featured_days should only ever have one day in it #}
+                    <a href="{% url day_day_archive day.day.year day.day.month day.day.day %}">
+                    {{ day.day }}{% endfor %}</a> {{ story }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No featured stories yet.</p>
+    {% endif %}
+
+</div>
