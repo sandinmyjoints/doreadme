@@ -24,6 +24,9 @@ class Day(models.Model):
 
         super(Day, self).save(force_insert=force_insert, force_update=force_update, using=using)
 
+    @classmethod
+    def first_day(cls):
+        return cls.objects.order_by("day")[0].day if cls.objects.count() else None
 
     @classmethod
     def random(cls, allow_future=False):

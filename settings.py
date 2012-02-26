@@ -117,6 +117,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     "django.contrib.messages.context_processors.messages",
     'dailystorysite.context_processors.site_name',
+    'day.context_processors.first_day',
     'zinnia.context_processors.version', # Optional
 #    'zinnia.context_processors.media',
     )

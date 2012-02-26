@@ -65,7 +65,7 @@
     {#    <div id="gutter" class="one column"><p></p></div>#}
 
 {#    <div id="sidebar" class="five columns omega row offset-by-one">#}
-    <div id="sidebar" class="five columns omega row ">
+    <div id="sidebar" class="five columns omega row sidebar">
         {% include "dailystorysite/sidebar_header.html" %}
         {% block sidebar %}
             {% include "dailystorysite/sidebar_content.html" %}
@@ -95,6 +95,7 @@
 <script type="text/javascript">
     var STATIC_URL = "{{ STATIC_URL }}";
     var DAY_REDIRECT_URL = "{% url day_redirect %}";
+    var FIRST_DAY = new Date({{ FIRST_DAY.year }}, {{ FIRST_DAY.month }}-1, {{ FIRST_DAY.day }});
 </script>
 <!-- end scripts-->
 {% block extrajs %}{% endblock extrajs %}

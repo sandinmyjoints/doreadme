@@ -46,6 +46,13 @@ class Journal(models.Model):
     additional_text_pattern = models.CharField(max_length=256, blank=True, default="")
     author_pattern = models.CharField(max_length=256, blank=True, default="")
 
+    class Meta():
+        ordering = ["name"]
+
+    # TODO optimize this
+    def featured_stories(self):
+        return self.story_set.filter(featured_days__isnull=False)
+
     def save(self, force_insert=False, force_update=False, using=None):
         if not self.slug:
             self.slug = slugify(self.name)

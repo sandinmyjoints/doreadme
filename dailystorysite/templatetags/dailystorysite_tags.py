@@ -1,6 +1,9 @@
 from contact_form.forms import BasicContactForm
 from django import template
 from django.contrib.sites.models import Site
+from day.models import Day
+from journal.models import Journal
+from story.models import Story
 
 HEADLESS_DESCRIPTION = "presents new short fiction from across the internet every day. Read on if you're into it, or come back tomorrow for a different story."
 
@@ -39,3 +42,23 @@ def include_description_short():
 def include_headless_description():
     return HEADLESS_DESCRIPTION
 
+@register.inclusion_tag('dailystorysite/statistics.html')
+def include_statistics():
+    # TODO cache these or otherwise optimize them
+    start_date = Day.first_day()
+    num_total_stories = Story.all_fiction.count()
+    mod_ten = num_total_stories % 10
+    num_total_stories -= mod_ten
+    featured_stories = Story.all_verified_fiction.exclude(featured_days=None)
+    num_featured_stories = featured_stories.count()
+    num_total_journals = Journal.objects.count()
+    num_featured_journals = len(set([s.journal for s in featured_stories]))
+    return {
+        "start_date": start_date,
+        "num_total_journals": num_total_journals,
+        "num_total_stories": num_total_stories,
+        "num_featured_stories": num_featured_stories,
+        "num_featured_journals": num_featured_journals,
+    }
+
+# Since Feb 1, 2012, 7 featured stories from 12 unique journals, drawn from 345 stories from 12 unique journals.

@@ -1,0 +1,6 @@
+Featuring <a href="{% url day_all_archive %}">{{ num_featured_stories }}
+    stor{{ num_featured_stories|pluralize:"y,ies" }}</a>
+from {{ num_featured_journals }} journal{{ num_featured_journals|pluralize }}
+{% if start_date %}since <a
+        href="{% url day_day_archive start_date.year start_date.month start_date.day %}">{{ start_date }}</a>{% endif %},
+drawn from more than {{ num_total_stories }} stories in <a href="{% url journal_list %}">{{ num_total_journals }} unique journals</a>.

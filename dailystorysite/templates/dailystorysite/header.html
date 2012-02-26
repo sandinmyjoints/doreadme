@@ -1,13 +1,14 @@
 {% load dailystorysite_tags %}
-{#<h1 id="site_title center"><a href="{% url index %}">{{ SITE_NAME|safe }}</a></h1>#}
-<div class="twelve columns">
-    <div class="row remove-bottom">
-        <h1 id="site_title" class="left"><a href="{% url index %}">{% include_site_name_header %}</a></h1>
 
-        <span class="tag left remove-bottom">New short fiction from across the internet every day.</span>
+<div class="ten columns alpha center">
+    <div class="row remove-bottom">
+        <h1 id="site_title" class=""><a href="{% url index %}">{% include_site_name_header %}</a></h1>
+
+        <h6 class="tag remove-bottom">New short fiction from across the internet every day.</h6>
 
     </div>
 </div>
-<div class="four columns">
-    <h3 class="right">{% include_description_short %}</h3>
+<div class="five columns omega center sidebar">
+{#    <h3 class="">{% include_description_short %}</h3>#}
+    <h6 class="statistics sweet-justice">{% include_statistics %}</h6>
 </div>

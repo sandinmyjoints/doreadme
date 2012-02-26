@@ -100,7 +100,7 @@ $(document).ready(function () {
     });
 
     $("#calendar-widget").datepicker({
-            minDate:-20,
+            minDate:FIRST_DAY,
             maxDate:0,
             showOtherMonths:true,
             selectOtherMonths:true,

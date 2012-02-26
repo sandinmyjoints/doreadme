@@ -1,9 +1,8 @@
 from django.conf.urls.defaults import patterns, url
-from django.core.urlresolvers import reverse
-from django.views.generic.base import RedirectView
 from django.views.generic.dates import DayArchiveView, MonthArchiveView, TodayArchiveView, DateDetailView
+from django.views.generic.list import ListView
 from day.models import Day
-from day.views import TodayRandomView, random_day_view, DayRedirectView
+from day.views import random_day_view, DayRedirectView
 
 urlpatterns = patterns('',
     # /year/month/date => Story archive
@@ -19,6 +18,10 @@ urlpatterns = patterns('',
         date_field="day",
         context_object_name="day_list",
         template_name='day/archive.html'), {}, name="day_month_archive"),
+
+    url(r'^list/$', ListView.as_view(model=Day,
+        context_object_name="day_list",
+        template_name='day/archive.html'), {}, name="day_all_archive"),
 
     url(r'^$', TodayArchiveView.as_view(model=Day,
         date_field="day",

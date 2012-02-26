@@ -68,7 +68,6 @@ header h3 {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5), /* more emboss */ 0 1px 0 rgba(255, 255, 255, 0.4);
     font-size: 1.8em;
     line-height: 1.5em;
-    padding-right: 1em;
 }
 
 header.container {
@@ -83,13 +82,37 @@ header h1 a:visited {
     color: #333;
 }
 
+header .sidebar {
+    margin-top: 1.5em;
+}
 
-div#sidebar {
+header .sidebar .statistics {
+    line-height: 28px;
+    padding: 0.5em;
+    border: solid #333 1px;
+    /*background-color: rgba(51, 154, 204, 0.4);*/
+    background-color: rgba(92, 167, 204, 0.7);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+header .sidebar .statistics a {
+    text-decoration: none;
+    /*background-color: #996699;*/
+    background-color: rgba(153, 102, 153, 0.6);
+}
+
+div.sidebar {
     padding-left: 30px;
     padding-right: 30px;
+    margin-left: 30px;
+
+}
+
+div#sidebar {
     padding-top: 12px;
     padding-bottom: 12px;
-    margin-left: 30px;
     background-color: #bbb;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -174,7 +197,7 @@ a:hover.day {
     top: -.25em;
 }
 
-div.day, div.story-container {
+div.day, div.story-container, div.journal-container {
     background-color: #FFF;
     border-top: 1px dotted black;
     border-bottom: 1px dotted black;
@@ -183,7 +206,7 @@ div.day, div.story-container {
     padding-bottom: 1em;
 }
 
-div.day, div.story-container, .dotted-border {
+div.day, div.story-container, div.journal-container, .dotted-border {
     /*background-color: #eee;*/
     border-left: 1px dotted black;
     border-right: 1px dotted black;
