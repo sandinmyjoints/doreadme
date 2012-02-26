@@ -12,9 +12,13 @@
    ================================================== -->
     <meta charset="utf-8">
     <title>{% block title %}{% endblock title %} - {{ SITE_NAME }}</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-    {% block extrameta %}{% endblock extrameta %}
+    <meta name="description"
+          content="doread.me presents the best new short fiction from across the internet every day.">
+    <meta name="author" content="William John Bert">
+    {% block extrameta %}
+        <meta name="keywords"
+              content="doreadme doread.me short stories fiction best internet literary journal fresh original writing interesting reading">
+    {% endblock extrameta %}
     <!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -42,10 +46,10 @@
 
     <!-- Favicons
      ================================================== -->
-{#    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">#}
-{#    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png">#}
-{#    <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}images/apple-touch-icon-72x72.png">#}
-{#    <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}images/apple-touch-icon-114x114.png">#}
+    {#    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">#}
+    {#    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png">#}
+    {#    <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}images/apple-touch-icon-72x72.png">#}
+    {#    <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}images/apple-touch-icon-114x114.png">#}
 
     {% block extrahead %}{% endblock extrahead %}
 </head>
@@ -64,7 +68,7 @@
 
     {#    <div id="gutter" class="one column"><p></p></div>#}
 
-{#    <div id="sidebar" class="five columns omega row offset-by-one">#}
+    {#    <div id="sidebar" class="five columns omega row offset-by-one">#}
     <div id="sidebar" class="five columns omega row sidebar">
         {% include "dailystorysite/sidebar_header.html" %}
         {% block sidebar %}
@@ -108,10 +112,13 @@
     _gaq.push(['_setAllowLinker', true]);
     _gaq.push(['_trackPageview']);
 
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    (function () {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
     })();
 
 </script>
