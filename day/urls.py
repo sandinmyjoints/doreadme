@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url
 from django.views.generic.dates import DayArchiveView, MonthArchiveView, TodayArchiveView, DateDetailView
 from django.views.generic.list import ListView
 from day.models import Day
-from day.views import random_day_view, DayRedirectView
+from day.views import random_day_view, DayRedirectView, DayListView
 
 urlpatterns = patterns('',
     # /year/month/date => Story archive
@@ -19,7 +19,7 @@ urlpatterns = patterns('',
         context_object_name="day_list",
         template_name='day/archive.html'), {}, name="day_month_archive"),
 
-    url(r'^list/$', ListView.as_view(model=Day,
+    url(r'^list/$', DayListView.as_view(model=Day,
         context_object_name="day_list",
         template_name='day/archive.html'), {}, name="day_all_archive"),
 
