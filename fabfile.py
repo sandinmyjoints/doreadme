@@ -53,6 +53,12 @@ def migrate(*args):
     with cd(env['dir']):
         run('python manage.py migrate ' + " ".join(args))
 
+#def pip_install():
+#    """Install from pip requirements"""
+#    with cd(env['dir']):
+#        with virtualenv():
+#            run('pip install -r requirements.txt')
+
 def revert():
     """ Revert git via reset --hard @{1} """
     with cd(env['dir']):

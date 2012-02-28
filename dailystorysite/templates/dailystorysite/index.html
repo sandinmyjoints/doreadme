@@ -7,32 +7,6 @@
 
     {% for day in day_list %}
         {% include "day/singleday_include.html" %}
-
-{#        <div class="day">#}
-{#            <span class="big day">{{ day.day }}</span>#}
-{#            {% with story=day.story %}#}
-{#                {% include "story/story_include.html" %}#}
-{#            {% endwith %}#}
-{#        </div>#}
-
     {% endfor %}
-
-{#    {% if previous_day %}#}
-{#        <h3>#}
-{#            <span class="center">&#167;</span>#}
-{#            <a href="{% url day_day_archive previous_day.year previous_day.month previous_day.day %}">Yesterday's story</a>#}
-{#        </h3>#}
-{##}
-{#    {% endif %}#}
-{#    <h3>#}
-{#        <span class="center">&#167;</span>#}
-{#        <a href="{% url random_day %}">Random story</a>#}
-{#    </h3>#}
-{#    {% if nice_month and today %}#}
-{#    <h3>#}
-{#        <span class="center">&#167;</span>#}
-{#        <a href="{% url day_month_archive today.year today.month %}">All {{ nice_month }}'s Stories</a>#}
-{#    </h3>#}
-{#    {% endif %}#}
 
 {% endblock content %}
