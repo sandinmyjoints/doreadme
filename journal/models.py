@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
@@ -50,8 +51,12 @@ class Journal(models.Model):
         ordering = ["name"]
 
     # TODO optimize this
-    def featured_stories(self):
-        return self.story_set.filter(featured_days__isnull=False)
+    def featured_stories(self, future_only=True):
+        featured_stories = self.story_set.filter(featured_days__isnull=False)
+        if future_only:
+            return featured_stories.filter(featured_days__day__lte=datetime.today())
+        else:
+            return featured_stories
 
     def save(self, force_insert=False, force_update=False, using=None):
         if not self.slug:
