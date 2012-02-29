@@ -127,7 +127,7 @@ class Story(models.Model):
 #            s.save()
 
     def __unicode__(self):
-        return " ".join([self.title, "by", self.author])
+        return "%s by %s %s" % (self.title, self.author, "(Verified)" if self.verified else "")
 
     @permalink
     def get_absolute_url(self):
