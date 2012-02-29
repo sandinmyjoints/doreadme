@@ -2,6 +2,5 @@
 header .sidebar .statistics {
     background: transparent;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99C0C0DE,endColorstr=#99C0C0DE)"; /* IE8 */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99C0C0DE,endColorstr=#99C0C0DE);   /* IE6 & 7 */
     zoom: 1;
 }
