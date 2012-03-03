@@ -25,10 +25,15 @@ class FictionStoryManager(models.Manager):
         return super(FictionStoryManager, self).get_query_set().filter(genre="FI")
 
 class VerifiedFictionStoryManager(models.Manager):
-    """Returns only fiction.
+    """Returns only verified fiction.
     """
     def get_query_set(self):
         return super(VerifiedFictionStoryManager, self).get_query_set().filter(genre="FI").filter(verified=True)
+
+class VerifiedNonFeaturedFictionStoryManager(VerifiedFictionStoryManager):
+    def get_query_set(self):
+        qs = super(VerifiedNonFeaturedFictionStoryManager, self).get_query_set()
+        return qs.filter(featured_days__isnull=True)
 
 class FeaturedFictionStoryManager(models.Manager):
     """
@@ -44,8 +49,9 @@ class Story(models.Model):
 
     objects = models.Manager()
     all_fiction = FictionStoryManager()
-    all_verified_fiction = VerifiedFictionStoryManager()
     featured_fiction = FeaturedFictionStoryManager()
+    verified_fiction = VerifiedFictionStoryManager()
+    verified_nonfeatured_fiction = VerifiedNonFeaturedFictionStoryManager()
 
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique=True)  # If not supplied, will be auto-generated in save()

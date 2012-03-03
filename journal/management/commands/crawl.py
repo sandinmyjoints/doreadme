@@ -502,7 +502,7 @@ class AdirondackReview(StoryCrawler):
 
 def story_count():
     for j in Journal.objects.all():
-        print "%s: %d" % (j, Story.all_verified_fiction.filter(journal__exact=j.id).count())
+        print "%s: %d" % (j, Story.verified_fiction.filter(journal__exact=j.id).count())
 
 def main(depth=3, verbose=False):
     logging.basicConfig(filename=os.path.abspath(os.path.join(SCRIPT_ROOT, "parse.log")), level=logging.INFO)

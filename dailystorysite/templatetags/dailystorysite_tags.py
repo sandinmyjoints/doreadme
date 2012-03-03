@@ -50,7 +50,7 @@ def include_statistics():
     num_total_stories = Story.all_fiction.count()
     mod_ten = num_total_stories % 10
     num_total_stories -= mod_ten
-    featured_stories = Story.all_verified_fiction.exclude(featured_days=None).filter(featured_days__day__lte=datetime.today())
+    featured_stories = Story.verified_fiction.exclude(featured_days=None).filter(featured_days__day__lte=datetime.today())
     num_featured_stories = featured_stories.count()
     num_total_journals = Journal.objects.count()
     num_featured_journals = len(set([s.journal for s in featured_stories]))
