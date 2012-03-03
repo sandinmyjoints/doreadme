@@ -1,11 +1,15 @@
-from datetime import datetime
 import random
+from sys import maxint
+import logging
+import uuid
 from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 
 from journal.models import Journal
 
+
+logger = logging.getLogger(name=__name__)
 
 GENRE_CHOICES = (
     ('FI', "Fiction"),
@@ -80,8 +84,11 @@ class Story(models.Model):
         while Story.objects.filter(slug=full_slug).count() > 0:
             i += 1
             full_slug = "-".join([slug_prefix, unicode(i)])
-            # TODO bounds checking on i, do something like generate a random string suffix if i gets too big
-            # TODO also log it as a warning
+            if i >= maxint-1:
+                # prevent an overflow
+                logger.warn("In generat_slug, i is %d" % i)
+                # give up on nice ints and try a UUID
+                full_slug = "-".join([slug_prefix, str(uuid.uuid4())])
 
         return full_slug
 

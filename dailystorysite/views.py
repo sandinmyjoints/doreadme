@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 from contact_form.views import ContactFormView
 from contact_form.forms import BasicContactForm
 from django.core.urlresolvers import reverse
@@ -8,6 +9,8 @@ from django.views.generic.dates import TodayArchiveView, MonthMixin, YearMixin
 from django.utils import simplejson as json
 
 from day.models import Day
+
+logger = logging.getLogger(name=__name__)
 
 
 class AboutView(TemplateView):
@@ -108,28 +111,12 @@ class DailyStoryContactFormView(ContactFormView, JSONResponseMixin):
     def get_success_url(self):
         return reverse("contact_form_completed")
 
-    # will this still be necessary if post can populate response correctly? probably not
-#    def get_context_data(self, **kwargs):
-#        context = super(DailyStoryContactFormView, self).get_context_data(**kwargs)
-#        if "form" in kwargs.keys():
-#            form = kwargs["form"]
-#            context["success"] = not form.errors
-#
-#        return context
-
-
 
 class DailyStoryTodayArchiveView(TodayArchiveView):
     model = Day
     context_object_name="day_list"
     template_name= 'dailystorysite/index.html'
     date_field = "day"
-
-#    def get_context_data(self, **kwargs):
-#        context = super(DailyStoryTodayArchiveView, self).get_context_data(**kwargs)
-#        context['nice_month'] = datetime.strftime(datetime.today(), "%B")
-#        context['today'] = datetime.today()
-#        return context
 
 
 class SiteHomePageView(DailyStoryTodayArchiveView):

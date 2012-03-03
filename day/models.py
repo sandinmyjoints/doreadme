@@ -1,11 +1,14 @@
 from datetime import datetime
 import random
+import logging
 from django.conf import settings
 from django.db import models
 
 # Create your models here.
 from django.db.models import permalink
 from story.models import Story
+
+logger = logging.getLogger(name=__name__)
 
 class Day(models.Model):
     day = models.DateField(unique=True)
@@ -23,6 +26,8 @@ class Day(models.Model):
         # out so that a blank Day can be created?
         if not self.story:
             self.story = Day.find_random_unfeatured_story(num_days_recent=settings.NUM_DAYS_RECENT)
+
+        logger.info("Saving Day %s" % unicode(self))
 
         super(Day, self).save(force_insert=force_insert, force_update=force_update, using=using)
 
@@ -60,7 +65,8 @@ class Day(models.Model):
         try:
             s = potential_stories.pop()
         except IndexError:
-            # There are no possible stories! TODO log an error
+            # There are no possible stories!
+            logger.warn("In find_random_unfeatured_story, potential_stories.count() is %d." % potential_stories.count())
             return None
 
         today = datetime.today().date()
