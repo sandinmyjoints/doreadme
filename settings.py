@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'tagging',
     'mptt',
     'zinnia',
+    'djcelery',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -173,6 +174,16 @@ LOGGING = {
 
 # DailyStory configuration
 NUM_DAYS_RECENT = 7
+
+# Celery
+import djcelery
+djcelery.setup_loader()
+
+BROKER_HOST = "ubuntu"
+BROKER_PORT = 5672
+BROKER_USER = "doreadme"
+BROKER_PASSWORD = "glbnocb9doreadme"
+BROKER_VHOST = "doreadmevhost"
 
 try:
     from local_settings import *
