@@ -30,7 +30,7 @@ urlpatterns = patterns('',
 
     # /day/random => random Day
     # TODO redo as a class-based view
-    url(r'^random$', random_day_view, {}, name="random_day"),
+    url(r'^random/$', random_day_view, {}, name="random_day"),
 
-    url(r'^day_redirect$', DayRedirectView.as_view(), name="day_redirect"),
+    url(r'^day_redirect/$', DayRedirectView.as_view(), name="day_redirect"),
 )
