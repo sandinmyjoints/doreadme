@@ -138,6 +138,7 @@ INSTALLED_APPS = (
 #    'debug_toolbar',
     'story',
     'journal',
+    'crawl',
     'day',
     'south',
     'dailystorysite',

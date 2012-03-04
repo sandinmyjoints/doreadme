@@ -1,5 +1,4 @@
-from journal.models import Journal, Crawl
+from journal.models import Journal
 from django.contrib import admin
 
 admin.site.register(Journal)
-admin.site.register(Crawl)

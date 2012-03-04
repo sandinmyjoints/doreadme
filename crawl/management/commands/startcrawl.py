@@ -10,16 +10,14 @@ import re
 import logging
 import sys
 from django.core.management.base import LabelCommand
-
-from journal.models import Journal, Crawl
-
-from story.models import Story
-
-__author__ = 'wbert'
-
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 
+from crawl.models import Crawl
+from journal.models import Journal
+from story.models import Story
+
 # TODO: fix logging to file; and setting verbose on class vs. on function or whatever
+logger = logging.getLogger(__name__)
 
 SCRIPT_ROOT = os.path.dirname(__file__)
 
@@ -130,7 +128,7 @@ class StoryCrawler(object):
 
     def log_msg(self, msg, level=logging.INFO):
         msg = ": ".join(["%s" % self.journal_name if self.journal_name else "no journal_name", msg])
-        logging.log(level, msg)
+        logger.log(level, msg)
         if self.verbose:
             print "%s: %s" % (level, msg)
 
@@ -229,10 +227,6 @@ class StoryCrawler(object):
             previously_crawled_pages) if self.crawled_pages else previously_crawled_pages
         this_crawl.save()
         self.log_msg("Finished updating %s." % this_crawl)
-
-    #    def crawl_for_stories(self, urls):
-    #        for url in self.crawled:
-    #            self.parse_story(url)
 
     @transaction.commit_manually
     def parse_story(self, source):
