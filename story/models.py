@@ -1,4 +1,3 @@
-import random
 from sys import maxint
 import logging
 import uuid
@@ -7,6 +6,7 @@ from django.db.models import permalink
 from django.template.defaultfilters import slugify
 
 from journal.models import Journal
+from story.managers import FictionStoryManager, FeaturedFictionStoryManager, VerifiedFictionStoryManager, VerifiedNonFeaturedFictionStoryManager
 
 
 logger = logging.getLogger(name=__name__)
@@ -20,31 +20,6 @@ GENRE_CHOICES = (
     ("OW", "Other Writing"),
     ("NW", "Not Writing"),
 )
-
-
-class FictionStoryManager(models.Manager):
-    """Returns only fiction.
-    """
-    def get_query_set(self):
-        return super(FictionStoryManager, self).get_query_set().filter(genre="FI")
-
-class VerifiedFictionStoryManager(models.Manager):
-    """Returns only verified fiction.
-    """
-    def get_query_set(self):
-        return super(VerifiedFictionStoryManager, self).get_query_set().filter(genre="FI").filter(verified=True)
-
-class VerifiedNonFeaturedFictionStoryManager(VerifiedFictionStoryManager):
-    def get_query_set(self):
-        qs = super(VerifiedNonFeaturedFictionStoryManager, self).get_query_set()
-        return qs.filter(featured_days__isnull=True)
-
-class FeaturedFictionStoryManager(models.Manager):
-    """
-    Returns only fiction that has been featured on a Day.
-    """
-    def get_query_set(self):
-        return super(FeaturedFictionStoryManager, self).get_query_set().filter(featured_days__isnull=False)
 
 
 class Story(models.Model):
@@ -86,7 +61,7 @@ class Story(models.Model):
             full_slug = "-".join([slug_prefix, unicode(i)])
             if i >= maxint-1:
                 # prevent an overflow
-                logger.warn("In generat_slug, i is %d" % i)
+                logger.warn("In generate_slug, i is %d" % i)
                 # give up on nice ints and try a UUID
                 full_slug = "-".join([slug_prefix, str(uuid.uuid4())])
 
