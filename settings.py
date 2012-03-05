@@ -209,8 +209,9 @@ LOGGING = {
 }
 
 
-# DailyStory configuration
+# doreadme configuration
 NUM_DAYS_RECENT = 7
+MIN_STORIES_WARNING = 7
 
 # Celery
 import djcelery

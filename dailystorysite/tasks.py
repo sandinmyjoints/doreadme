@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import date
 import logging
 
 from django.conf import settings
