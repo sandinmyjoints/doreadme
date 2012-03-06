@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def dummy_task():
     now_ = "dummy task at %s" % datetime.datetime.now()
     print now_
-    logger = dummy_task.get_logger(logfile="logs/tasks.log")
+    logger = dummy_task.get_logger(logfile="logs/user/tasks.log")
     logger.info(now_)
     Journal.objects.create(name=now_, url="http://www.site.com", seed_url="http://www.site.com", description="blah")
 
@@ -26,7 +26,7 @@ def select_story_for_next_day():
     If it exists and doesn't have a Story assigned, assigns it a Story.
     :return:
     """
-    logger = dummy_task.get_logger(logfile="logs/tasks.log")
+    logger = dummy_task.get_logger(logfile="logs/user/tasks.log")
 
     try:
         today = date.today()

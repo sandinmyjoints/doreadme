@@ -71,7 +71,7 @@ def revert():
 
 def restart_supervisor():
     with cd(env['dir']):
-        virtualenv('python manage.py supervisor --daemonize') # This should only run if supervisor is not already running
+#        virtualenv('python manage.py supervisor --daemonize') # This should only run if supervisor is not already running
         virtualenv('python manage.py supervisor restart celeryd')
         virtualenv('python manage.py supervisor restart celerybeat')
 
