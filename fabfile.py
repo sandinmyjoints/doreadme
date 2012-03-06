@@ -61,7 +61,7 @@ def migrate(*args):
 
 def pip_install():
     """Install from pip requirements"""
-    virtualenv('pip install -r ../requirements.txt')
+    virtualenv('pip install -r requirements.txt')
 
 def revert():
     """ Revert git via reset --hard @{1} """
