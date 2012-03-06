@@ -1,4 +1,5 @@
 # Django settings for dailystory project.
+from celery.schedules import crontab
 import os
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -136,6 +137,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'django_extensions',
 #    'debug_toolbar',
+    'djcelery',
     'story',
     'journal',
     'crawl',
@@ -146,7 +148,6 @@ INSTALLED_APPS = (
     'tagging',
     'mptt',
     'zinnia',
-    'djcelery',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -217,11 +218,16 @@ MIN_STORIES_WARNING = 7
 import djcelery
 djcelery.setup_loader()
 
-BROKER_HOST = "ubuntu"
-BROKER_PORT = 5672
-BROKER_USER = "doreadme"
-BROKER_PASSWORD = "glbnocb9doreadme"
-BROKER_VHOST = "doreadmevhost"
+CELERYBEAT_SCHEDULE = {
+    "every-four-am": { # After midnight, select the story for today if it is not set (it should be, however), and for the following day
+        "task": "dailystorysite.tasks.select_story_for_next_day",
+        "schedule": crontab(hour=0, minute=1),
+        },
+    "every-five-am": { # At 5 a.m., check how many stories are available to select
+        "task": "story.tasks.ensure_enough_verifiednonfeaturedfiction",
+        "schedule": crontab(hour=5),
+    }
+}
 
 try:
     from local_settings import *

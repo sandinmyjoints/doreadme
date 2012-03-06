@@ -28,3 +28,10 @@ EMAIL_PORT = ('587')
 EMAIL_HOST_USER = ('email.daily.story@gmail.com')
 EMAIL_HOST_PASSWORD = ('glbnocb9dailystory')
 EMAIL_USE_TLS = True
+
+
+BROKER_HOST = "ubuntu"
+BROKER_PORT = 5672
+BROKER_USER = "doreadme"
+BROKER_PASSWORD = "glbnocb9doreadme"
+BROKER_VHOST = "doreadmevhost"

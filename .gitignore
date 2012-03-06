@@ -4,6 +4,8 @@ logs
 local_settings.py
 *.py[co]
 workspace.xml
+celerybeat-schedule
+celerybeat*
 
 # Packages
 *.egg
