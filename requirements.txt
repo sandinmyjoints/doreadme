@@ -6,7 +6,6 @@ Jinja2==2.6
 PIL==1.1.7
 PyYAML==3.10
 Pygments==1.4
-RssLib==1.0.0.0
 South==0.7.3
 Sphinx==1.1.2
 amqplib==1.0.2
