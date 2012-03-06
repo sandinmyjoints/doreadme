@@ -22,7 +22,7 @@ from fabric.api import *
 
 PROD_HOST = 'wjb@wjb.webfactional.com:22'
 PROD_DIR = '/home/wjb/webapps/doreadme/doreadme'
-PROD_ACTIVATE = '/home/wjb/.virtualenvs/doreadme/bin/activate'
+PROD_ACTIVATE = 'source /home/wjb/.virtualenvs/doreadme/bin/activate'
 
 def prod():
     """Set up the environment for the current production server."""

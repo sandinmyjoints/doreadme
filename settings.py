@@ -230,7 +230,7 @@ CELERYBEAT_SCHEDULE = {
     },
     "when-i-say": {
         "task": "dailystorysite.tasks.dummy_task",
-        "schedule": crontab(hour=7, minute=25),
+        "schedule": crontab(hour=7, minute=30),
     }
 }
 
