@@ -45,7 +45,7 @@ def restart_apache():
         run('../apache2/bin/restart')
 
 def virtualenv(command):
-    with cd(env.directory):
+    with cd(env.dir):
         sudo(env.activate + '&&' + command)
 
 def collectstatic():
