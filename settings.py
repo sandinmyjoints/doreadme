@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     'tagging',
     'mptt',
     'zinnia',
+    'djsupervisor',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -226,6 +227,10 @@ CELERYBEAT_SCHEDULE = {
     "every-five-am": { # At 5 a.m., check how many stories are available to select
         "task": "story.tasks.ensure_enough_verifiednonfeaturedfiction",
         "schedule": crontab(hour=5),
+    },
+    "when-i-say": {
+        "task": "dailystorysite.tasks.dummy_task",
+        "schedule": crontab(hour=23, minute=29),
     }
 }
 

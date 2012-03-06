@@ -45,14 +45,17 @@ def restart_apache():
 
 def collectstatic():
     """Run manage.py collectstatic, suppressing any input."""
+    # TODO need to activate virtualenv first
     with cd(env['dir']):
-        run('python manage.py collectstatic --noinput')
+        run('python manage.py collectstatic')
+    restart_apache()
 
 def migrate(*args):
     """South migration"""
     with cd(env['dir']):
         run('python manage.py migrate ' + " ".join(args))
 
+        # TODO need to activate virtualenv for this one
 #def pip_install():
 #    """Install from pip requirements"""
 #    with cd(env['dir']):
@@ -65,6 +68,12 @@ def revert():
         run('git reset --hard @{1}')
         restart_apache()
 
+def restart_supervisor():
+    with cd(env['dir']):
+        run('python manage.py supervisor --daemonize') # This should only run if supervisor is not already running
+        run('python manage.py restart celeryd')
+        run('python manage.py restart celerybeat')
+
 def deploy():
     """Deploy to prod. Calls prod(), push(), pull(), restart_apache()"""
     # TODO figure out how to specify whether to collecstatic and migrate.
@@ -72,3 +81,4 @@ def deploy():
     push()
     pull()
     restart_apache()
+    restart_supervisor()
