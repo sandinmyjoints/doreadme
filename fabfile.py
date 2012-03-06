@@ -46,7 +46,7 @@ def restart_apache():
 
 def virtualenv(command):
     with cd(env.dir):
-        sudo(env.activate + '&&' + command)
+        run(env.activate + '&&' + command)
 
 def collectstatic():
     """Run manage.py collectstatic, suppressing any input."""
