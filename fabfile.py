@@ -22,12 +22,13 @@ from fabric.api import *
 
 PROD_HOST = 'wjb@wjb.webfactional.com:22'
 PROD_DIR = '/home/wjb/webapps/doreadme/doreadme'
+PROD_ACTIVATE = '/home/wjb/.virtualenvs/doreadme/bin/activate'
 
 def prod():
     """Set up the environment for the current production server."""
     env['hosts'] = [PROD_HOST]
-#    env.roledefs["prod"] = [PROD_HOST]
     env['dir'] = PROD_DIR
+    env.activate = PROD_ACTIVATE
 
 def push():
     """On local, push latest commit to master to origin."""
@@ -43,24 +44,24 @@ def restart_apache():
     with cd(env['dir']):
         run('../apache2/bin/restart')
 
+def virtualenv(command):
+    with cd(env.directory):
+        sudo(env.activate + '&&' + command)
+
 def collectstatic():
     """Run manage.py collectstatic, suppressing any input."""
-    # TODO need to activate virtualenv first
     with cd(env['dir']):
-        run('python manage.py collectstatic')
+        virtualenv('python manage.py collectstatic')
     restart_apache()
 
 def migrate(*args):
-    """South migration"""
+    """South migrations"""
     with cd(env['dir']):
-        run('python manage.py migrate ' + " ".join(args))
+        virtualenv('python manage.py migrate ' + " ".join(args))
 
-        # TODO need to activate virtualenv for this one
-#def pip_install():
-#    """Install from pip requirements"""
-#    with cd(env['dir']):
-#        with virtualenv():
-#            run('pip install -r requirements.txt')
+def pip_install():
+    """Install from pip requirements"""
+    virtualenv('pip install -r ../requirements.txt')
 
 def revert():
     """ Revert git via reset --hard @{1} """
@@ -70,15 +71,18 @@ def revert():
 
 def restart_supervisor():
     with cd(env['dir']):
-        run('python manage.py supervisor --daemonize') # This should only run if supervisor is not already running
-        run('python manage.py restart celeryd')
-        run('python manage.py restart celerybeat')
+        virtualenv('python manage.py supervisor --daemonize') # This should only run if supervisor is not already running
+        virtualenv('python manage.py restart celeryd')
+        virtualenv('python manage.py restart celerybeat')
 
 def deploy():
     """Deploy to prod. Calls prod(), push(), pull(), restart_apache()"""
-    # TODO figure out how to specify whether to collecstatic and migrate.
+    # TODO figure out how to specify whether to collectstatic and migrate.
     print "Env hosts: %s" % env.hosts
     push()
     pull()
-    restart_apache()
+    pip_install()
+    migrate()
+    # if something, then collectstatic()
     restart_supervisor()
+    restart_apache()
