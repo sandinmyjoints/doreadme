@@ -32,7 +32,7 @@ SERVER_EMAIL = "william@doread.me"
 STATIC_ROOT = '/home/wjb/webapps/doreadme_static'
 
 
-BROKER_HOST = "web191"
+BROKER_HOST = "localhost"
 BROKER_PORT = 25508
 BROKER_USER = "doreadme"
 BROKER_PASSWORD = "glbnocb9doreadme"
