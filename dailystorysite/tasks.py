@@ -26,7 +26,7 @@ def select_story_for_next_day():
     If it exists and doesn't have a Story assigned, assigns it a Story.
     :return:
     """
-    logger = dummy_task.get_logger(logfile="logs/user/tasks.log")
+    logger = select_story_for_next_day.get_logger(logfile="logs/user/tasks.log")
 
     logger.info("select_story_for_next_day")
 

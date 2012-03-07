@@ -1,0 +1,2 @@
+https://github.com/Fantomas42/django-blog-zinnia.git
+https://github.com/madisona/django-contact-form.git
