@@ -32,10 +32,10 @@ SERVER_EMAIL = "william@doread.me"
 STATIC_ROOT = '/home/wjb/webapps/doreadme_static'
 
 
-BROKER_HOST = "localhost"
+BROKER_HOST = "web191"
 BROKER_PORT = 25508
 BROKER_USER = "doreadme"
-BROKER_PASSWORD = "glbnocb9rdoreadme"
+BROKER_PASSWORD = "glbnocb9doreadme"
 BROKER_VHOST = "doreadmevhost"
 CELERYD_CONCURRENCY = 1
 CELERYD_NODES="w1"
