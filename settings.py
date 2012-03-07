@@ -228,10 +228,10 @@ CELERYBEAT_SCHEDULE = {
         "task": "story.tasks.ensure_enough_verifiednonfeaturedfiction",
         "schedule": crontab(hour=5),
     },
-    "when-i-say": {
-        "task": "dailystorysite.tasks.dummy_task",
-        "schedule": crontab(hour=22, minute=17),
-    }
+#    "when-i-say": {
+#        "task": "dailystorysite.tasks.dummy_task",
+#        "schedule": crontab(hour=22, minute=17),
+#    }
 }
 
 try:
