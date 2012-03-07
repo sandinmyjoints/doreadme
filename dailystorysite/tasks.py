@@ -28,6 +28,8 @@ def select_story_for_next_day():
     """
     logger = dummy_task.get_logger(logfile="logs/user/tasks.log")
 
+    logger.info("select_story_for_next_day")
+
     try:
         today = date.today()
         tomorrow = date.fromordinal(today.toordinal()+1)

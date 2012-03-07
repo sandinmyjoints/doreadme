@@ -16,6 +16,7 @@ WARNING_MESSAGE = """
 @task
 def ensure_enough_verifiednonfeaturedfiction():
     logger = dummy_task.get_logger(logfile="logs/user/tasks.log")
+    logger.info("ensure_enough")
 
     fiction_count = Story.verified_nonfeatured_fiction.count()
     if fiction_count <= settings.MIN_STORIES_WARNING:
