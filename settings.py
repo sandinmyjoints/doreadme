@@ -226,7 +226,7 @@ CELERYBEAT_SCHEDULE = {
         },
     "every-five-am": { # At 5 a.m., check how many stories are available to select
         "task": "story.tasks.ensure_enough_verifiednonfeaturedfiction",
-        "schedule": crontab(hour=5),
+        "schedule": crontab(hour=5, minute=0),
     },
 #    "when-i-say": {
 #        "task": "dailystorysite.tasks.dummy_task",
