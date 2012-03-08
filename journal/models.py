@@ -47,7 +47,7 @@ class Journal(models.Model):
             full_slug = "-".join([slug_prefix, i])
             if i >= maxint - 1:
                 # prevent an overflow
-                logger.warn("In generate_slug, i is %d" % i)
+                logger.warning("In generate_slug, i is %d" % i)
                 # give up on nice ints and try a UUID
                 full_slug = "-".join([slug_prefix, str(uuid.uuid4())])
 
