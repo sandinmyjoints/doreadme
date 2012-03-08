@@ -234,6 +234,8 @@ CELERYBEAT_SCHEDULE = {
 #    }
 }
 
+CELERY_DISABLE_RATE_LIMITS = True
+
 try:
     from local_settings import *
 except ImportError:

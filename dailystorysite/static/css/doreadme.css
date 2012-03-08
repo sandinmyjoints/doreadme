@@ -254,7 +254,7 @@ span.next {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .center {
