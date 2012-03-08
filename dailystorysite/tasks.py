@@ -34,13 +34,10 @@ def select_story_for_next_day():
         logger.info("in try")
 
         today = date.today()
-        logger.info("today is %s" % today)
 
         tomorrow = date.fromordinal(today.toordinal()+1)
-        logger.info("tomorrow is %s" % tomorrow)
 
         day_after_tomorrow = date.fromordinal(tomorrow.toordinal()+1)
-        logger.info("day_after_tomorrow is %s" % day_after_tomorrow)
 
         today_days = Day.objects.filter(day__gte=today).filter(day__lte=tomorrow)
         logger.info("today_days.count() is %d" % today_days.count())
@@ -53,7 +50,7 @@ def select_story_for_next_day():
             if today_days.count() > 1:
                 logger.warning("Multiple Days for today! This violates the db constraint on Day so should never happen. today_days.count() is %d." % today_days.count())
 
-        logger.info("now today_day is %s" % today_day)
+        logger.info("today_day is %s" % today_day)
 
         if not today_day.story:
             logger.warning("No story set for today! Setting one.")
@@ -72,7 +69,7 @@ def select_story_for_next_day():
         else:
             tomorrow_day = Day.objects.create(day=tomorrow)
 
-        logger.info("now tomorrow_day is %s" % tomorrow_day)
+        logger.info("tomorrow_day is %s" % tomorrow_day)
 
         if not tomorrow_day.story:
             # As long as Day.save() is also calling find_random_unfeatured_story, this should not be called
