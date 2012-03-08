@@ -66,7 +66,7 @@ class Day(models.Model):
             s = potential_stories.pop()
         except IndexError:
             # There are no possible stories!
-            logger.warn("In find_random_unfeatured_story, potential_stories.count() is %d." % potential_stories.count())
+            logger.warning("In find_random_unfeatured_story, potential_stories.count() is %d." % potential_stories.count())
             return None
 
         today = datetime.today().date()

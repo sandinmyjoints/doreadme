@@ -20,11 +20,11 @@ def ensure_enough_verifiednonfeaturedfiction():
 
     fiction_count = Story.verified_nonfeatured_fiction.count()
     if fiction_count <= settings.MIN_STORIES_WARNING:
-        logger.warn(WARNING_MESSAGE % fiction_count)
+        logger.warning(WARNING_MESSAGE % fiction_count)
 
         try:
 
             mail_admins(subject="Only %d stories left" % fiction_count,
                 message=WARNING_MESSAGE)
         except (BadHeaderError, SMTPEexception), ex:
-            logger.warn("Error sending mail from ensure_enough_verifiednonfeaturedfiction: %s" % ex)
+            logger.warning("Error sending mail from ensure_enough_verifiednonfeaturedfiction: %s" % ex)

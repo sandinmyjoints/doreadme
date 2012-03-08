@@ -46,17 +46,17 @@ def select_story_for_next_day():
         logger.info("today_days.count() is %d" % today_days)
 
         if today_days.count() < 1:
-            logger.warn("No Day for today. Creating one.")
+            logger.warning("No Day for today. Creating one.")
             today_day = Day.objects.create(day=today)
         else:
             today_day = today_days[0]
             if today_days.count() > 1:
-                logger.warn("Multiple Days for today! This violates the db constraint on Day so should never happen. today_days.count() is %d." % today_days.count())
+                logger.warning("Multiple Days for today! This violates the db constraint on Day so should never happen. today_days.count() is %d." % today_days.count())
 
         logger.info("now today_day is %s" % today_day)
 
         if not today_day.story:
-            logger.warn("No story set for today! Setting one.")
+            logger.warning("No story set for today! Setting one.")
             today_day.story = Day.find_random_unfeatured_story(num_days_recent=settings.NUM_DAYS_RECENT)
             logger.info("today_day.story is %s" % today_day.story)
 
@@ -65,7 +65,7 @@ def select_story_for_next_day():
 
         if tomorrow_days.count() > 1:
             # error--multiple Days for tomorrow!
-            logger.warn("Multiple Days for tomorrow! This violates the db constraint on Day so should never happen. tomorrow_days.count() is %d." % tomorrow_days.count())
+            logger.warning("Multiple Days for tomorrow! This violates the db constraint on Day so should never happen. tomorrow_days.count() is %d." % tomorrow_days.count())
 
         if tomorrow_days:
             tomorrow_day = tomorrow_days[0]
@@ -80,5 +80,5 @@ def select_story_for_next_day():
             logger.info("tomorrow_day.story is %s" % tomorrow_day.story)
 
     except Exception, exc:
-        logger.warn("Exception in select_story_for_tomorrow. Retrying. Exception was '%s'." % exc)
+        logger.warning("Exception in select_story_for_tomorrow. Retrying. Exception was '%s'." % exc)
         select_story_for_next_day.retry(exc=exc)  # retry in default (3 * 60 seconds)
