@@ -8,3 +8,8 @@
 
 1/20 many hours (long weekend)
 1/21 0 hours
+1/22 2 hours on crawler, started big crawl
+1/23 0 hours (dinner with pete and jen and scott)
+1/24 1 hour
+1/25 1 hour
+1/26 6 hours, launched

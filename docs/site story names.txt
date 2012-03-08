@@ -231,13 +231,8 @@ Rrread.me
 Rreeaadd
 First read
 Firstread.me
-Wakereadelse
-Nothing but text
 Readmenow
-Get the story
-The whole story
-What's the story
-Eat sleep read
+
 Read.ly
 Story.us
 Storysaur.us
@@ -245,10 +240,8 @@ Read.us
 Justread.me
 Wanttoread.me
 Fiction.me
-Live and read
-Live breathe read
 
-As I live and read
+
 Youread.me
 Yuried
 Yoreed
@@ -285,18 +278,6 @@ Reads.ly
 Stori.ly
 Prose.me
 
-New fiction every day.
-New writing every day.
-New story every day.
-Get read every day.
-Words every day.
-New words every day.
-New day, new story.
-Today. Tomorrow. Story.
-Sunrise, sunset, story.
-Story is everything.
-The story is all.
-
 Readbold.ly
 Compel.ing
 Fresh.ly
@@ -326,6 +307,54 @@ Storybite
 Storybit
 
 Storyb.it
+
+Tags
+====
+
+Sharing X stories from X journals since X (X days).
+
+There's a lot of stories out there. doread.me helps you find them.
+
+There's an overwhelming number of new stories/amount of good new fiction coming every day. doread.me helps you manage the stream of new fiction. 
+
+Find better fiction.
+Find new writing. 
+
+A fun, sane way to find new fiction.
+The enjoyable, manageable way to find new fiction.
+
+Fiction from across the internet, one day & story at a time.
+
+Take control of your reading.
+Reading at your fingertips.
+Stories at your pace. 
+
+Get the story
+The whole story
+What's the story
+
+Wake:read:sleep
+if(awake):read
+Eat sleep read
+Live and read
+Live breathe read
+As I live and read
+
+New fiction every day.
+New writing every day.
+New story every day.
+Get read every day.
+Words every day.
+New words every day.
+New day, new story.
 New fiction every day.
 Try new fiction every day.
 A taste of new fiction every day.
+
+Today. Tomorrow. Story.
+Sunrise, sunset, story.
+Story is everything.
+The story is all.
+
+
+

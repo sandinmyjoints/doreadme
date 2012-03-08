@@ -18,9 +18,9 @@ X EXTEND THE dotted-borders TO COVER YESTERDAY' STORY, RANDOM, THIS MONTH, ETC
 
 X fonts: http://www.google.com/webfonts#UsePlace:use/Collection:Bitter:400,700|Crimson+Text:400,400italic,700
 
-* figure out hosting
+X figure out hosting
 
-* Add a stats inclusion tag
+X Add a stats inclusion tag
 
 X choose a name 
 
@@ -30,27 +30,63 @@ X crawl and store additional text
 
 * scrub and classify story genres manually
 
-* schedule stories for a few weeks and setup reminder to do more
+X schedule stories for a few weeks and setup reminder to do more
 
-* launch.
+X launch.
 
-* include your journal link/story link to form  
+X install Google Analytics
+
+X fix statistics inclusion so it doesn't count ones in the future
+
+X Change date to Today's Story on index page
+
+X Write fabfile/deploy script
+
+* Put doreadme.wsgi into git repo
+
+* Change rabbitmq storage to postgres db?
+
+* Submit to Chrome app store
+
+* In admin, limit choices for Days to only Stories that have been verified
+
+* use celery to automatically schedule the next day's story
+-install and configure rabbitmq on webfaction
+-put this in mod_wsgi:
+import os
+os.environ["CELERY_LOADER"] = "django"
+
+* celery checks on how many verified non-featured fiction stories are available and sends a warning email if there are fewer than 7
+
+* celery automatically runs new crawls when the amount of non-featured fiction gets low
+
+* Use Readability: http://www.readability.com/publishers/api/ http://www.readability.com/publishers/tools
+Reader mode in which the whole story is displayed without any of the junk, like Instapaper or Safari Reader.
+So how would this work? Use clicks read the full story->gets a choice of go to link or add to my readability. Readability's Read Now|Read Later button. Does it only work with pages that are on your own site, or can you submit a url that is on another site? Can I split the Read Full Story button into multiple buttons on mouseover? Read now | Read later | Go to journal
+
+What about Instapaper?
+
+* fix fonts in IE - maybe in ie stylesheets, don't use google web fonts, or maybe find other fonts that do look good in ie. how to test in ie? can i install windows into fusion?
  
 * integrate with Goodreads api
 
-* cssSandpaper
+* Adwords
 
-* Switch to bootstrap fluid
+* Add user accounts, taste preferences, etc
 
-* Compass
+* User accounts, favorite stories, story ratings, open story links in a new tab or in an iframe or something like that, so they stay on the site
 
+* Add Disqus? Add share links
+
+* Favicons
+
+* include your journal link/story link to form 
+ 
 * Figure out how to deal with sites that have inconsistent markup for stories
 
-* Setup remote git repo at webfaction, or on github
+X Setup remote git repo at webfaction
 
-* use celery to automatically schedule the next day's story
-
-* use celery to automatically run new crawls
+* Setup repo on github
 
 X Day picker
 
@@ -60,39 +96,41 @@ X Day picker
 
 * Journals can upload logos, users/authors can upload photos
 
-* Adwords
+* cssSandpaper
 
-* Add Disqus? Add share links
+* Look into using bootstrap fluid
+
+* Compass
+
+* Less CSS
 
 * Use Raphael.js to draw from No button to More actions dropdown div
 
-* Add user accounts, taste preferences, etc
+* When zinnia is upgraded from .10-dev to .10, be sure to update the version the app is using so it will be on pypi and installable via pip
 
-* User accounts, favorite stories, story ratings, open story links in a new tab or in an iframe or something like that, so they stay on the site
-
-* Where on the VM filesystem can I move files to OS X, and vice versa?
+X Where on the VM filesystem can I move files to OS X, and vice versa?
 
 X Get unit testing working with postgres
 
 X install blogging app for News page
 
+* Fix linebreak filter so that paragraphs can go in <p> but still have right CSS
+
 * Write unit tests
 
 * Write Selenium tests
 
-* Object-oriented CSS, what was it called? Ask Bill?
-
 * Logging
 
-* Crawler hints: if story urls fit a certain pattern, can ignore_hints or not 
+X Crawler hints: if story urls fit a certain pattern, can ignore_hints or not 
 
 X Figure out why postgres sometimes crashes during schema migration 
 
 * Figure out how to classify story vs poetry, esp for Anomalous
 
-* favicon
-
 * icons/images for journals
+
+* Reddit for fiction/creative writing
 
 
 X How to have a concept of today's story--
