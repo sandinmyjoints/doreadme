@@ -43,7 +43,7 @@ def select_story_for_next_day():
         logger.info("day_after_tomorrow is %s" % day_after_tomorrow)
 
         today_days = Day.objects.filter(day__gte=today).filter(day__lte=tomorrow)
-        logger.info("today_days.count() is %d" % today_days)
+        logger.info("today_days.count() is %d" % today_days.count())
 
         if today_days.count() < 1:
             logger.warning("No Day for today. Creating one.")

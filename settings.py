@@ -222,7 +222,7 @@ djcelery.setup_loader()
 CELERYBEAT_SCHEDULE = {
     "every-four-am": { # After midnight, select the story for today if it is not set (it should be, however), and for the following day
         "task": "dailystorysite.tasks.select_story_for_next_day",
-        "schedule": crontab(hour=19, minute=8),
+        "schedule": crontab(hour=19, minute=12),
         },
     "every-five-am": { # At 5 a.m., check how many stories are available to select
         "task": "story.tasks.ensure_enough_verifiednonfeaturedfiction",
